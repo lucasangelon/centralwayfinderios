@@ -60,7 +60,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             
             // When the "Settings" item is clicked.
         case 3:
-            self.performSegueWithIdentifier("ShowSettingsSegue", sender: self)
+            self.performSegueWithIdentifier("ShowSettingsViewController", sender: self)
             
             // Default action.
         default:
