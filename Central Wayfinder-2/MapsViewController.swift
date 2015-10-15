@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import CoreLocation
+import MapKit
 
-class GoogleMapsViewController : UIViewController {
+class MapsViewController : UIViewController, MKMapViewDelegate {
+    
+    @IBOutlet weak var mapView: MKMapView!
     
     var didFindUserLocation = false
+    var destination: MapLocation!
     
     var userLat = 0.0
     var userLong = 0.0
@@ -24,6 +29,28 @@ class GoogleMapsViewController : UIViewController {
         // TODO: Remove, testing purposes.
         print(destLat)
         print(destLong)
+        
+        let initialLocation = CLLocation(latitude: -31.948085, longitude: 115.861103)
+        
+        mapView.delegate = self
+        if destinationExists() {
+            let destinationLocation = CLLocation(latitude: destLat, longitude: destLong)
+            
+            centerMapOnLocation(destinationLocation)
+            mapView?.addAnnotation(destination)
+            
+        } else {
+            centerMapOnLocation(initialLocation)
+        }
+    }
+    
+    
+    let regionRadius: CLLocationDistance = 600
+    
+    func centerMapOnLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
+            regionRadius * 2.0, regionRadius * 2.0)
+        mapView.setRegion(coordinateRegion, animated: true)
     }
     
     // Generating a route to be placed in the map.
@@ -33,5 +60,14 @@ class GoogleMapsViewController : UIViewController {
         destLat = dLat
         destLong = dLong
         destTitle = dTitle
+        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: dLat, longitude: dLong), title: dTitle, subtitle: dTitle)
+    }
+    
+    func destinationExists() -> Bool {
+        if destLat != 0.0 && destLong != 0.0 {
+            return true
+        } else {
+            return false
+        }
     }
 }

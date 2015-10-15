@@ -45,7 +45,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         case 0:
             
             // Perform Segue.
-            self.performSegueWithIdentifier("ShowMapSegue", sender: self)
+            self.performSegueWithIdentifier("ShowMapsViewController", sender: self)
             
             // When the "Services" item is clicked.
         case 1:

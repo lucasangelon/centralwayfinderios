@@ -172,6 +172,9 @@
                         </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <segue destination="Qz0-gV-owB" kind="show" identifier="ShowMapsFromServices" id="nrC-DR-EDC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5m4-4J-gT6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -259,11 +262,67 @@
                     <connections>
                         <segue destination="1hw-sP-Vwa" kind="show" identifier="ShowSettingsViewController" id="n2Y-8Q-uSB"/>
                         <segue destination="Lku-Xs-6OZ" kind="show" identifier="ShowServicesViewController" id="6n0-QH-20b"/>
+                        <segue destination="Qz0-gV-owB" kind="show" identifier="ShowMapsViewController" id="bH6-jx-wsv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P6d-HQ-orE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="520" y="292"/>
+        </scene>
+        <!--Maps View Controller-->
+        <scene sceneID="eBU-pO-u5K">
+            <objects>
+                <viewController title="Maps View Controller" id="Qz0-gV-owB" customClass="MapsViewController" customModule="Central_Wayfinder_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1ZN-K5-Y6n"/>
+                        <viewControllerLayoutGuide type="bottom" id="uEc-8b-GEl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KOn-V8-Ix9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="53n-P3-LMo">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                            </mapView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9cH-3a-zeM">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <items>
+                                    <navigationItem id="RLE-ph-Dbn">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="mkE-vg-oHV">
+                                            <connections>
+                                                <segue destination="qsL-Yq-vMl" kind="show" identifier="ReturnFromMaps" id="Km0-Gc-vHV"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="HVK-3P-B3B"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <searchBar contentMode="redraw" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jpm-Fk-h1n">
+                                <rect key="frame" x="52" y="20" width="215" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9cH-3a-zeM" firstAttribute="top" secondItem="1ZN-K5-Y6n" secondAttribute="bottom" id="7kk-m0-XPx"/>
+                            <constraint firstItem="9cH-3a-zeM" firstAttribute="centerX" secondItem="jpm-Fk-h1n" secondAttribute="centerX" id="DFn-VO-hId"/>
+                            <constraint firstItem="9cH-3a-zeM" firstAttribute="leading" secondItem="KOn-V8-Ix9" secondAttribute="leading" id="Fps-dQ-02l"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="top" secondItem="9cH-3a-zeM" secondAttribute="bottom" id="blf-Ev-Tk7"/>
+                            <constraint firstItem="9cH-3a-zeM" firstAttribute="top" secondItem="jpm-Fk-h1n" secondAttribute="top" id="cC9-jg-aDE"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="leading" secondItem="9cH-3a-zeM" secondAttribute="leading" id="dfd-9H-2r6"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="centerX" secondItem="jpm-Fk-h1n" secondAttribute="centerX" id="lUy-gm-xIa"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="bottom" secondItem="uEc-8b-GEl" secondAttribute="top" id="n0V-TD-UXc"/>
+                            <constraint firstAttribute="trailing" secondItem="9cH-3a-zeM" secondAttribute="trailing" id="ss9-1f-UmD"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="mapView" destination="53n-P3-LMo" id="tjh-LF-HnI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yv4-Sj-hvw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1009" y="292"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="cS0-Q0-sZt">
@@ -308,6 +367,7 @@
         <image name="swiftIcon" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="88Q-ny-eX3"/>
+        <segue reference="Km0-Gc-vHV"/>
+        <segue reference="nrC-DR-EDC"/>
     </inferredMetricsTieBreakers>
 </document>

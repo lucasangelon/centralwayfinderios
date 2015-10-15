@@ -19,7 +19,9 @@
 		A0781F221BCF4AEC002A65AF /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F211BCF4AEC002A65AF /* SplashViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A0781F241BCF4B38002A65AF /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F231BCF4B38002A65AF /* MainMenuViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A0781F261BCF4BB4002A65AF /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F251BCF4BB4002A65AF /* MapsViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		A0781F281BCF4BE2002A65AF /* MapsTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F271BCF4BE2002A65AF /* MapsTasks.swift */; settings = {ASSET_TAGS = (); }; };
+		A0781F2A1BCF72FC002A65AF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0781F291BCF72FC002A65AF /* CoreLocation.framework */; };
+		A0781F2C1BCF869B002A65AF /* MapLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F2B1BCF869B002A65AF /* MapLocation.swift */; settings = {ASSET_TAGS = (); }; };
+		A0781F2F1BCF8BA5002A65AF /* MapsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +60,9 @@
 		A0781F211BCF4AEC002A65AF /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		A0781F231BCF4B38002A65AF /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		A0781F251BCF4BB4002A65AF /* MapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
-		A0781F271BCF4BE2002A65AF /* MapsTasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsTasks.swift; sourceTree = "<group>"; };
+		A0781F291BCF72FC002A65AF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A0781F2B1BCF869B002A65AF /* MapLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocation.swift; sourceTree = "<group>"; };
+		A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsViewHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0781F2A1BCF72FC002A65AF /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +94,7 @@
 		A0781EDE1BCF348D002A65AF = {
 			isa = PBXGroup;
 			children = (
+				A0781F291BCF72FC002A65AF /* CoreLocation.framework */,
 				A0781EE91BCF348D002A65AF /* Central Wayfinder-2 */,
 				A0781EFE1BCF348E002A65AF /* Central Wayfinder-2Tests */,
 				A0781F091BCF348E002A65AF /* Central Wayfinder-2UITests */,
@@ -109,12 +115,12 @@
 		A0781EE91BCF348D002A65AF /* Central Wayfinder-2 */ = {
 			isa = PBXGroup;
 			children = (
+				A0781F2D1BCF8987002A65AF /* Models */,
 				A0781F1C1BCF365C002A65AF /* Assets */,
 				A0781F1B1BCF362F002A65AF /* AppConfiguration */,
 				A0781F1A1BCF3623002A65AF /* Helpers */,
 				A0781F191BCF361D002A65AF /* Views */,
 				A0781F181BCF3616002A65AF /* Controllers */,
-				A0781EF61BCF348D002A65AF /* Info.plist */,
 			);
 			path = "Central Wayfinder-2";
 			sourceTree = "<group>";
@@ -162,7 +168,7 @@
 		A0781F1A1BCF3623002A65AF /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				A0781F271BCF4BE2002A65AF /* MapsTasks.swift */,
+				A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -170,6 +176,7 @@
 		A0781F1B1BCF362F002A65AF /* AppConfiguration */ = {
 			isa = PBXGroup;
 			children = (
+				A0781EF61BCF348D002A65AF /* Info.plist */,
 				A0781EEA1BCF348D002A65AF /* AppDelegate.swift */,
 			);
 			name = AppConfiguration;
@@ -181,6 +188,14 @@
 				A0781EF11BCF348D002A65AF /* Assets.xcassets */,
 			);
 			name = Assets;
+			sourceTree = "<group>";
+		};
+		A0781F2D1BCF8987002A65AF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A0781F2B1BCF869B002A65AF /* MapLocation.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,11 +332,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0781F241BCF4B38002A65AF /* MainMenuViewController.swift in Sources */,
-				A0781F281BCF4BE2002A65AF /* MapsTasks.swift in Sources */,
 				A0781F1E1BCF368D002A65AF /* ServicesViewControllers.swift in Sources */,
 				A0781F261BCF4BB4002A65AF /* MapsViewController.swift in Sources */,
+				A0781F2C1BCF869B002A65AF /* MapLocation.swift in Sources */,
 				A0781EED1BCF348D002A65AF /* ViewController.swift in Sources */,
 				A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */,
+				A0781F2F1BCF8BA5002A65AF /* MapsViewHelper.swift in Sources */,
 				A0781F201BCF4212002A65AF /* SettingsViewController.swift in Sources */,
 				A0781F221BCF4AEC002A65AF /* SplashViewController.swift in Sources */,
 			);

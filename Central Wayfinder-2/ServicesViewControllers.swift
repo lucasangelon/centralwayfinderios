@@ -44,7 +44,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         // TODO: Remove, testing purposes only.
         print(currentRow)
         
-        //performSegueWithIdentifier("ShowMapsFromServiceSegue", sender: self)
+        performSegueWithIdentifier("ShowMapsFromServices", sender: self)
     }
     
     // Prepare for the Segue by sending all information required to the Google Maps View Controller.
@@ -52,8 +52,8 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if segue.identifier != "ReturnFromServices" {
             // Set up the coordinates and the title of the location.
-            //let destinationSegue = segue.destinationViewController as! GoogleMapsViewController
-            //destinationSegue.createRoute(currentRow.0, dLong: currentRow.1, dTitle: currentRow.2)
+            let destinationSegue = segue.destinationViewController as! MapsViewController
+            destinationSegue.createRoute(currentRow.0, dLong: currentRow.1, dTitle: currentRow.2)
         }
     }
     
