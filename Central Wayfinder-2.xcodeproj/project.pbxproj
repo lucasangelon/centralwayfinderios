@@ -467,6 +467,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Central Wayfinder-2/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Lucas-Angelon.Central-Wayfinder-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -479,6 +480,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Central Wayfinder-2/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Lucas-Angelon.Central-Wayfinder-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -552,6 +554,7 @@
 				A0781F111BCF348E002A65AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A0781F121BCF348E002A65AF /* Build configuration list for PBXNativeTarget "Central Wayfinder-2Tests" */ = {
 			isa = XCConfigurationList;
@@ -560,6 +563,7 @@
 				A0781F141BCF348E002A65AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A0781F151BCF348E002A65AF /* Build configuration list for PBXNativeTarget "Central Wayfinder-2UITests" */ = {
 			isa = XCConfigurationList;
@@ -568,6 +572,7 @@
 				A0781F171BCF348E002A65AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

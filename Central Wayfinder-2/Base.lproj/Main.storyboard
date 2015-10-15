@@ -1,25 +1,78 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gsh-6o-Fns">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Splash View Controller-->
+        <scene sceneID="Vbk-h7-JpR">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Central_Wayfinder_2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Splash View Controller" id="gsh-6o-Fns" customClass="SplashViewController" customModule="Central_Wayfinder_2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="6WC-uI-lSz"/>
+                        <viewControllerLayoutGuide type="bottom" id="iYC-4w-eIE"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <view key="view" contentMode="scaleToFill" id="es1-dE-O8X">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CAg-GB-Fw2">
+                                <rect key="frame" x="-4" y="20" width="328" height="44"/>
+                                <color key="barTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <items>
+                                    <navigationItem id="otx-R8-vcC"/>
+                                </items>
+                            </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LpI-Hv-Q5I">
+                                <rect key="frame" x="92" y="342" width="137" height="30"/>
+                                <state key="normal" title="Click Here to Enter"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© 2015 Central Institute of Technology" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98g-Hp-zy3">
+                                <rect key="frame" x="8" y="528" width="304" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hm5-BI-qgy">
+                                <rect key="frame" x="-4" y="20" width="328" height="548"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="CAg-GB-Fw2" firstAttribute="leading" secondItem="es1-dE-O8X" secondAttribute="leadingMargin" constant="-20" id="50L-wK-dov"/>
+                            <constraint firstItem="iYC-4w-eIE" firstAttribute="top" secondItem="98g-Hp-zy3" secondAttribute="bottom" constant="20" id="7fP-P8-iYp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CAg-GB-Fw2" secondAttribute="trailing" constant="-20" id="BLe-5c-DTN"/>
+                            <constraint firstItem="hm5-BI-qgy" firstAttribute="top" secondItem="6WC-uI-lSz" secondAttribute="bottom" id="E1v-zN-JI4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="98g-Hp-zy3" secondAttribute="trailing" constant="-8" id="E6y-Y0-CJy"/>
+                            <constraint firstItem="98g-Hp-zy3" firstAttribute="leading" secondItem="es1-dE-O8X" secondAttribute="leadingMargin" constant="-8" id="HJK-5h-OZJ"/>
+                            <constraint firstItem="98g-Hp-zy3" firstAttribute="top" secondItem="LpI-Hv-Q5I" secondAttribute="bottom" constant="156" id="Hue-hJ-cxQ"/>
+                            <constraint firstItem="hm5-BI-qgy" firstAttribute="leading" secondItem="es1-dE-O8X" secondAttribute="leadingMargin" constant="-20" id="Qv0-H6-6Jf"/>
+                            <constraint firstItem="LpI-Hv-Q5I" firstAttribute="leading" secondItem="es1-dE-O8X" secondAttribute="leadingMargin" constant="76" id="UyX-Yy-sab"/>
+                            <constraint firstItem="hm5-BI-qgy" firstAttribute="leading" secondItem="es1-dE-O8X" secondAttribute="leadingMargin" constant="24" id="VT6-by-EmC"/>
+                            <constraint firstItem="CAg-GB-Fw2" firstAttribute="top" secondItem="6WC-uI-lSz" secondAttribute="bottom" id="Xsb-FD-pr4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hm5-BI-qgy" secondAttribute="trailing" constant="24" id="YoR-Rk-fhn"/>
+                            <constraint firstItem="iYC-4w-eIE" firstAttribute="top" secondItem="hm5-BI-qgy" secondAttribute="bottom" id="cYo-dC-Z2E"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LpI-Hv-Q5I" secondAttribute="trailing" constant="75" id="ftf-SF-Aq5"/>
+                            <constraint firstItem="hm5-BI-qgy" firstAttribute="top" secondItem="6WC-uI-lSz" secondAttribute="bottom" id="h3e-YX-Okk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hm5-BI-qgy" secondAttribute="trailing" constant="-20" id="kit-cH-032"/>
+                            <constraint firstItem="iYC-4w-eIE" firstAttribute="top" secondItem="hm5-BI-qgy" secondAttribute="bottom" id="rJ0-Yu-X1f"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="VT6-by-EmC"/>
+                                <exclude reference="YoR-Rk-fhn"/>
+                                <exclude reference="h3e-YX-Okk"/>
+                                <exclude reference="cYo-dC-Z2E"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U1C-MM-Rr7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="23" y="292"/>
         </scene>
     </scenes>
 </document>
