@@ -29,7 +29,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     // Returns the properly set up items for the list.
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCellWithIdentifier("ImageTextArrowCell", forIndexPath: indexPath)
         
         cell.textLabel?.text = cellContent[indexPath.row]
         cell.imageView?.image = UIImage(named: "swiftIcon")
