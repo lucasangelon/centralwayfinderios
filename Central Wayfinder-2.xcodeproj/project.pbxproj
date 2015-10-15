@@ -18,6 +18,8 @@
 		A0781F201BCF4212002A65AF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F1F1BCF4212002A65AF /* SettingsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A0781F221BCF4AEC002A65AF /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F211BCF4AEC002A65AF /* SplashViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A0781F241BCF4B38002A65AF /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F231BCF4B38002A65AF /* MainMenuViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		A0781F261BCF4BB4002A65AF /* MapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F251BCF4BB4002A65AF /* MapsViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		A0781F281BCF4BE2002A65AF /* MapsTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F271BCF4BE2002A65AF /* MapsTasks.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		A0781F1F1BCF4212002A65AF /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		A0781F211BCF4AEC002A65AF /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		A0781F231BCF4B38002A65AF /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
+		A0781F251BCF4BB4002A65AF /* MapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsViewController.swift; sourceTree = "<group>"; };
+		A0781F271BCF4BE2002A65AF /* MapsTasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsTasks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +145,7 @@
 				A0781F1F1BCF4212002A65AF /* SettingsViewController.swift */,
 				A0781F211BCF4AEC002A65AF /* SplashViewController.swift */,
 				A0781F231BCF4B38002A65AF /* MainMenuViewController.swift */,
+				A0781F251BCF4BB4002A65AF /* MapsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -157,6 +162,7 @@
 		A0781F1A1BCF3623002A65AF /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				A0781F271BCF4BE2002A65AF /* MapsTasks.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -311,7 +317,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0781F241BCF4B38002A65AF /* MainMenuViewController.swift in Sources */,
+				A0781F281BCF4BE2002A65AF /* MapsTasks.swift in Sources */,
 				A0781F1E1BCF368D002A65AF /* ServicesViewControllers.swift in Sources */,
+				A0781F261BCF4BB4002A65AF /* MapsViewController.swift in Sources */,
 				A0781EED1BCF348D002A65AF /* ViewController.swift in Sources */,
 				A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */,
 				A0781F201BCF4212002A65AF /* SettingsViewController.swift in Sources */,
