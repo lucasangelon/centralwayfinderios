@@ -26,7 +26,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
     // Prepare the tableView.
     @available(iOS 6.0, *)
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ImageTextCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("TextImageCell", forIndexPath: indexPath)
         
         // Set up the information based on the, currently, hardcoded list.
         cell.textLabel?.text = servicesLocations[indexPath.row].2
@@ -44,15 +44,17 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         // TODO: Remove, testing purposes only.
         print(currentRow)
         
-        performSegueWithIdentifier("ShowMapsFromServiceSegue", sender: self)
+        //performSegueWithIdentifier("ShowMapsFromServiceSegue", sender: self)
     }
     
     // Prepare for the Segue by sending all information required to the Google Maps View Controller.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        // Set up the coordinates and the title of the location.
-        let destinationSegue = segue.destinationViewController as! GoogleMapsViewController
-        destinationSegue.createRoute(currentRow.0, dLong: currentRow.1, dTitle: currentRow.2)
+        if segue.identifier != "ReturnFromServices" {
+            // Set up the coordinates and the title of the location.
+            //let destinationSegue = segue.destinationViewController as! GoogleMapsViewController
+            //destinationSegue.createRoute(currentRow.0, dLong: currentRow.1, dTitle: currentRow.2)
+        }
     }
     
     override func didReceiveMemoryWarning() {

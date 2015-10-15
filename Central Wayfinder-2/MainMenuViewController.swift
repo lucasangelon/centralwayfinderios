@@ -49,7 +49,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             
             // When the "Services" item is clicked.
         case 1:
-            self.performSegueWithIdentifier("ShowServicesSegue", sender: self)
+            self.performSegueWithIdentifier("ShowServicesViewController", sender: self)
             
             // When the "Central Web" item is clicked, open the website on the default browser for the system.
         case 2:

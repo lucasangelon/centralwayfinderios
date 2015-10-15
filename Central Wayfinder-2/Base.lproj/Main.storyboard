@@ -77,6 +77,106 @@
             </objects>
             <point key="canvasLocation" x="23" y="292"/>
         </scene>
+        <!--Services View Controller-->
+        <scene sceneID="jIz-Hg-X8a">
+            <objects>
+                <viewController title="Services View Controller" id="Lku-Xs-6OZ" customClass="ServicesViewController" customModule="Central_Wayfinder_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Uil-cG-FrF"/>
+                        <viewControllerLayoutGuide type="bottom" id="o1A-4x-Qk8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aYx-WB-MBQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PLe-ss-zVx">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <items>
+                                    <navigationItem title="Services" id="Bjn-3Z-cNZ">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="7UW-38-oyy">
+                                            <connections>
+                                                <segue destination="qsL-Yq-vMl" kind="show" identifier="ReturnFromServices" id="88Q-ny-eX3"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XRo-0C-37R">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="504" id="JOi-pL-MwT"/>
+                                </constraints>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="9TJ-9v-oPV">
+                                    <rect key="frame" x="0.0" y="72" width="320" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TextImageCell" textLabel="rDw-LV-ifZ" style="IBUITableViewCellStyleDefault" id="ern-AP-v7m">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ern-AP-v7m" id="r9V-y4-mQv">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rDw-LV-ifZ">
+                                                    <rect key="frame" x="15" y="0.0" width="290" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="JOi-pL-MwT"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <outlet property="dataSource" destination="Lku-Xs-6OZ" id="Akk-PP-Wpk"/>
+                                    <outlet property="delegate" destination="Lku-Xs-6OZ" id="P8M-Kb-emO"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="XRo-0C-37R" firstAttribute="top" secondItem="PLe-ss-zVx" secondAttribute="bottom" id="BKG-cH-mjE"/>
+                            <constraint firstItem="PLe-ss-zVx" firstAttribute="leading" secondItem="XRo-0C-37R" secondAttribute="leading" id="F2w-fH-VZX"/>
+                            <constraint firstItem="PLe-ss-zVx" firstAttribute="top" secondItem="Uil-cG-FrF" secondAttribute="bottom" id="KNS-hM-LEm"/>
+                            <constraint firstItem="XRo-0C-37R" firstAttribute="bottom" secondItem="o1A-4x-Qk8" secondAttribute="top" id="MRd-DI-lkd"/>
+                            <constraint firstItem="PLe-ss-zVx" firstAttribute="trailing" secondItem="XRo-0C-37R" secondAttribute="trailing" id="UWJ-3V-hcP"/>
+                            <constraint firstItem="XRo-0C-37R" firstAttribute="top" secondItem="PLe-ss-zVx" secondAttribute="bottom" id="V3e-n4-lZv"/>
+                            <constraint firstItem="PLe-ss-zVx" firstAttribute="trailing" secondItem="XRo-0C-37R" secondAttribute="trailing" id="aSh-sE-lEX"/>
+                            <constraint firstAttribute="trailing" secondItem="XRo-0C-37R" secondAttribute="trailing" id="aZy-gG-tKS"/>
+                            <constraint firstItem="XRo-0C-37R" firstAttribute="leading" secondItem="aYx-WB-MBQ" secondAttribute="leading" id="cdb-hv-Vd1"/>
+                            <constraint firstItem="XRo-0C-37R" firstAttribute="bottom" secondItem="o1A-4x-Qk8" secondAttribute="top" id="fW4-wH-Wyc"/>
+                            <constraint firstItem="XRo-0C-37R" firstAttribute="leading" secondItem="aYx-WB-MBQ" secondAttribute="leading" id="rSH-MV-gc2"/>
+                            <constraint firstItem="XRo-0C-37R" firstAttribute="leading" secondItem="PLe-ss-zVx" secondAttribute="leading" id="vfN-xb-12P"/>
+                            <constraint firstItem="PLe-ss-zVx" firstAttribute="top" secondItem="Uil-cG-FrF" secondAttribute="bottom" id="ycn-n8-sL1"/>
+                            <constraint firstAttribute="trailing" secondItem="XRo-0C-37R" secondAttribute="trailing" id="zcU-JR-vmb"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="F2w-fH-VZX"/>
+                                <exclude reference="aSh-sE-lEX"/>
+                                <exclude reference="ycn-n8-sL1"/>
+                                <exclude reference="BKG-cH-mjE"/>
+                                <exclude reference="MRd-DI-lkd"/>
+                                <exclude reference="rSH-MV-gc2"/>
+                                <exclude reference="zcU-JR-vmb"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5m4-4J-gT6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="520" y="-373"/>
+        </scene>
         <!--Main Menu View Controller-->
         <scene sceneID="Cy6-wx-3hg">
             <objects>
@@ -158,6 +258,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <segue destination="1hw-sP-Vwa" kind="show" identifier="ShowSettingsViewController" id="n2Y-8Q-uSB"/>
+                        <segue destination="Lku-Xs-6OZ" kind="show" identifier="ShowServicesViewController" id="6n0-QH-20b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P6d-HQ-orE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -207,6 +308,6 @@
         <image name="swiftIcon" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Gom-4r-XtH"/>
+        <segue reference="88Q-ny-eX3"/>
     </inferredMetricsTieBreakers>
 </document>
