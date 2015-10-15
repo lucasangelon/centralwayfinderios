@@ -10,6 +10,11 @@ import UIKit
 import CoreLocation
 import MapKit
 
+// Based on: http://www.raywenderlich.com/90971/introduction-mapkit-swift-tutorial
+// Based on: http://stackoverflow.com/questions/6495419/mkannotation-simple-example
+// Based on: http://stackoverflow.com/questions/30867937/redundant-conformance-error-message-swift-2
+// Based on: http://stackoverflow.com/questions/29764337/subclassing-mkannotation-error-conform-to-protocol
+
 class MapsViewController : UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
