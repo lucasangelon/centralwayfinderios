@@ -21,19 +21,19 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
     
     var didFindUserLocation = false
     var destination: MapLocation!
+    var start: MapLocation!
     
     var userLat = 0.0
     var userLong = 0.0
+    var userTitle = ""
     var destLat = 0.0
     var destLong = 0.0
     var destTitle = ""
     
+    var destinationItem: MKMapItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // TODO: Remove, testing purposes.
-        print(destLat)
-        print(destLong)
         
         let initialLocation = CLLocation(latitude: -31.948085, longitude: 115.861103)
         
@@ -43,6 +43,9 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
             
             centerMapOnLocation(destinationLocation)
             mapView?.addAnnotation(destination)
+            mapView.addAnnotation(start)
+            
+            
             
         } else {
             centerMapOnLocation(initialLocation)
@@ -66,8 +69,48 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
         destLong = dLong
         destTitle = dTitle
         destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: dLat, longitude: dLong), title: dTitle, subtitle: dTitle)
+        
+        // Set up the coordinates for the user.
+        userLat = -31.9470712
+        userLong = 115.855008
+        userTitle = "Oliver's on James"
+        start = MapLocation(coordinate: CLLocationCoordinate2D(latitude: userLat, longitude: userLong), title: userTitle, subtitle: userTitle)
+        
+        // Start a request.
+        let request = MKDirectionsRequest()
+        let markDestination = MKPlacemark(coordinate: CLLocationCoordinate2DMake(userLat, userLong), addressDictionary: nil)
+        let markStart = MKPlacemark(coordinate: CLLocationCoordinate2DMake(destLat, destLong), addressDictionary: nil)
+        
+        // Define the request information.
+        request.source = MKMapItem(placemark: markStart)
+        request.destination = MKMapItem(placemark: markDestination)
+        request.transportType = MKDirectionsTransportType.Walking
+        request.requestsAlternateRoutes = false
+        
+        let directions = MKDirections(request: request)
+        
+        
+        // Pull the route information from the Apple Maps Request. Retrieved from: https://www.hackingwithswift.com/example-code/location/how-to-find-directions-using-mkmapview-and-mkdirectionsrequest
+        directions.calculateDirectionsWithCompletionHandler { [unowned self] response, error in
+            guard let unwrappedResponse = response else {
+                return
+            }
+            
+            for route in unwrappedResponse.routes {
+                self.mapView.addOverlay(route.polyline)
+                self.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+            }
+        }
     }
     
+    // Renders the route on the Map View.
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
+        renderer.strokeColor = UIColor.blueColor()
+        return renderer
+    }
+    
+    // Checks if the application sent the user to this page with a destination from Services.
     func destinationExists() -> Bool {
         if destLat != 0.0 && destLong != 0.0 {
             return true
