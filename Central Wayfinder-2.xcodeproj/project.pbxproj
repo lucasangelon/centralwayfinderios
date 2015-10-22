@@ -22,6 +22,12 @@
 		A0781F2A1BCF72FC002A65AF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0781F291BCF72FC002A65AF /* CoreLocation.framework */; };
 		A0781F2C1BCF869B002A65AF /* MapLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F2B1BCF869B002A65AF /* MapLocation.swift */; settings = {ASSET_TAGS = (); }; };
 		A0781F2F1BCF8BA5002A65AF /* MapsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */; settings = {ASSET_TAGS = (); }; };
+		A0C505711BD8AD380084A9E8 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C505701BD8AD380084A9E8 /* libsqlite3.tbd */; };
+		A0C5057F1BD8D2E40084A9E8 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C505761BD8D2E40084A9E8 /* FMDatabase.m */; settings = {ASSET_TAGS = (); }; };
+		A0C505801BD8D2E40084A9E8 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C505781BD8D2E40084A9E8 /* FMResultSet.m */; settings = {ASSET_TAGS = (); }; };
+		A0C505811BD8D2E40084A9E8 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057A1BD8D2E40084A9E8 /* FMDatabaseQueue.m */; settings = {ASSET_TAGS = (); }; };
+		A0C505821BD8D2E40084A9E8 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057C1BD8D2E40084A9E8 /* FMDatabaseAdditions.m */; settings = {ASSET_TAGS = (); }; };
+		A0C505831BD8D2E40084A9E8 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057E1BD8D2E40084A9E8 /* FMDatabasePool.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +69,19 @@
 		A0781F291BCF72FC002A65AF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A0781F2B1BCF869B002A65AF /* MapLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocation.swift; sourceTree = "<group>"; };
 		A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsViewHelper.swift; sourceTree = "<group>"; };
+		A0C505701BD8AD380084A9E8 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		A0C505731BD8D2E40084A9E8 /* Central Wayfinder-2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Central Wayfinder-2-Bridging-Header.h"; sourceTree = "<group>"; };
+		A0C505741BD8D2E40084A9E8 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		A0C505751BD8D2E40084A9E8 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		A0C505761BD8D2E40084A9E8 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		A0C505771BD8D2E40084A9E8 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		A0C505781BD8D2E40084A9E8 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		A0C505791BD8D2E40084A9E8 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		A0C5057A1BD8D2E40084A9E8 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		A0C5057B1BD8D2E40084A9E8 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		A0C5057C1BD8D2E40084A9E8 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		A0C5057D1BD8D2E40084A9E8 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		A0C5057E1BD8D2E40084A9E8 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0C505711BD8AD380084A9E8 /* libsqlite3.tbd in Frameworks */,
 				A0781F2A1BCF72FC002A65AF /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,6 +114,7 @@
 		A0781EDE1BCF348D002A65AF = {
 			isa = PBXGroup;
 			children = (
+				A0C505701BD8AD380084A9E8 /* libsqlite3.tbd */,
 				A0781F291BCF72FC002A65AF /* CoreLocation.framework */,
 				A0781EE91BCF348D002A65AF /* Central Wayfinder-2 */,
 				A0781EFE1BCF348E002A65AF /* Central Wayfinder-2Tests */,
@@ -115,6 +136,7 @@
 		A0781EE91BCF348D002A65AF /* Central Wayfinder-2 */ = {
 			isa = PBXGroup;
 			children = (
+				A0C505721BD8D2B00084A9E8 /* FMDB */,
 				A0781F2D1BCF8987002A65AF /* Models */,
 				A0781F1C1BCF365C002A65AF /* Assets */,
 				A0781F1B1BCF362F002A65AF /* AppConfiguration */,
@@ -198,6 +220,25 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		A0C505721BD8D2B00084A9E8 /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				A0C505741BD8D2E40084A9E8 /* FMDB.h */,
+				A0C505751BD8D2E40084A9E8 /* FMDatabase.h */,
+				A0C505761BD8D2E40084A9E8 /* FMDatabase.m */,
+				A0C505771BD8D2E40084A9E8 /* FMResultSet.h */,
+				A0C505781BD8D2E40084A9E8 /* FMResultSet.m */,
+				A0C505791BD8D2E40084A9E8 /* FMDatabaseQueue.h */,
+				A0C5057A1BD8D2E40084A9E8 /* FMDatabaseQueue.m */,
+				A0C5057B1BD8D2E40084A9E8 /* FMDatabaseAdditions.h */,
+				A0C5057C1BD8D2E40084A9E8 /* FMDatabaseAdditions.m */,
+				A0C5057D1BD8D2E40084A9E8 /* FMDatabasePool.h */,
+				A0C5057E1BD8D2E40084A9E8 /* FMDatabasePool.m */,
+				A0C505731BD8D2E40084A9E8 /* Central Wayfinder-2-Bridging-Header.h */,
+			);
+			name = FMDB;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -260,6 +301,7 @@
 		A0781EDF1BCF348D002A65AF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Lucas Angelon Arouca";
 				TargetAttributes = {
@@ -334,10 +376,15 @@
 				A0781F241BCF4B38002A65AF /* MainMenuViewController.swift in Sources */,
 				A0781F1E1BCF368D002A65AF /* ServicesViewControllers.swift in Sources */,
 				A0781F261BCF4BB4002A65AF /* MapsViewController.swift in Sources */,
+				A0C5057F1BD8D2E40084A9E8 /* FMDatabase.m in Sources */,
 				A0781F2C1BCF869B002A65AF /* MapLocation.swift in Sources */,
+				A0C505811BD8D2E40084A9E8 /* FMDatabaseQueue.m in Sources */,
 				A0781EED1BCF348D002A65AF /* ViewController.swift in Sources */,
 				A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */,
+				A0C505821BD8D2E40084A9E8 /* FMDatabaseAdditions.m in Sources */,
 				A0781F2F1BCF8BA5002A65AF /* MapsViewHelper.swift in Sources */,
+				A0C505801BD8D2E40084A9E8 /* FMResultSet.m in Sources */,
+				A0C505831BD8D2E40084A9E8 /* FMDatabasePool.m in Sources */,
 				A0781F201BCF4212002A65AF /* SettingsViewController.swift in Sources */,
 				A0781F221BCF4AEC002A65AF /* SplashViewController.swift in Sources */,
 			);
@@ -481,12 +528,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Central Wayfinder-2/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Lucas-Angelon.Central-Wayfinder-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Central Wayfinder-2/Central Wayfinder-2-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -494,12 +544,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Central Wayfinder-2/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Lucas-Angelon.Central-Wayfinder-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Central Wayfinder-2/Central Wayfinder-2-Bridging-Header.h";
 			};
 			name = Release;
 		};

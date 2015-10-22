@@ -37,6 +37,10 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
         
         let initialLocation = CLLocation(latitude: -31.948085, longitude: 115.861103)
         
+        //Perth Campus Default Location:
+        // Latitude: -31.9476680755615
+        // Longitude: 115.862129211426
+        
         mapView.delegate = self
         if destinationExists() {
             let destinationLocation = CLLocation(latitude: destLat, longitude: destLong)
@@ -44,16 +48,13 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
             centerMapOnLocation(destinationLocation)
             mapView?.addAnnotation(destination)
             mapView.addAnnotation(start)
-            
-            
-            
         } else {
             centerMapOnLocation(initialLocation)
         }
     }
     
     
-    let regionRadius: CLLocationDistance = 600
+    let regionRadius: CLLocationDistance = 300
     
     func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
