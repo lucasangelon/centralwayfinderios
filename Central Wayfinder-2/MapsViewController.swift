@@ -18,6 +18,7 @@ import MapKit
 class MapsViewController : UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
+    let userDefaults = UserDefaultsController()
     
     var didFindUserLocation = false
     var destination: MapLocation!
@@ -35,11 +36,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let initialLocation = CLLocation(latitude: -31.948085, longitude: 115.861103)
-        
-        //Perth Campus Default Location:
-        // Latitude: -31.9476680755615
-        // Longitude: 115.862129211426
+        let initialLocation = CLLocation(latitude: userDefaults.campusDefaultLat, longitude: userDefaults.campusDefaultLong)
         
         mapView.delegate = self
         if destinationExists() {
@@ -72,9 +69,9 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
         destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: dLat, longitude: dLong), title: dTitle, subtitle: dTitle)
         
         // Set up the coordinates for the user.
-        userLat = -31.9470712
-        userLong = 115.855008
-        userTitle = "Oliver's on James"
+        userLat = userDefaults.campusDefaultLat
+        userLong = userDefaults.campusDefaultLong
+        userTitle = "Your Location"
         start = MapLocation(coordinate: CLLocationCoordinate2D(latitude: userLat, longitude: userLong), title: userTitle, subtitle: userTitle)
         
         // Start a request.

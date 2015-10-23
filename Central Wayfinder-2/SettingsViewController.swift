@@ -10,7 +10,6 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    // Declaring the base tableView.
     @IBOutlet var tableView: UITableView!
     
     // List items for the menu.
@@ -57,7 +56,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
             
-        // When the "Services" item is clicked.
+        // When the "Select Campus" item is clicked.
         case 1:
             self.performSegueWithIdentifier("ShowCampusSelectionViewController", sender: self)
             

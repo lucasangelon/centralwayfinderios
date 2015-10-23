@@ -391,7 +391,7 @@
         <!--Campus Selection View Controller-->
         <scene sceneID="28X-5E-JuQ">
             <objects>
-                <viewController title="Campus Selection View Controller" id="4UW-fp-ry7" sceneMemberID="viewController">
+                <viewController title="Campus Selection View Controller" id="4UW-fp-ry7" customClass="CampusSelectionViewController" customModule="Central_Wayfinder_2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lB1-d4-0UU"/>
                         <viewControllerLayoutGuide type="bottom" id="QfK-lC-ig5"/>
@@ -400,7 +400,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Cz-SH-Z65">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Cz-SH-Z65">
                                 <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                                 <items>
                                     <navigationItem title="Select Campus" id="o70-sa-GUr">
@@ -412,8 +412,37 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VII-vB-32d">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="504" id="w8x-43-RF8"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TextCell" id="DUo-KG-1Nv">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DUo-KG-1Nv" id="CP0-sg-YVB">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="4UW-fp-ry7" id="yAa-cH-o3h"/>
+                                    <outlet property="delegate" destination="4UW-fp-ry7" id="Gtr-GA-iY2"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="VII-vB-32d" firstAttribute="bottom" secondItem="QfK-lC-ig5" secondAttribute="top" id="1Sk-F7-uTw"/>
+                            <constraint firstItem="4Cz-SH-Z65" firstAttribute="leading" secondItem="VII-vB-32d" secondAttribute="leading" id="3N8-lq-fM2"/>
+                            <constraint firstItem="4Cz-SH-Z65" firstAttribute="top" secondItem="lB1-d4-0UU" secondAttribute="bottom" id="GeC-4o-nLo"/>
+                            <constraint firstItem="VII-vB-32d" firstAttribute="leading" secondItem="mvd-WY-znz" secondAttribute="leading" id="JxD-MI-xVe"/>
+                            <constraint firstItem="4Cz-SH-Z65" firstAttribute="trailing" secondItem="VII-vB-32d" secondAttribute="trailing" id="Msh-4u-qsI"/>
+                            <constraint firstAttribute="trailing" secondItem="VII-vB-32d" secondAttribute="trailing" id="on0-rM-lyr"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>
@@ -428,6 +457,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="bH6-jx-wsv"/>
         <segue reference="Gom-4r-XtH"/>
-        <segue reference="n2Y-8Q-uSB"/>
+        <segue reference="Vwn-hh-gnD"/>
     </inferredMetricsTieBreakers>
 </document>

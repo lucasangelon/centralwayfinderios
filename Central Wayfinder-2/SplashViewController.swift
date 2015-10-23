@@ -42,7 +42,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         
         // Detecting if the user is opening the application for the first time.
         if userDefaults.isFirstLaunch {
-            
+
         }
     }
     
