@@ -46,6 +46,17 @@ class UserDefaultsController {
         }
     }
     
+    // Accessibility
+    var accessibility: Bool {
+        get {
+            return defaults.boolForKey("accessibility")
+        }
+        
+        set {
+            defaults.setBool(newValue, forKey: "accessibility")
+        }
+    }
+    
     // First Launch Detector
     var isFirstLaunch: Bool {
         get {

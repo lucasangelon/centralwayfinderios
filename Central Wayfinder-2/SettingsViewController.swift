@@ -10,10 +10,23 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var accessibilitySwitch: UISwitch!
     @IBOutlet var tableView: UITableView!
+    
+    let userDefaults = UserDefaultsController()
     
     // List items for the menu.
     let cellContent = [["Accessibility", "Select Campus"], ["About", "Terms of Service", "Copyright"]]
+    
+    func accessibilityTap(sender: UISwitch!) {
+        if sender.on {
+            userDefaults.accessibility = true
+            print(userDefaults.accessibility)
+        } else {
+            userDefaults.accessibility = false
+            print(userDefaults.accessibility)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,24 +58,52 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     // Returns the properly set up items for the list.
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("TextCell", forIndexPath: indexPath)
+        var cell: UITableViewCell
+        
+        if indexPath.section == 0 && indexPath.row == 0 {
+            cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath)
+            
+            cell.textLabel?.text = "Accessibility"
+            
+            var accessibilitySwitch = UISwitch(frame: CGRectZero) as UISwitch
+            accessibilitySwitch.addTarget(self, action: "accessibilityTap:", forControlEvents: .ValueChanged)
+            accessibilitySwitch.on = false
+            cell.accessoryView = accessibilitySwitch
+            
+        } else {
+            cell = tableView.dequeueReusableCellWithIdentifier("TextCell", forIndexPath: indexPath)
+        }
         
         cell.textLabel?.text = cellContent[indexPath.section][indexPath.row]
+        cell.textLabel?.sizeToFit()
         
         return cell
     }
     
+    // Handles highlighting the tableviewcells.
+    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if indexPath.row == 0 && indexPath.section == 0 {
+            return false
+        }
+        
+        return true
+    }
+    
     // handling the clicks on the table items.
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        switch indexPath.row {
-            
-        // When the "Select Campus" item is clicked.
-        case 1:
-            self.performSegueWithIdentifier("ShowCampusSelectionViewController", sender: self)
-            
-        // Default action.
-        default:
-            print("NoSegueAvailable")
+        if indexPath.section == 0{
+            switch indexPath.row {
+                
+            case 0:
+                userDefaults.accessibility = true
+            // When the "Select Campus" item is clicked.
+            case 1:
+                self.performSegueWithIdentifier("ShowCampusSelectionViewController", sender: self)
+                
+            // Default action.
+            default:
+                print("NoSegueAvailable")
+            }
         }
     }
 }

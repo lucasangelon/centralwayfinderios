@@ -11,7 +11,36 @@ import UIKit
 class CampusSelectionViewController : UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var backButton: UIBarButtonItem!
+    
     let userDefaults = UserDefaultsController()
+    var firstUse = false
+    
+    // Adding the back button action to the barButtonItem. 
+    // Make sure to remember to link it to the viewController action using control + touchpad on the Storyboard in order
+    // for it to work!
+    @IBAction func backButton(sender: UIBarButtonItem) {
+        
+        // If using the application for the first time.
+        if firstUse {
+            
+            // Declaring the userDefaults again in order to check for nulls.
+            let nsud = NSUserDefaults()
+            
+            if (nsud.objectForKey("selectedCampus") != nil) { }
+            else {
+                
+                // If the user clicked the back button instead of selecting a campus, default to Perth Campus.
+                userDefaults.campusName = campusInformation[0].0
+                userDefaults.campusDefaultLat = campusInformation[0].1
+                userDefaults.campusDefaultLong = campusInformation[0].2
+            }
+            
+            self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
+        } else {
+            self.performSegueWithIdentifier("ReturnFromCampusSelection", sender: self)
+        }
+    }
     
     // List items for the menu.
     let cellContent = ["Perth", "Leederville", "East Perth", "Mount Lawley", "Nedlands"]
@@ -51,9 +80,16 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         userDefaults.campusDefaultLat = campusInformation[indexPath.row].1
         userDefaults.campusDefaultLong = campusInformation[indexPath.row].2
         
-        //TODO: Remove, testing purposes only.
-        print(userDefaults.campusName)
-        print(userDefaults.campusDefaultLat)
-        print(userDefaults.campusDefaultLong)
+        if firstUse {
+            firstUse = false
+            self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
+        } else {
+            self.performSegueWithIdentifier("ReturnFromCampusSelection", sender: self)
+        }
+    }
+    
+    // Sets a boolean depending on previous viewController's prepareForSegue (SplashScreen during first use).
+    func firstTimeUse() {
+        firstUse = true
     }
 }

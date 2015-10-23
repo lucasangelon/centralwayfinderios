@@ -29,7 +29,7 @@
                                 <rect key="frame" x="92" y="342" width="137" height="30"/>
                                 <state key="normal" title="Click Here to Enter"/>
                                 <connections>
-                                    <segue destination="qsL-Yq-vMl" kind="show" identifier="ShowMainMenuViewController" id="WBU-HQ-SRL"/>
+                                    <action selector="startButton:" destination="gsh-6o-Fns" eventType="touchUpInside" id="EfE-ub-781"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© 2015 Central Institute of Technology" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98g-Hp-zy3">
@@ -72,10 +72,15 @@
                         </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="startButton" destination="LpI-Hv-Q5I" id="0jt-kI-4gH"/>
+                        <segue destination="4UW-fp-ry7" kind="show" identifier="FirstUseToCampusSelection" id="dj3-vt-ghr"/>
+                        <segue destination="qsL-Yq-vMl" kind="show" identifier="ShowMainMenuViewController" id="B0S-rZ-zSF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U1C-MM-Rr7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="23" y="292"/>
+            <point key="canvasLocation" x="47" y="292"/>
         </scene>
         <!--Services View Controller-->
         <scene sceneID="jIz-Hg-X8a">
@@ -212,7 +217,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="270" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -361,6 +366,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SwitchCell" id="SbG-zO-SXl">
+                                        <rect key="frame" x="0.0" y="72" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SbG-zO-SXl" id="DYS-Bv-X9c">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="1hw-sP-Vwa" id="Qaq-Hp-WPn"/>
@@ -406,7 +419,7 @@
                                     <navigationItem title="Select Campus" id="o70-sa-GUr">
                                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="dH1-pq-eBZ">
                                             <connections>
-                                                <segue destination="1hw-sP-Vwa" kind="show" identifier="ReturnFromCampusSelection" id="Vwn-hh-gnD"/>
+                                                <action selector="backButton:" destination="4UW-fp-ry7" id="r3D-rZ-dw5"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -445,6 +458,11 @@
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="backButton" destination="dH1-pq-eBZ" id="dYx-g0-qr6"/>
+                        <segue destination="qsL-Yq-vMl" kind="show" identifier="ReturnFromFirstUse" id="2AE-RU-2V2"/>
+                        <segue destination="1hw-sP-Vwa" kind="show" identifier="ReturnFromCampusSelection" id="8m5-A0-oU5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vnb-Q2-Ua2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -455,8 +473,9 @@
         <image name="swiftIcon" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bH6-jx-wsv"/>
         <segue reference="Gom-4r-XtH"/>
-        <segue reference="Vwn-hh-gnD"/>
+        <segue reference="8m5-A0-oU5"/>
+        <segue reference="9Pr-z6-JSA"/>
+        <segue reference="bH6-jx-wsv"/>
     </inferredMetricsTieBreakers>
 </document>

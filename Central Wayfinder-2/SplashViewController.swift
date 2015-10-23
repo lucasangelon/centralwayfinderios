@@ -11,6 +11,8 @@ import CoreLocation
 
 class SplashViewController: UIViewController, CLLocationManagerDelegate, UIApplicationDelegate {
     
+    @IBOutlet var startButton: UIButton!
+    
     // Declaring the location manager.
     var locationManager = CLLocationManager()
     let userDefaults = UserDefaultsController()
@@ -38,11 +40,6 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Denied || CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Restricted {
             
             alert("Location Services Alert", message: "In order to improve your experience with Central Wayfinder, please authorize location services to be used while the application is open.")
-        }
-        
-        // Detecting if the user is opening the application for the first time.
-        if userDefaults.isFirstLaunch {
-
         }
     }
     
@@ -91,6 +88,25 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
             alert.addButtonWithTitle("Ok")
             
             alert.show()
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "FirstUseToCampusSelection" {
+            
+            let destinationSegue = segue.destinationViewController as! CampusSelectionViewController
+            destinationSegue.firstTimeUse()
+        }
+    }
+    
+    @IBAction func startButton(sender: AnyObject) {
+        // Detecting if the user is opening the application for the first time.
+        if (!userDefaults.isFirstLaunch) {
+            userDefaults.isFirstLaunch = true
+            self.performSegueWithIdentifier("FirstUseToCampusSelection", sender: nil)
+        } else {
+            self.performSegueWithIdentifier("ShowMainMenuViewController", sender: nil)
         }
     }
 }
