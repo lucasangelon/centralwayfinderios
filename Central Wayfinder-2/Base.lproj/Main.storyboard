@@ -379,12 +379,68 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="indoorMaps" destination="XJW-gc-zMW" id="7Va-bG-Q72"/>
                         <outlet property="navigationBar" destination="uFr-hl-WUx" id="i1P-bj-zVd"/>
+                        <segue destination="gzo-IM-keZ" kind="show" identifier="ShowIndoorMapsViewController" id="XdR-Ca-dd9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SgV-Uv-loA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1507" y="292"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bsw-Z0-btR">
+            <objects>
+                <navigationController id="gzo-IM-keZ" sceneMemberID="viewController">
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fnB-Fb-YuE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="A6V-6Z-bxY" kind="relationship" relationship="rootViewController" id="Wkj-Q7-s28"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RPp-el-yY9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1930" y="292"/>
+        </scene>
+        <!--Indoor Maps View Controller-->
+        <scene sceneID="A6w-rA-avF">
+            <objects>
+                <viewController title="Indoor Maps View Controller" id="A6V-6Z-bxY" customClass="IndoorMapsViewController" customModule="Central_Wayfinder_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1xK-ma-Uj8"/>
+                        <viewControllerLayoutGuide type="bottom" id="Tuo-ht-E9Q"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mOk-bb-5X9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZIy-xW-YWG">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <connections>
+                                    <outlet property="delegate" destination="A6V-6Z-bxY" id="3sk-gi-UHF"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ZIy-xW-YWG" secondAttribute="trailing" id="P4c-XO-1PU"/>
+                            <constraint firstItem="ZIy-xW-YWG" firstAttribute="leading" secondItem="mOk-bb-5X9" secondAttribute="leading" id="Z6d-Un-29o"/>
+                            <constraint firstItem="ZIy-xW-YWG" firstAttribute="bottom" secondItem="Tuo-ht-E9Q" secondAttribute="top" id="g6g-ac-B0x"/>
+                            <constraint firstItem="ZIy-xW-YWG" firstAttribute="top" secondItem="1xK-ma-Uj8" secondAttribute="bottom" id="xY6-wx-fdI"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="EEP-zh-Gon"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="scrollView" destination="ZIy-xW-YWG" id="1CA-7w-u1S"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5nD-kn-9hp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2341" y="292"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="cS0-Q0-sZt">
