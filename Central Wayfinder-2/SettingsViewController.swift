@@ -16,7 +16,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     let userDefaults = UserDefaultsController()
     
     // List items for the menu.
-    let cellContent = [["Accessibility", "Select Campus"], ["About", "Terms of Service", "Copyright"]]
+    let cellContent = [["Accessibility", "Select Campus"], ["About", "Terms of Service", "Privacy Policy"]]
     
     func accessibilityTap(sender: UISwitch!) {
         if sender.on {

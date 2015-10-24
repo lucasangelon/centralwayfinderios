@@ -29,30 +29,40 @@ extension MapsViewController {
                 
                 // Changes the pin color to green for the starting position and red for destination.
                 if (view.annotation?.subtitle)! == "Destination" {
-                    if #available(iOS 9.0, *) {
-                        view.pinTintColor = UIColor.redColor()
-                    } else {
-                        view.pinColor = MKPinAnnotationColor.Red
-                    }
+                    setPinColor(view, color: UIColor.redColor(), annotationColor: MKPinAnnotationColor.Red)
+                    
+                    // Adds the information button to the annotation.
+                    view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
                 } else {
-                    if #available(iOS 9.0, *) {
-                        view.pinTintColor = UIColor.greenColor()
-                    } else {
-                        view.pinColor = MKPinAnnotationColor.Green
-                    }
+                    setPinColor(view, color: UIColor.greenColor(), annotationColor: MKPinAnnotationColor.Green)
                 }
                 
                 view.calloutOffset = CGPoint(x: -5, y: 5)
-                view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
-                
             }
             return view
         }
         return nil
     }
     
-    // Handles the click on the detination information.
+    // Handles the click on the destination information.
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        
+            performSegueWithIdentifier("ShowPostMapsViewController", sender: self)
+    }
+    
+    // Prepares to send the user to the location information page.
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowPostMapsViewController" {
+            let destinationSegue = segue.destinationViewController as! PostMapsViewController
+            destinationSegue.locationTitle = destination.title!
+        }
+    }
+    
+    // Handles the color of the pin annotations.
+    private func setPinColor(view: MKPinAnnotationView, color: UIColor, annotationColor: MKPinAnnotationColor) {
+        if #available(iOS 9.0, *) {
+            view.pinTintColor = color
+        } else {
+            view.pinColor = annotationColor
+        }
     }
 }
