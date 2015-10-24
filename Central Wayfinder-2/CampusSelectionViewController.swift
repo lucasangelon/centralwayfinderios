@@ -22,9 +22,13 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         super.viewDidLoad()
         
         // Hiding the usual back button and implementing a special one for the campus selection page.
-        self.navigationController?.navigationBar.backItem?.hidesBackButton = true
-        let campusSelectionBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Bordered, target: self, action: "back:")
-        self.navigationController?.navigationItem.leftBarButtonItem = campusSelectionBackButton
+        self.navigationItem.backBarButtonItem?.enabled = false
+        let campusSelectionBackButton = UIBarButtonItem(title: "<Back", style: UIBarButtonItemStyle.Bordered, target: self, action: "back:")
+        self.navigationItem.leftBarButtonItem = campusSelectionBackButton
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
     }
     
     // Setting up the footer.
@@ -68,7 +72,6 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         
         // If using the application for the first time.
         if firstUse {
-            firstUse = false
             
             // Declaring the userDefaults again in order to check for nulls.
             let nsud = NSUserDefaults()
@@ -82,7 +85,10 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
                 userDefaults.campusDefaultLong = campusInformation[0].2
             }
             
+            firstUse = false
+            
             self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
+            
         } else {
             self.navigationController?.popViewControllerAnimated(true)
         }

@@ -74,6 +74,8 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         default:
             print("NoSegueAvailable")
         }
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
