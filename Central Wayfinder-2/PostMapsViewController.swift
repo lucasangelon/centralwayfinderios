@@ -23,10 +23,11 @@ class PostMapsViewController : UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowIndoorMapsViewController" {
-            let destinationNavigationSegue = segue.destinationViewController as! UINavigationController
-            let destinationSegue = destinationNavigationSegue.childViewControllers.first as! IndoorMapsViewController
+            //let destinationNavigationSegue = segue.destinationViewController as! UINavigationController
+            let destinationSegue = segue.destinationViewController as! IndoorMapsViewController//destinationNavigationSegue.childViewControllers.first as! IndoorMapsViewController
             
             destinationSegue.locationTitle = locationTitle
+            destinationSegue
         }
     }
     

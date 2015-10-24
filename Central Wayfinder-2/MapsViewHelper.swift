@@ -52,7 +52,8 @@ extension MapsViewController {
     // Prepares to send the user to the location information page.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowPostMapsViewController" {
-            let destinationSegue = segue.destinationViewController as! PostMapsViewController
+            let navigationSegue = segue.destinationViewController as! UINavigationController
+            var destinationSegue = navigationSegue.childViewControllers.first as! PostMapsViewController
             destinationSegue.locationTitle = destination.title!
         }
     }

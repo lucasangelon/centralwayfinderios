@@ -19,6 +19,7 @@ class IndoorMapsViewController : ViewController, UIScrollViewDelegate {
     // Based on: http://www.raywenderlich.com/76436/use-uiscrollview-scroll-zoom-content-swift
     override func viewDidLoad() {
         self.navigationController?.navigationItem.title = locationTitle
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         
         let image = UIImage(named: "Image.jpg")!
         imageView = UIImageView(image: image)
