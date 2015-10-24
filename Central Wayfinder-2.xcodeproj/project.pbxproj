@@ -15,7 +15,7 @@
 		A0781EF51BCF348D002A65AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0781EF31BCF348D002A65AF /* LaunchScreen.storyboard */; };
 		A0781F001BCF348E002A65AF /* Central_Wayfinder_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781EFF1BCF348E002A65AF /* Central_Wayfinder_2Tests.swift */; };
 		A0781F0B1BCF348E002A65AF /* Central_Wayfinder_2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F0A1BCF348E002A65AF /* Central_Wayfinder_2UITests.swift */; };
-		A0781F1E1BCF368D002A65AF /* ServicesViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F1D1BCF368D002A65AF /* ServicesViewControllers.swift */; settings = {ASSET_TAGS = (); }; };
+		A0781F1E1BCF368D002A65AF /* ServicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F1D1BCF368D002A65AF /* ServicesViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A0781F201BCF4212002A65AF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F1F1BCF4212002A65AF /* SettingsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A0781F221BCF4AEC002A65AF /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F211BCF4AEC002A65AF /* SplashViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A0781F241BCF4B38002A65AF /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F231BCF4B38002A65AF /* MainMenuViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -66,7 +66,7 @@
 		A0781F061BCF348E002A65AF /* Central Wayfinder-2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Central Wayfinder-2UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0781F0A1BCF348E002A65AF /* Central_Wayfinder_2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Central_Wayfinder_2UITests.swift; sourceTree = "<group>"; };
 		A0781F0C1BCF348E002A65AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A0781F1D1BCF368D002A65AF /* ServicesViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewControllers.swift; sourceTree = "<group>"; };
+		A0781F1D1BCF368D002A65AF /* ServicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServicesViewController.swift; sourceTree = "<group>"; };
 		A0781F1F1BCF4212002A65AF /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		A0781F211BCF4AEC002A65AF /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		A0781F231BCF4B38002A65AF /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
@@ -176,7 +176,7 @@
 		A0781F181BCF3616002A65AF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				A0781F1D1BCF368D002A65AF /* ServicesViewControllers.swift */,
+				A0781F1D1BCF368D002A65AF /* ServicesViewController.swift */,
 				A0781F1F1BCF4212002A65AF /* SettingsViewController.swift */,
 				A0781F211BCF4AEC002A65AF /* SplashViewController.swift */,
 				A0781F231BCF4B38002A65AF /* MainMenuViewController.swift */,
@@ -386,7 +386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0781F241BCF4B38002A65AF /* MainMenuViewController.swift in Sources */,
-				A0781F1E1BCF368D002A65AF /* ServicesViewControllers.swift in Sources */,
+				A0781F1E1BCF368D002A65AF /* ServicesViewController.swift in Sources */,
 				A0A15B411BD9C4FC00B27A22 /* UserDefaultsController.swift in Sources */,
 				A0A15B3F1BD9C1B800B27A22 /* DatabaseManager.swift in Sources */,
 				A0781F261BCF4BB4002A65AF /* MapsViewController.swift in Sources */,

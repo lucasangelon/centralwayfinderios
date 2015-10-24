@@ -11,24 +11,13 @@ import UIKit
 
 class PostMapsViewController : UIViewController {
     
-    @IBOutlet weak var navigationBar: UINavigationItem!
     var locationTitle: String = ""
     
     @IBOutlet weak var indoorMaps: UIButton!
     
     override func viewDidLoad() {
-        navigationBar.title = locationTitle
+        self.navigationItem.title = locationTitle
         indoorMaps.addTarget(self, action: "indoorMapsTap:", forControlEvents: UIControlEvents.TouchUpInside)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "ShowIndoorMapsViewController" {
-            //let destinationNavigationSegue = segue.destinationViewController as! UINavigationController
-            let destinationSegue = segue.destinationViewController as! IndoorMapsViewController//destinationNavigationSegue.childViewControllers.first as! IndoorMapsViewController
-            
-            destinationSegue.locationTitle = locationTitle
-            destinationSegue
-        }
     }
     
     func indoorMapsTap(sender: UIButton) {

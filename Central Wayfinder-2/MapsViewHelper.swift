@@ -11,7 +11,7 @@ import MapKit
 extension MapsViewController {
     
     //TODO: Comment this D=
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         if let annotation = annotation as? MapLocation {
             
@@ -52,8 +52,7 @@ extension MapsViewController {
     // Prepares to send the user to the location information page.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowPostMapsViewController" {
-            let navigationSegue = segue.destinationViewController as! UINavigationController
-            var destinationSegue = navigationSegue.childViewControllers.first as! PostMapsViewController
+            let destinationSegue = segue.destinationViewController as! PostMapsViewController
             destinationSegue.locationTitle = destination.title!
         }
     }

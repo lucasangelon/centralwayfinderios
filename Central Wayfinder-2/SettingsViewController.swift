@@ -57,7 +57,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.textLabel?.text = "Accessibility"
             
-            var accessibilitySwitch = UISwitch(frame: CGRectZero) as UISwitch
+            let accessibilitySwitch = UISwitch(frame: CGRectZero) as UISwitch
             accessibilitySwitch.addTarget(self, action: "accessibilityTap:", forControlEvents: .ValueChanged)
             
             let nsud = NSUserDefaults()

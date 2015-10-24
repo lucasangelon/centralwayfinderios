@@ -13,12 +13,10 @@ class IndoorMapsViewController : UIViewController, UIScrollViewDelegate {
     
     @IBOutlet var scrollView: UIScrollView!
     
-    var locationTitle: String = ""
     var imageView: UIImageView!
     
     // Based on: http://www.raywenderlich.com/76436/use-uiscrollview-scroll-zoom-content-swift
     override func viewDidLoad() {
-        self.navigationController?.navigationItem.title = locationTitle
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
         let image = UIImage(named: "Image.jpg")!
@@ -28,7 +26,7 @@ class IndoorMapsViewController : UIViewController, UIScrollViewDelegate {
         
         scrollView.contentSize = image.size
         
-        var doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "scrollViewDoubleTapped:")
+        let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "scrollViewDoubleTapped:")
         doubleTapRecognizer.numberOfTapsRequired = 2
         doubleTapRecognizer.numberOfTouchesRequired = 1
         scrollView.addGestureRecognizer(doubleTapRecognizer)

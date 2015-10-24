@@ -17,6 +17,9 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Show the navigation bar.
+        self.navigationController?.navigationBarHidden = false
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -45,6 +48,8 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         print(currentRow)
         
         performSegueWithIdentifier("ShowMapsFromServices", sender: self)
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     // Prepare for the Segue by sending all information required to the Google Maps View Controller.

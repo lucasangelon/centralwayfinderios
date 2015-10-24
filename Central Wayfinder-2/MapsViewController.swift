@@ -35,6 +35,9 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Make the navigation bar visible after the main menu view controller.
+        self.navigationController?.navigationBarHidden = false
+        
         let initialLocation = CLLocation(latitude: userDefaults.campusDefaultLat, longitude: userDefaults.campusDefaultLong)
         
         mapView.delegate = self
