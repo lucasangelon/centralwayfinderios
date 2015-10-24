@@ -19,6 +19,8 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.barTintColor = UIColor.orangeColor()
+        self.navigationController?.toolbarHidden = true
         
         // Configuring the location manager.
         locationManager.delegate = self

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class IndoorMapsViewController : ViewController, UIScrollViewDelegate {
+class IndoorMapsViewController : UIViewController, UIScrollViewDelegate {
     
     @IBOutlet var scrollView: UIScrollView!
     

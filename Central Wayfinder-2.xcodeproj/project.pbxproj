@@ -10,7 +10,6 @@
 		A02DD7881BDB66CC00951F5C /* PostMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A02DD78A1BDB74E600951F5C /* IndoorMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781EEA1BCF348D002A65AF /* AppDelegate.swift */; };
-		A0781EED1BCF348D002A65AF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781EEC1BCF348D002A65AF /* ViewController.swift */; };
 		A0781EF01BCF348D002A65AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0781EEE1BCF348D002A65AF /* Main.storyboard */; };
 		A0781EF21BCF348D002A65AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0781EF11BCF348D002A65AF /* Assets.xcassets */; };
 		A0781EF51BCF348D002A65AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0781EF31BCF348D002A65AF /* LaunchScreen.storyboard */; };
@@ -57,7 +56,6 @@
 		A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndoorMapsViewController.swift; sourceTree = "<group>"; };
 		A0781EE71BCF348D002A65AF /* Central Wayfinder-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Central Wayfinder-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0781EEA1BCF348D002A65AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A0781EEC1BCF348D002A65AF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A0781EEF1BCF348D002A65AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A0781EF11BCF348D002A65AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A0781EF41BCF348D002A65AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -178,7 +176,6 @@
 		A0781F181BCF3616002A65AF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				A0781EEC1BCF348D002A65AF /* ViewController.swift */,
 				A0781F1D1BCF368D002A65AF /* ServicesViewControllers.swift */,
 				A0781F1F1BCF4212002A65AF /* SettingsViewController.swift */,
 				A0781F211BCF4AEC002A65AF /* SplashViewController.swift */,
@@ -396,7 +393,6 @@
 				A0C5057F1BD8D2E40084A9E8 /* FMDatabase.m in Sources */,
 				A0781F2C1BCF869B002A65AF /* MapLocation.swift in Sources */,
 				A0C505811BD8D2E40084A9E8 /* FMDatabaseQueue.m in Sources */,
-				A0781EED1BCF348D002A65AF /* ViewController.swift in Sources */,
 				A02DD7881BDB66CC00951F5C /* PostMapsViewController.swift in Sources */,
 				A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */,
 				A0C505821BD8D2E40084A9E8 /* FMDatabaseAdditions.m in Sources */,

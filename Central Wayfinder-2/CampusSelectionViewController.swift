@@ -11,45 +11,20 @@ import UIKit
 class CampusSelectionViewController : UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet var tableView: UITableView!
-    @IBOutlet var backButton: UIBarButtonItem!
     
     let userDefaults = UserDefaultsController()
-    var firstUse = false
-    
-    // Adding the back button action to the barButtonItem. 
-    // Make sure to remember to link it to the viewController action using control + touchpad on the Storyboard in order
-    // for it to work!
-    @IBAction func backButton(sender: UIBarButtonItem) {
-        
-        // If using the application for the first time.
-        if firstUse {
-            
-            // Declaring the userDefaults again in order to check for nulls.
-            let nsud = NSUserDefaults()
-            
-            if (nsud.objectForKey("selectedCampus") != nil) { }
-            else {
-                
-                // If the user clicked the back button instead of selecting a campus, default to Perth Campus.
-                userDefaults.campusName = campusInformation[0].0
-                userDefaults.campusDefaultLat = campusInformation[0].1
-                userDefaults.campusDefaultLong = campusInformation[0].2
-            }
-            
-            self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
-        } else {
-            self.performSegueWithIdentifier("ReturnFromCampusSelection", sender: self)
-        }
-    }
-    
-    // List items for the menu.
     let cellContent = ["Perth", "Leederville", "East Perth", "Mount Lawley", "Nedlands"]
-    
-    //TODO: Remove this list after setting up Internal Storage.
     let campusInformation = [("Perth", -31.9476680755615, 115.862129211426), ("Leederville", -31.9339389801025, 115.842643737793), ("East Perth", -31.9512138366699, 115.872375488281), ("Mount Lawley", -31.939432144165, 115.875679016113), ("Nedlands", -31.9700088500977, 115.81575012207)]
+    
+    var firstUse = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Hiding the usual back button and implementing a special one for the campus selection page.
+        self.navigationController?.navigationBar.backItem?.hidesBackButton = true
+        let campusSelectionBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Bordered, target: self, action: "back:")
+        self.navigationController?.navigationItem.leftBarButtonItem = campusSelectionBackButton
     }
     
     // Setting up the footer.
@@ -84,7 +59,32 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
             firstUse = false
             self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
         } else {
-            self.performSegueWithIdentifier("ReturnFromCampusSelection", sender: self)
+            self.navigationController?.popViewControllerAnimated(true)
+        }
+    }
+    
+    // Handling the special back button.
+    func back(sender: UIBarButtonItem) {
+        
+        // If using the application for the first time.
+        if firstUse {
+            firstUse = false
+            
+            // Declaring the userDefaults again in order to check for nulls.
+            let nsud = NSUserDefaults()
+            
+            if (nsud.objectForKey("selectedCampus") != nil) { }
+            else {
+                
+                // If the user clicked the back button instead of selecting a campus, default to Perth Campus.
+                userDefaults.campusName = campusInformation[0].0
+                userDefaults.campusDefaultLat = campusInformation[0].1
+                userDefaults.campusDefaultLong = campusInformation[0].2
+            }
+            
+            self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
+        } else {
+            self.navigationController?.popViewControllerAnimated(true)
         }
     }
     

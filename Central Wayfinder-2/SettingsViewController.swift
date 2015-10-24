@@ -18,18 +18,10 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     // List items for the menu.
     let cellContent = [["Accessibility", "Select Campus"], ["About", "Terms of Service", "Privacy Policy"]]
     
-    func accessibilityTap(sender: UISwitch!) {
-        if sender.on {
-            userDefaults.accessibility = true
-            print(userDefaults.accessibility)
-        } else {
-            userDefaults.accessibility = false
-            print(userDefaults.accessibility)
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBarHidden = false
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -118,6 +110,19 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             default:
                 print("NoSegueAvailable")
             }
+        }
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    // Handling the tap on the accessibility switch.
+    func accessibilityTap(sender: UISwitch!) {
+        if sender.on {
+            userDefaults.accessibility = true
+            print(userDefaults.accessibility)
+        } else {
+            userDefaults.accessibility = false
+            print(userDefaults.accessibility)
         }
     }
 }

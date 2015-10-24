@@ -18,6 +18,14 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Paint the navigation bar in white after the Splash Screen.
+        self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+    }
+    
+    // Ensures the navigation bar is hidden in this page.
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = true
     }
     
     // Returns the item count from the list based on the "cellContent" variable.
