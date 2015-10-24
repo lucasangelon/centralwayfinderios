@@ -302,21 +302,22 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <searchBar contentMode="redraw" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jpm-Fk-h1n">
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="jpm-Fk-h1n">
                                 <rect key="frame" x="52" y="20" width="215" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="jpm-Fk-h1n" firstAttribute="centerX" secondItem="53n-P3-LMo" secondAttribute="centerX" id="7TE-DV-Xx7"/>
                             <constraint firstItem="9cH-3a-zeM" firstAttribute="top" secondItem="1ZN-K5-Y6n" secondAttribute="bottom" id="7kk-m0-XPx"/>
-                            <constraint firstItem="9cH-3a-zeM" firstAttribute="centerX" secondItem="jpm-Fk-h1n" secondAttribute="centerX" id="DFn-VO-hId"/>
                             <constraint firstItem="9cH-3a-zeM" firstAttribute="leading" secondItem="KOn-V8-Ix9" secondAttribute="leading" id="Fps-dQ-02l"/>
+                            <constraint firstItem="jpm-Fk-h1n" firstAttribute="top" secondItem="9cH-3a-zeM" secondAttribute="top" id="JpA-iL-lNc"/>
                             <constraint firstItem="53n-P3-LMo" firstAttribute="top" secondItem="9cH-3a-zeM" secondAttribute="bottom" id="blf-Ev-Tk7"/>
-                            <constraint firstItem="9cH-3a-zeM" firstAttribute="top" secondItem="jpm-Fk-h1n" secondAttribute="top" id="cC9-jg-aDE"/>
+                            <constraint firstItem="jpm-Fk-h1n" firstAttribute="centerX" secondItem="9cH-3a-zeM" secondAttribute="centerX" id="ctU-Us-Ab2"/>
                             <constraint firstItem="53n-P3-LMo" firstAttribute="leading" secondItem="9cH-3a-zeM" secondAttribute="leading" id="dfd-9H-2r6"/>
-                            <constraint firstItem="53n-P3-LMo" firstAttribute="centerX" secondItem="jpm-Fk-h1n" secondAttribute="centerX" id="lUy-gm-xIa"/>
                             <constraint firstItem="53n-P3-LMo" firstAttribute="bottom" secondItem="uEc-8b-GEl" secondAttribute="top" id="n0V-TD-UXc"/>
+                            <constraint firstItem="jpm-Fk-h1n" firstAttribute="leading" secondItem="KOn-V8-Ix9" secondAttribute="leadingMargin" constant="36" id="qH2-RO-X2h"/>
                             <constraint firstAttribute="trailing" secondItem="9cH-3a-zeM" secondAttribute="trailing" id="ss9-1f-UmD"/>
                         </constraints>
                     </view>
@@ -473,9 +474,9 @@
         <image name="swiftIcon" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Gom-4r-XtH"/>
-        <segue reference="8m5-A0-oU5"/>
+        <segue reference="Km0-Gc-vHV"/>
+        <segue reference="nrC-DR-EDC"/>
         <segue reference="9Pr-z6-JSA"/>
-        <segue reference="bH6-jx-wsv"/>
+        <segue reference="8m5-A0-oU5"/>
     </inferredMetricsTieBreakers>
 </document>

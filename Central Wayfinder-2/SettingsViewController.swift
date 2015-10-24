@@ -69,6 +69,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             accessibilitySwitch.addTarget(self, action: "accessibilityTap:", forControlEvents: .ValueChanged)
             
             let nsud = NSUserDefaults()
+            
+            // Checking the variable to retrieve the initial status of the switch.
             if nsud.objectForKey("accessibility") != nil {
                 if userDefaults.accessibility {
                     accessibilitySwitch.on = true

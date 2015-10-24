@@ -20,7 +20,6 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     let userDefaults = UserDefaultsController()
     
-    var didFindUserLocation = false
     var destination: MapLocation!
     var start: MapLocation!
     
@@ -39,6 +38,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
         let initialLocation = CLLocation(latitude: userDefaults.campusDefaultLat, longitude: userDefaults.campusDefaultLong)
         
         mapView.delegate = self
+        
         if destinationExists() {
             let destinationLocation = CLLocation(latitude: destLat, longitude: destLong)
             
@@ -66,13 +66,13 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
         destLat = dLat
         destLong = dLong
         destTitle = dTitle
-        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: dLat, longitude: dLong), title: dTitle, subtitle: dTitle)
+        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: dLat, longitude: dLong), title: dTitle, subtitle: "Destination")
         
         // Set up the coordinates for the user.
         userLat = userDefaults.campusDefaultLat
         userLong = userDefaults.campusDefaultLong
-        userTitle = "Your Location"
-        start = MapLocation(coordinate: CLLocationCoordinate2D(latitude: userLat, longitude: userLong), title: userTitle, subtitle: userTitle)
+        userTitle = "You are here"
+        start = MapLocation(coordinate: CLLocationCoordinate2D(latitude: userLat, longitude: userLong), title: userTitle, subtitle: "Your Location")
         
         // Start a request.
         let request = MKDirectionsRequest()
@@ -104,7 +104,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
     // Renders the route on the Map View.
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
-        renderer.strokeColor = UIColor.blueColor()
+        renderer.strokeColor = UIColor.blueColor().colorWithAlphaComponent(0.5)
         return renderer
     }
     
