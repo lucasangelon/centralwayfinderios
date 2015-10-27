@@ -96,7 +96,7 @@
                     <connections>
                         <outlet property="startButton" destination="LpI-Hv-Q5I" id="0jt-kI-4gH"/>
                         <segue destination="4UW-fp-ry7" kind="show" identifier="FirstUseToCampusSelection" id="dj3-vt-ghr"/>
-                        <segue destination="8iE-uw-VpR" kind="show" identifier="ShowMainMenuViewController" id="B0S-rZ-zSF"/>
+                        <segue destination="qsL-Yq-vMl" kind="show" identifier="ShowMainMenuViewController" id="7x9-P3-soN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U1C-MM-Rr7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -115,20 +115,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XRo-0C-37R">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XRo-0C-37R">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="504" id="JOi-pL-MwT"/>
                                 </constraints>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="9TJ-9v-oPV">
-                                    <rect key="frame" x="0.0" y="136" width="320" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="72" width="320" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TextImageCell" textLabel="rDw-LV-ifZ" style="IBUITableViewCellStyleDefault" id="ern-AP-v7m">
-                                        <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ern-AP-v7m" id="r9V-y4-mQv">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -174,7 +174,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="b6y-6B-5h4"/>
+                    <tabBarItem key="tabBarItem" title="Services" image="tree.jpg" id="b6y-6B-5h4"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -263,7 +263,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="3Bq-5O-h9u"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="tree.jpg" id="3Bq-5O-h9u"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -368,7 +368,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZIy-xW-YWG">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZIy-xW-YWG">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <connections>
                                     <outlet property="delegate" destination="A6V-6Z-bxY" id="3sk-gi-UHF"/>
@@ -405,13 +405,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gob-tz-I0Y">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gob-tz-I0Y">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TextCell" id="U69-lk-an8">
-                                        <rect key="frame" x="0.0" y="92" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U69-lk-an8" id="yMV-Ku-wyv">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -419,7 +419,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SwitchCell" id="SbG-zO-SXl">
-                                        <rect key="frame" x="0.0" y="136" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="72" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SbG-zO-SXl" id="DYS-Bv-X9c">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -441,7 +441,7 @@
                             <constraint firstItem="gob-tz-I0Y" firstAttribute="leading" secondItem="6LU-F3-Tfl" secondAttribute="leading" id="zb6-M3-MbX"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="Fch-Va-9mp"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="tree.jpg" id="Fch-Va-9mp"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -492,9 +492,6 @@
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <connections>
-                        <segue destination="8iE-uw-VpR" kind="show" identifier="ReturnFromFirstUse" id="2AE-RU-2V2"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vnb-Q2-Ua2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -512,8 +509,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="Lku-Xs-6OZ" kind="relationship" relationship="viewControllers" id="xm0-zb-KWh"/>
-                        <segue destination="8iE-uw-VpR" kind="relationship" relationship="viewControllers" id="Yna-IU-tzh"/>
                         <segue destination="jtF-An-wbS" kind="relationship" relationship="viewControllers" id="SPj-Ww-hit"/>
+                        <segue destination="qsL-Yq-vMl" kind="relationship" relationship="viewControllers" id="3VL-jG-6rj"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AAh-1c-SIn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -524,7 +521,7 @@
         <scene sceneID="Lyc-pP-7tH">
             <objects>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="jtF-An-wbS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="ryb-Ye-Ndm"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="tree.jpg" id="ryb-Ye-Ndm"/>
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="rBI-gp-XSf">
                         <autoresizingMask key="autoresizingMask"/>
@@ -532,44 +529,23 @@
                     </tabBar>
                     <connections>
                         <segue destination="1hw-sP-Vwa" kind="relationship" relationship="viewControllers" id="Kad-vb-eJJ"/>
-                        <segue destination="8iE-uw-VpR" kind="relationship" relationship="viewControllers" id="DMN-H2-kF6"/>
                         <segue destination="Lku-Xs-6OZ" kind="relationship" relationship="viewControllers" id="oyr-x9-z7Z"/>
+                        <segue destination="qsL-Yq-vMl" kind="relationship" relationship="viewControllers" id="zv2-Fd-USE"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="onw-gm-DTy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1672" y="1009"/>
         </scene>
-        <!--Item-->
-        <scene sceneID="8OT-93-ZZe">
-            <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="8iE-uw-VpR" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="TPm-OO-EYr"/>
-                    <toolbarItems/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="BMa-D5-R1I">
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="qsL-Yq-vMl" kind="relationship" relationship="viewControllers" id="DoF-RE-Rsv"/>
-                        <segue destination="Lku-Xs-6OZ" kind="relationship" relationship="viewControllers" id="Rpj-Rr-lAB"/>
-                        <segue destination="1hw-sP-Vwa" kind="relationship" relationship="viewControllers" id="PhT-8Z-IX5"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tfr-pM-1Mt" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1672" y="320"/>
-        </scene>
     </scenes>
     <resources>
         <image name="swiftIcon" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Rpj-Rr-lAB"/>
-        <segue reference="2AE-RU-2V2"/>
         <segue reference="dj3-vt-ghr"/>
-        <segue reference="PhT-8Z-IX5"/>
+        <segue reference="bH6-jx-wsv"/>
+        <segue reference="3VL-jG-6rj"/>
         <segue reference="SPj-Ww-hit"/>
-        <segue reference="nrC-DR-EDC"/>
+        <segue reference="xm0-zb-KWh"/>
     </inferredMetricsTieBreakers>
 </document>

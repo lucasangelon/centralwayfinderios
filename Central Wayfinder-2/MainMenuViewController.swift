@@ -21,6 +21,9 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // Paint the navigation bar in white after the Splash Screen.
         self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+        
+        // Ensures the tab bar is hidden on the main menu in order to avoid duplicate options on the page.
+        self.tabBarController?.tabBar.hidden = true
     }
     
     // Ensures the navigation bar is hidden in this page.
