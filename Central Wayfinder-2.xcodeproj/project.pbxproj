@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		A02DD7881BDB66CC00951F5C /* PostMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A02DD78A1BDB74E600951F5C /* IndoorMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		A0700A921BDF5C7C009F9459 /* ToolbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0700A911BDF5C7C009F9459 /* ToolbarController.swift */; settings = {ASSET_TAGS = (); }; };
+		A0700A941BDF7250009F9459 /* CentralTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0700A931BDF7250009F9459 /* CentralTabBarController.swift */; settings = {ASSET_TAGS = (); }; };
 		A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781EEA1BCF348D002A65AF /* AppDelegate.swift */; };
 		A0781EF01BCF348D002A65AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0781EEE1BCF348D002A65AF /* Main.storyboard */; };
 		A0781EF21BCF348D002A65AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0781EF11BCF348D002A65AF /* Assets.xcassets */; };
@@ -54,6 +56,8 @@
 /* Begin PBXFileReference section */
 		A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostMapsViewController.swift; sourceTree = "<group>"; };
 		A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndoorMapsViewController.swift; sourceTree = "<group>"; };
+		A0700A911BDF5C7C009F9459 /* ToolbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarController.swift; sourceTree = "<group>"; };
+		A0700A931BDF7250009F9459 /* CentralTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CentralTabBarController.swift; sourceTree = "<group>"; };
 		A0781EE71BCF348D002A65AF /* Central Wayfinder-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Central Wayfinder-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0781EEA1BCF348D002A65AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0781EEF1BCF348D002A65AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -185,6 +189,8 @@
 				A0A15B421BD9CAF400B27A22 /* CampusSelectionViewController.swift */,
 				A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */,
 				A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */,
+				A0700A911BDF5C7C009F9459 /* ToolbarController.swift */,
+				A0700A931BDF7250009F9459 /* CentralTabBarController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -394,6 +400,7 @@
 				A0781F2C1BCF869B002A65AF /* MapLocation.swift in Sources */,
 				A0C505811BD8D2E40084A9E8 /* FMDatabaseQueue.m in Sources */,
 				A02DD7881BDB66CC00951F5C /* PostMapsViewController.swift in Sources */,
+				A0700A941BDF7250009F9459 /* CentralTabBarController.swift in Sources */,
 				A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */,
 				A0C505821BD8D2E40084A9E8 /* FMDatabaseAdditions.m in Sources */,
 				A0781F2F1BCF8BA5002A65AF /* MapsViewHelper.swift in Sources */,
@@ -401,6 +408,7 @@
 				A02DD78A1BDB74E600951F5C /* IndoorMapsViewController.swift in Sources */,
 				A0A15B431BD9CAF400B27A22 /* CampusSelectionViewController.swift in Sources */,
 				A0C505831BD8D2E40084A9E8 /* FMDatabasePool.m in Sources */,
+				A0700A921BDF5C7C009F9459 /* ToolbarController.swift in Sources */,
 				A0781F201BCF4212002A65AF /* SettingsViewController.swift in Sources */,
 				A0781F221BCF4AEC002A65AF /* SplashViewController.swift in Sources */,
 			);

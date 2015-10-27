@@ -9,18 +9,18 @@
 import UIKit
 import CoreLocation
 
-class SplashViewController: UIViewController, CLLocationManagerDelegate, UIApplicationDelegate {
+class SplashViewController: UIViewController, CLLocationManagerDelegate, UIApplicationDelegate, UITabBarDelegate {
     
     @IBOutlet var startButton: UIButton!
     
     // Declaring the location manager.
     var locationManager = CLLocationManager()
     let userDefaults = UserDefaultsController()
+    let tabController = CentralTabBarController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.barTintColor = UIColor.orangeColor()
-        self.navigationController?.toolbarHidden = true
         
         // Configuring the location manager.
         locationManager.delegate = self

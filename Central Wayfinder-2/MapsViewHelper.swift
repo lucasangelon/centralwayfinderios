@@ -20,7 +20,7 @@ extension MapsViewController {
             
             if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
                 as? MKPinAnnotationView {
-                    // 2
+
                     dequeuedView.annotation = annotation
                     view = dequeuedView
             } else {

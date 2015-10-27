@@ -14,6 +14,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet var tableView: UITableView!
     
     let userDefaults = UserDefaultsController()
+    let toolbarController = ToolbarController()
     
     // List items for the menu.
     let cellContent = [["Accessibility", "Select Campus"], ["About", "Terms of Service", "Privacy Policy"]]
