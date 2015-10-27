@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 
+@available(iOS 8.0, *)
 class SplashViewController: UIViewController, CLLocationManagerDelegate, UIApplicationDelegate, UITabBarDelegate {
     
     @IBOutlet var startButton: UIButton!
@@ -16,6 +17,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     // Declaring the location manager.
     var locationManager = CLLocationManager()
     let userDefaults = UserDefaultsController()
+    let databaseManager = DatabaseManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +26,12 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         
         // Configuring the location manager.
         locationManager.delegate = self
+        
+        databaseManager.setupDatabase()
+        databaseManager.saveCampus("EP", name: "East Perth", lat: -31.9512138366699, long: 115.872375488281, zoom: 19)
+        databaseManager.findCampus("Leederville")
+        databaseManager.findCampus("East Perth")
+        databaseManager.closeDB()
     }
     
     // Handling the alert window in the right hierarchy.

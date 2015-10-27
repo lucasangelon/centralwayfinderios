@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A02DD7881BDB66CC00951F5C /* PostMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A02DD78A1BDB74E600951F5C /* IndoorMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		A064B0311BDFE18E00A1D55B /* UtilsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B0301BDFE18E00A1D55B /* UtilsHelper.swift */; settings = {ASSET_TAGS = (); }; };
 		A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781EEA1BCF348D002A65AF /* AppDelegate.swift */; };
 		A0781EF01BCF348D002A65AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0781EEE1BCF348D002A65AF /* Main.storyboard */; };
 		A0781EF21BCF348D002A65AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0781EF11BCF348D002A65AF /* Assets.xcassets */; };
@@ -54,6 +55,8 @@
 /* Begin PBXFileReference section */
 		A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostMapsViewController.swift; sourceTree = "<group>"; };
 		A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndoorMapsViewController.swift; sourceTree = "<group>"; };
+		A064B0301BDFE18E00A1D55B /* UtilsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilsHelper.swift; sourceTree = "<group>"; };
+		A064B0321BDFF1F900A1D55B /* centralWayfinderDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = centralWayfinderDB.sqlite; sourceTree = "<group>"; };
 		A0781EE71BCF348D002A65AF /* Central Wayfinder-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Central Wayfinder-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0781EEA1BCF348D002A65AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0781EEF1BCF348D002A65AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -123,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				A0C505701BD8AD380084A9E8 /* libsqlite3.tbd */,
+				A064B0321BDFF1F900A1D55B /* centralWayfinderDB.sqlite */,
 				A0781F291BCF72FC002A65AF /* CoreLocation.framework */,
 				A0781EE91BCF348D002A65AF /* Central Wayfinder-2 */,
 				A0781EFE1BCF348E002A65AF /* Central Wayfinder-2Tests */,
@@ -181,7 +185,6 @@
 				A0781F211BCF4AEC002A65AF /* SplashViewController.swift */,
 				A0781F231BCF4B38002A65AF /* MainMenuViewController.swift */,
 				A0781F251BCF4BB4002A65AF /* MapsViewController.swift */,
-				A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */,
 				A0A15B421BD9CAF400B27A22 /* CampusSelectionViewController.swift */,
 				A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */,
 				A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */,
@@ -203,6 +206,8 @@
 			children = (
 				A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */,
 				A0A15B3E1BD9C1B800B27A22 /* DatabaseManager.swift */,
+				A064B0301BDFE18E00A1D55B /* UtilsHelper.swift */,
+				A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -385,6 +390,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A064B0311BDFE18E00A1D55B /* UtilsHelper.swift in Sources */,
 				A0781F241BCF4B38002A65AF /* MainMenuViewController.swift in Sources */,
 				A0781F1E1BCF368D002A65AF /* ServicesViewController.swift in Sources */,
 				A0A15B411BD9C4FC00B27A22 /* UserDefaultsController.swift in Sources */,
