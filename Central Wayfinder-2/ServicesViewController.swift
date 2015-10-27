@@ -20,6 +20,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // Show the navigation bar.
         self.navigationController?.navigationBarHidden = false
+        self.tabBarController?.tabBar.hidden = false
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

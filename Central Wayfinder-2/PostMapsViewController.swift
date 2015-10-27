@@ -17,6 +17,7 @@ class PostMapsViewController : UIViewController {
     
     override func viewDidLoad() {
         self.navigationItem.title = locationTitle
+        
         indoorMaps.addTarget(self, action: "indoorMapsTap:", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
