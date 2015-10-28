@@ -27,11 +27,21 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         // Configuring the location manager.
         locationManager.delegate = self
         
-        databaseManager.setupDatabase()
+        databaseManager.getInstance()
+        var campus: Campus = Campus()
+        campus = databaseManager.getCampus("EP")
+        
+        print(campus.id)
+        print(campus.name)
+        print(campus.lat)
+        print(campus.long)
+        print(campus.zoom)
+        
+        /*databaseManager.setupDatabase()
         databaseManager.saveCampus("EP", name: "East Perth", lat: -31.9512138366699, long: 115.872375488281, zoom: 19)
         databaseManager.findCampus("Leederville")
         databaseManager.findCampus("East Perth")
-        databaseManager.closeDB()
+        databaseManager.closeDB()*/
     }
     
     // Handling the alert window in the right hierarchy.

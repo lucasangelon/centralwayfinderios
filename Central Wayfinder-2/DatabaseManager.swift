@@ -8,9 +8,42 @@
 
 import Foundation
 
-@available(iOS 8.0, *)
-class DatabaseManager {
-    var databasePath = NSString()
+let sharedInstance = DatabaseManager()
+
+//@available(iOS 8.0, *)
+class DatabaseManager: NSObject {
+    
+    var database: FMDatabase? = nil
+    
+    func getInstance() -> DatabaseManager {
+        if (sharedInstance.database == nil) {
+            sharedInstance.database = FMDatabase(path: UtilsHelper.getPath("centralWayfinderDB.sqlite"))
+            print("Loaded!")
+        }
+        
+        return sharedInstance
+    }
+    
+    func getCampus(id: String) -> Campus {
+        sharedInstance.database!.open()
+        
+        let result: FMResultSet! = sharedInstance.database!.executeQuery("SELECT * FROM 'buildings' WHERE Campus_ID = (?)", withArgumentsInArray: [id])
+        var campus: Campus = Campus()
+        
+        if (result != nil) {
+            campus.id = result.stringForColumn("Campus_ID")
+            campus.name = result.stringForColumn("Campus_Name")
+            campus.lat = result.doubleForColumn("Campus_Lat")
+            campus.long = result.doubleForColumn("Campus_Long")
+            campus.zoom = result.doubleForColumn("Campus_Zoom")
+        }
+        
+        sharedInstance.database!.close()
+        
+        return campus
+    }
+    
+    /*var databasePath = NSString()
     let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
     var centralWayfinderDB : FMDatabase? = nil
     
@@ -22,7 +55,7 @@ class DatabaseManager {
             let fileManager = NSFileManager.defaultManager()
             let directoryPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
             
-            self.databasePath = directoryPath.stringByAppendingString("central_wayfinder.db")
+            self.databasePath = directoryPath.stringByAppendingString("centralWayfinderDB.sql")
 
             self.centralWayfinderDB = FMDatabase(path: self.databasePath as String)
             
@@ -109,5 +142,5 @@ class DatabaseManager {
         dispatch_async(backgroundQueue, {
             self.centralWayfinderDB!.close()
         })
-    }
+    }*/
 }
