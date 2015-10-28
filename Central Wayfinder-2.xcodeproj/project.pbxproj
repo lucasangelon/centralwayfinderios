@@ -39,7 +39,6 @@
 		A0C505811BD8D2E40084A9E8 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057A1BD8D2E40084A9E8 /* FMDatabaseQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A0C505821BD8D2E40084A9E8 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057C1BD8D2E40084A9E8 /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A0C505831BD8D2E40084A9E8 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057E1BD8D2E40084A9E8 /* FMDatabasePool.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A0F6477C1BE12648005B6988 /* converted.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = A07FD2E71BE1224A003E6EA4 /* converted.sqlite */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,7 +88,6 @@
 		A0781F291BCF72FC002A65AF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A0781F2B1BCF869B002A65AF /* MapLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocation.swift; sourceTree = "<group>"; };
 		A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsViewHelper.swift; sourceTree = "<group>"; };
-		A07FD2E71BE1224A003E6EA4 /* converted.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = converted.sqlite; sourceTree = "<group>"; };
 		A0A15B3E1BD9C1B800B27A22 /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsController.swift; sourceTree = "<group>"; };
 		A0A15B421BD9CAF400B27A22 /* CampusSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusSelectionViewController.swift; sourceTree = "<group>"; };
@@ -228,7 +226,6 @@
 			isa = PBXGroup;
 			children = (
 				A0781EF61BCF348D002A65AF /* Info.plist */,
-				A07FD2E71BE1224A003E6EA4 /* converted.sqlite */,
 				A0781EEA1BCF348D002A65AF /* AppDelegate.swift */,
 			);
 			name = AppConfiguration;
@@ -384,7 +381,6 @@
 			files = (
 				A0781EF51BCF348D002A65AF /* LaunchScreen.storyboard in Resources */,
 				A0781EF21BCF348D002A65AF /* Assets.xcassets in Resources */,
-				A0F6477C1BE12648005B6988 /* converted.sqlite in Resources */,
 				A0781EF01BCF348D002A65AF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
