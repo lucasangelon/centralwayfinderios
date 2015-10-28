@@ -27,9 +27,19 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         // Configuring the location manager.
         locationManager.delegate = self
         
-        databaseManager.getInstance()
+    
+        sharedInstance.database?.open()
+        print(sharedInstance.database?.tableExists("campuses"))
+        sharedInstance.database?.close()
+        print(sharedInstance.database?.tableExists("campuses"))
+        print(sharedInstance.tableExists("campuses"))
+        
+        print(sharedInstance.createTable())
+        print(sharedInstance.tableExists("campuses"))
+        sharedInstance.insertRecord()
+        
         var campus: Campus = Campus()
-        campus = databaseManager.getCampus("EP")
+        campus = sharedInstance.getCampus("PE")
         
         print(campus.id)
         print(campus.name)

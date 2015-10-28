@@ -17,30 +17,66 @@ class DatabaseManager: NSObject {
     
     func getInstance() -> DatabaseManager {
         if (sharedInstance.database == nil) {
-            sharedInstance.database = FMDatabase(path: UtilsHelper.getPath("centralWayfinderDB.sqlite"))
+            sharedInstance.database = FMDatabase(path: UtilsHelper.getPath("converted.sqlite"))
             print("Loaded!")
         }
         
         return sharedInstance
     }
     
-    func getCampus(id: String) -> Campus {
-        sharedInstance.database!.open()
+    func createTable() {
+        sharedInstance.database?.open()
         
-        let result: FMResultSet! = sharedInstance.database!.executeQuery("SELECT * FROM 'buildings' WHERE Campus_ID = (?)", withArgumentsInArray: [id])
+        var table = sharedInstance.database?.executeUpdate("CREATE TABLE [campuses] ('Campus_ID' TEXT NOT NULL PRIMARY KEY, 'Campus_Name' TEXT NOT NULL, 'Campus_Lat' REAL NOT NULL, 'Campus_Long' REAL NOT NULL, 'Campus_Zoom' REAL NOT NULL);", withArgumentsInArray: nil)
+        
+        if (table != nil) {
+            print("Successfully generated table")
+        }
+        
+        sharedInstance.database?.close()
+    }
+    
+    func insertRecord() {
+        sharedInstance.database?.open()
+        
+        var insert = sharedInstance.database?.executeUpdate("INSERT INTO campuses (Campus_ID, Campus_Name, Campus_Lat, Campus_Long, Campus_Zoom) VALUES (?, ?, ?, ?, ?)", withArgumentsInArray: ["NE", "Non-Existant", 21, 22, 10])
+        
+        if (insert != nil) {
+            print("Successfuly saved record!")
+        }
+        
+        sharedInstance.database?.close()
+    }
+    
+    func getCampus(id: String) -> Campus {
+        sharedInstance.database?.open()
+        
+        let result = sharedInstance.database?.executeQuery("SELECT * FROM campuses WHERE Campus_ID = (?)", withArgumentsInArray: [id])
         var campus: Campus = Campus()
         
         if (result != nil) {
-            campus.id = result.stringForColumn("Campus_ID")
-            campus.name = result.stringForColumn("Campus_Name")
-            campus.lat = result.doubleForColumn("Campus_Lat")
-            campus.long = result.doubleForColumn("Campus_Long")
-            campus.zoom = result.doubleForColumn("Campus_Zoom")
+            campus.id = result!.stringForColumn("Campus_ID")
+            campus.name = result!.stringForColumn("Campus_Name")
+            campus.lat = result!.doubleForColumn("Campus_Lat")
+            campus.long = result!.doubleForColumn("Campus_Long")
+            campus.zoom = result!.doubleForColumn("Campus_Zoom")
         }
         
-        sharedInstance.database!.close()
+        sharedInstance.database?.close()
         
         return campus
+    }
+    
+    func tableExists(table: String) -> Bool {
+        sharedInstance.database?.open()
+        
+        if ((sharedInstance.database?.tableExists(table)) != nil) {
+            sharedInstance.database?.close()
+            return true
+        } else {
+            sharedInstance.database?.close()
+            return false
+        }
     }
     
     /*var databasePath = NSString()
