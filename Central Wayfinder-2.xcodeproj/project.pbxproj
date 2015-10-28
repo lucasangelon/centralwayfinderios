@@ -10,6 +10,12 @@
 		A02DD7881BDB66CC00951F5C /* PostMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A02DD78A1BDB74E600951F5C /* IndoorMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A064B0311BDFE18E00A1D55B /* UtilsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B0301BDFE18E00A1D55B /* UtilsHelper.swift */; settings = {ASSET_TAGS = (); }; };
+		A064B0341BE0640900A1D55B /* Campus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B0331BE0640900A1D55B /* Campus.swift */; settings = {ASSET_TAGS = (); }; };
+		A064B0361BE0657900A1D55B /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B0351BE0657900A1D55B /* Building.swift */; settings = {ASSET_TAGS = (); }; };
+		A064B0381BE0664400A1D55B /* CampusLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B0371BE0664400A1D55B /* CampusLocation.swift */; settings = {ASSET_TAGS = (); }; };
+		A064B03A1BE066AA00A1D55B /* CampusLocationCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B0391BE066AA00A1D55B /* CampusLocationCategory.swift */; settings = {ASSET_TAGS = (); }; };
+		A064B03C1BE067C300A1D55B /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B03B1BE067C300A1D55B /* Floor.swift */; settings = {ASSET_TAGS = (); }; };
+		A064B03E1BE0680A00A1D55B /* Waypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B03D1BE0680A00A1D55B /* Waypoint.swift */; settings = {ASSET_TAGS = (); }; };
 		A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781EEA1BCF348D002A65AF /* AppDelegate.swift */; };
 		A0781EF01BCF348D002A65AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0781EEE1BCF348D002A65AF /* Main.storyboard */; };
 		A0781EF21BCF348D002A65AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0781EF11BCF348D002A65AF /* Assets.xcassets */; };
@@ -57,6 +63,12 @@
 		A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndoorMapsViewController.swift; sourceTree = "<group>"; };
 		A064B0301BDFE18E00A1D55B /* UtilsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilsHelper.swift; sourceTree = "<group>"; };
 		A064B0321BDFF1F900A1D55B /* centralWayfinderDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = centralWayfinderDB.sqlite; sourceTree = "<group>"; };
+		A064B0331BE0640900A1D55B /* Campus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Campus.swift; sourceTree = "<group>"; };
+		A064B0351BE0657900A1D55B /* Building.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
+		A064B0371BE0664400A1D55B /* CampusLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusLocation.swift; sourceTree = "<group>"; };
+		A064B0391BE066AA00A1D55B /* CampusLocationCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusLocationCategory.swift; sourceTree = "<group>"; };
+		A064B03B1BE067C300A1D55B /* Floor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
+		A064B03D1BE0680A00A1D55B /* Waypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waypoint.swift; sourceTree = "<group>"; };
 		A0781EE71BCF348D002A65AF /* Central Wayfinder-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Central Wayfinder-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0781EEA1BCF348D002A65AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0781EEF1BCF348D002A65AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -188,6 +200,7 @@
 				A0A15B421BD9CAF400B27A22 /* CampusSelectionViewController.swift */,
 				A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */,
 				A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */,
+				A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -207,7 +220,6 @@
 				A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */,
 				A0A15B3E1BD9C1B800B27A22 /* DatabaseManager.swift */,
 				A064B0301BDFE18E00A1D55B /* UtilsHelper.swift */,
-				A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -233,6 +245,12 @@
 			isa = PBXGroup;
 			children = (
 				A0781F2B1BCF869B002A65AF /* MapLocation.swift */,
+				A064B0331BE0640900A1D55B /* Campus.swift */,
+				A064B0351BE0657900A1D55B /* Building.swift */,
+				A064B0371BE0664400A1D55B /* CampusLocation.swift */,
+				A064B0391BE066AA00A1D55B /* CampusLocationCategory.swift */,
+				A064B03B1BE067C300A1D55B /* Floor.swift */,
+				A064B03D1BE0680A00A1D55B /* Waypoint.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -390,10 +408,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A064B03C1BE067C300A1D55B /* Floor.swift in Sources */,
 				A064B0311BDFE18E00A1D55B /* UtilsHelper.swift in Sources */,
 				A0781F241BCF4B38002A65AF /* MainMenuViewController.swift in Sources */,
 				A0781F1E1BCF368D002A65AF /* ServicesViewController.swift in Sources */,
 				A0A15B411BD9C4FC00B27A22 /* UserDefaultsController.swift in Sources */,
+				A064B0341BE0640900A1D55B /* Campus.swift in Sources */,
 				A0A15B3F1BD9C1B800B27A22 /* DatabaseManager.swift in Sources */,
 				A0781F261BCF4BB4002A65AF /* MapsViewController.swift in Sources */,
 				A0C5057F1BD8D2E40084A9E8 /* FMDatabase.m in Sources */,
@@ -402,9 +422,13 @@
 				A02DD7881BDB66CC00951F5C /* PostMapsViewController.swift in Sources */,
 				A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */,
 				A0C505821BD8D2E40084A9E8 /* FMDatabaseAdditions.m in Sources */,
+				A064B03A1BE066AA00A1D55B /* CampusLocationCategory.swift in Sources */,
+				A064B0361BE0657900A1D55B /* Building.swift in Sources */,
 				A0781F2F1BCF8BA5002A65AF /* MapsViewHelper.swift in Sources */,
 				A0C505801BD8D2E40084A9E8 /* FMResultSet.m in Sources */,
+				A064B03E1BE0680A00A1D55B /* Waypoint.swift in Sources */,
 				A02DD78A1BDB74E600951F5C /* IndoorMapsViewController.swift in Sources */,
+				A064B0381BE0664400A1D55B /* CampusLocation.swift in Sources */,
 				A0A15B431BD9CAF400B27A22 /* CampusSelectionViewController.swift in Sources */,
 				A0C505831BD8D2E40084A9E8 /* FMDatabasePool.m in Sources */,
 				A0781F201BCF4212002A65AF /* SettingsViewController.swift in Sources */,

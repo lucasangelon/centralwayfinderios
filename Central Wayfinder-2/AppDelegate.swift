@@ -12,10 +12,10 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var databaseFilePath: NSString = NSString()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
         
         return true
     }
@@ -42,6 +42,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    // MARK: Flying Meat Database Start
+    // Based on: http://metrozines.com/
+    
+    /*let DATABASE_RESOURCE_NAME = "centralWayfinderDb"
+    let DATABASE_RESOURCE_TYPE = "sqlite"
+    let DATABASE_FILE_NAME = "centralWayfinderDb.sqlite"
+    
+    func initializeDatabase() -> {
+        let documentFolderPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        
+        let databaseFile = "/" + DATABASE_FILE_NAME
+        
+        self.databaseFilePath = documentFolderPath.stringByAppendingString(databaseFile)
+        
+        let fileManager = document
+    }*/
 
 }
 

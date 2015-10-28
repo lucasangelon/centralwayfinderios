@@ -12,7 +12,7 @@ import Foundation
 class DatabaseManager {
     var databasePath = NSString()
     let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
-    var centralWayfinderDB : FMDatabase!
+    var centralWayfinderDB : FMDatabase? = nil
     
     // Creates / Opens the database.
     func setupDatabase() {
@@ -20,12 +20,11 @@ class DatabaseManager {
         dispatch_async(backgroundQueue, {
             // Finding the location of the database file.
             let fileManager = NSFileManager.defaultManager()
-            let directoryPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+            let directoryPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
             
-            let documentsDirectory = directoryPath[0]
-            
-            self.databasePath = documentsDirectory.stringByAppendingString("central_wayfinder.db")
-            print("cool")
+            self.databasePath = directoryPath.stringByAppendingString("central_wayfinder.db")
+
+            self.centralWayfinderDB = FMDatabase(path: self.databasePath as String)
             
             // If the file exists:
             if !fileManager.fileExistsAtPath(self.databasePath as String) {
@@ -36,22 +35,22 @@ class DatabaseManager {
                 print("great")
                 // If it is null, print the last error.
                 if self.centralWayfinderDB == nil {
-                    print("Error: \(self.centralWayfinderDB.lastErrorMessage())")
+                    print("Error: \(self.centralWayfinderDB!.lastErrorMessage())")
                 }
                 
                 // If the database opens, create the campuses table.
-                if self.centralWayfinderDB.open() {
+                if self.centralWayfinderDB!.open() {
                     let sqlStatement = "CREATE TABLE IF NOT EXISTS campuses (Campus_ID PRIMARY KEY VARCHAR NOT NULL, Campus_Name VARCHAR NOT NULL, Campus_Lat DOUBLE NOT NULL, Campus_Long DOUBLE NOT NULL, Campus_Zoom DOUBLE NOT NULL)"
                     
                     // If it fails, print the error.
-                    if !self.centralWayfinderDB.executeStatements(sqlStatement) {
-                        print("Error: \(self.centralWayfinderDB.lastErrorMessage())")
+                    if !self.centralWayfinderDB!.executeStatements(sqlStatement) {
+                        print("Error: \(self.centralWayfinderDB!.lastErrorMessage())")
                     }
                 }
                     
                     // If it does not open, print the error.
                 else {
-                    print("Error \(self.centralWayfinderDB.lastErrorMessage())")
+                    print("Error \(self.centralWayfinderDB!.lastErrorMessage())")
                 }
                 
                 self.closeDB()
@@ -63,18 +62,18 @@ class DatabaseManager {
     func saveCampus(id: String, name: String, lat: Double, long: Double, zoom: Double) {
         
         dispatch_async(backgroundQueue, {
-            if self.centralWayfinderDB.open() {
+            if self.centralWayfinderDB!.open() {
                 let insertSql = "INSERT INTO campuses(Campus_Id, Campus_Name, Campus_Lat, Campus_Long, Campus_Zoom) VALUES (?, ?, ?, ?, ?)"
                 
-                let result = self.centralWayfinderDB.executeUpdate(insertSql, withArgumentsInArray: [id, name, lat, long, zoom])
+                let result = self.centralWayfinderDB!.executeUpdate(insertSql, withArgumentsInArray: [id, name, lat, long, zoom])
                 
                 if !result {
-                    print("Error \(self.centralWayfinderDB.lastErrorMessage())")
+                    print("Error \(self.centralWayfinderDB!.lastErrorMessage())")
                 } else {
                     print("Campus Added")
                 }
             } else {
-                print("Error \(self.centralWayfinderDB.lastErrorMessage())")
+                print("Error \(self.centralWayfinderDB!.lastErrorMessage())")
             }
             
             self.closeDB()
@@ -84,10 +83,10 @@ class DatabaseManager {
     func findCampus(campus: String) {
         
         dispatch_async(backgroundQueue, {
-            if self.centralWayfinderDB.open() {
+            if self.centralWayfinderDB!.open() {
                 let querySql = "SELECT * FROM campuses WHERE Campus_Name = (?)"
                 
-                let result:FMResultSet? = self.centralWayfinderDB.executeQuery(querySql, withArgumentsInArray: [campus])
+                let result:FMResultSet? = self.centralWayfinderDB!.executeQuery(querySql, withArgumentsInArray: [campus])
                 
                 if result?.next() == true {
                     print(result?.stringForColumn("Campus_Name"))
@@ -97,9 +96,9 @@ class DatabaseManager {
                     print("Campus not founsd")
                 }
                 
-                self.centralWayfinderDB.close()
+                self.centralWayfinderDB!.close()
             } else {
-                print("Error \(self.centralWayfinderDB.lastErrorMessage())")
+                print("Error \(self.centralWayfinderDB!.lastErrorMessage())")
             }
             
             self.closeDB()
@@ -108,7 +107,7 @@ class DatabaseManager {
     
     func closeDB() {
         dispatch_async(backgroundQueue, {
-            self.centralWayfinderDB.close()
+            self.centralWayfinderDB!.close()
         })
     }
 }
