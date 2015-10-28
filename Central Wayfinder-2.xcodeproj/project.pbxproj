@@ -34,10 +34,10 @@
 		A0A15B411BD9C4FC00B27A22 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */; settings = {ASSET_TAGS = (); }; };
 		A0A15B431BD9CAF400B27A22 /* CampusSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A15B421BD9CAF400B27A22 /* CampusSelectionViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		A0C505711BD8AD380084A9E8 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C505701BD8AD380084A9E8 /* libsqlite3.tbd */; };
-		A0C5057F1BD8D2E40084A9E8 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C505761BD8D2E40084A9E8 /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A0C505801BD8D2E40084A9E8 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C505781BD8D2E40084A9E8 /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A0C505811BD8D2E40084A9E8 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057A1BD8D2E40084A9E8 /* FMDatabaseQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A0C505821BD8D2E40084A9E8 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057C1BD8D2E40084A9E8 /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A0C5057F1BD8D2E40084A9E8 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C505761BD8D2E40084A9E8 /* FMDatabase.m */; };
+		A0C505801BD8D2E40084A9E8 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C505781BD8D2E40084A9E8 /* FMResultSet.m */; };
+		A0C505811BD8D2E40084A9E8 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057A1BD8D2E40084A9E8 /* FMDatabaseQueue.m */; };
+		A0C505821BD8D2E40084A9E8 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057C1BD8D2E40084A9E8 /* FMDatabaseAdditions.m */; };
 		A0C505831BD8D2E40084A9E8 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057E1BD8D2E40084A9E8 /* FMDatabasePool.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
