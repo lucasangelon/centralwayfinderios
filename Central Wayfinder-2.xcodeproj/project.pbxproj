@@ -16,6 +16,7 @@
 		A064B03A1BE066AA00A1D55B /* CampusLocationCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B0391BE066AA00A1D55B /* CampusLocationCategory.swift */; settings = {ASSET_TAGS = (); }; };
 		A064B03C1BE067C300A1D55B /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B03B1BE067C300A1D55B /* Floor.swift */; settings = {ASSET_TAGS = (); }; };
 		A064B03E1BE0680A00A1D55B /* Waypoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B03D1BE0680A00A1D55B /* Waypoint.swift */; settings = {ASSET_TAGS = (); }; };
+		A06DEAC61BE1BDB2003BE704 /* DatabaseStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06DEAC51BE1BDB2003BE704 /* DatabaseStatements.swift */; settings = {ASSET_TAGS = (); }; };
 		A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781EEA1BCF348D002A65AF /* AppDelegate.swift */; };
 		A0781EF01BCF348D002A65AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0781EEE1BCF348D002A65AF /* Main.storyboard */; };
 		A0781EF21BCF348D002A65AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0781EF11BCF348D002A65AF /* Assets.xcassets */; };
@@ -68,6 +69,7 @@
 		A064B0391BE066AA00A1D55B /* CampusLocationCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusLocationCategory.swift; sourceTree = "<group>"; };
 		A064B03B1BE067C300A1D55B /* Floor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
 		A064B03D1BE0680A00A1D55B /* Waypoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Waypoint.swift; sourceTree = "<group>"; };
+		A06DEAC51BE1BDB2003BE704 /* DatabaseStatements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseStatements.swift; sourceTree = "<group>"; };
 		A0781EE71BCF348D002A65AF /* Central Wayfinder-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Central Wayfinder-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0781EEA1BCF348D002A65AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A0781EEF1BCF348D002A65AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */,
 				A0A15B3E1BD9C1B800B27A22 /* DatabaseManager.swift */,
 				A064B0301BDFE18E00A1D55B /* UtilsHelper.swift */,
+				A06DEAC51BE1BDB2003BE704 /* DatabaseStatements.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 				A064B0311BDFE18E00A1D55B /* UtilsHelper.swift in Sources */,
 				A0781F241BCF4B38002A65AF /* MainMenuViewController.swift in Sources */,
 				A0781F1E1BCF368D002A65AF /* ServicesViewController.swift in Sources */,
+				A06DEAC61BE1BDB2003BE704 /* DatabaseStatements.swift in Sources */,
 				A0A15B411BD9C4FC00B27A22 /* UserDefaultsController.swift in Sources */,
 				A064B0341BE0640900A1D55B /* Campus.swift in Sources */,
 				A0A15B3F1BD9C1B800B27A22 /* DatabaseManager.swift in Sources */,

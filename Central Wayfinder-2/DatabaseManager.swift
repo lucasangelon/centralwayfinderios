@@ -9,39 +9,43 @@
 import Foundation
 
 // Based on: http://www.techotopia.com/index.php/An_Example_SQLite_based_iOS_8_Application_using_Swift_and_FMDB
+
+// Check this for Queue FMDB: http://metrozines.com/
 let sharedInstance = DatabaseManager()
 
+// Handles the database interaction.
 class DatabaseManager : NSObject {
     
     var databasePath = NSString()
+    var queue: FMDatabaseQueue?
     
-    func setup() {
+    func setupQueue() {
         let filemgr = NSFileManager.defaultManager()
-        let dirPaths =
-        NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
-            .UserDomainMask, true)
         
-        let docsDir = dirPaths[0]
+        // Gets the database from the folder.
+        let documentFolder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        databasePath = documentFolder.stringByAppendingString("centralWayfinder.db")
         
-        databasePath = docsDir.stringByAppendingString(
-            "contacts.db")
-        
+        // If the file does not exist, generate a new one.
         if !filemgr.fileExistsAtPath(databasePath as String) {
             
-            let contactDB = FMDatabase(path: databasePath as String)
+            // Create the database using the generated path.
+            let centralWayfinderDB = FMDatabase(path: databasePath as String)
             
-            if contactDB == nil {
-                print("Error: \(contactDB.lastErrorMessage())")
+            // If it is nil, print the last error message.
+            if centralWayfinderDB == nil {
+                print("Error: \(centralWayfinderDB.lastErrorMessage())")
             }
             
-            if contactDB.open() {
+            // If it opened, generate the tables required for the Central Wayfinder application.
+            if centralWayfinderDB.open() {
                 let sql_stmt = "CREATE TABLE IF NOT EXISTS CONTACTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, ADDRESS TEXT, PHONE TEXT)"
-                if !contactDB.executeStatements(sql_stmt) {
-                    print("Error: \(contactDB.lastErrorMessage())")
+                if !centralWayfinderDB.executeStatements(sql_stmt) {
+                    print("Error: \(centralWayfinderDB.lastErrorMessage())")
                 }
-                contactDB.close()
+                centralWayfinderDB.close()
             } else {
-                print("Error: \(contactDB.lastErrorMessage())")
+                print("Error: \(centralWayfinderDB.lastErrorMessage())")
             }
         }
     }

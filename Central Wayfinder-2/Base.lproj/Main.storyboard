@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7nB-Pq-JZA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7nB-Pq-JZA">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -492,6 +492,9 @@
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <segue destination="qsL-Yq-vMl" kind="show" identifier="ReturnFromFirstUse" id="irx-04-2pO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vnb-Q2-Ua2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -503,6 +506,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Gf9-nl-Us8" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="Hra-sD-fXf"/>
                     <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="UmI-UK-FSf">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -523,6 +527,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="jtF-An-wbS" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" image="tree.jpg" id="ryb-Ye-Ndm"/>
                     <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="rBI-gp-XSf">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -535,7 +540,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="onw-gm-DTy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1672" y="1009"/>
+            <point key="canvasLocation" x="1634" y="983"/>
         </scene>
     </scenes>
     <resources>
@@ -544,8 +549,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="dj3-vt-ghr"/>
+        <segue reference="irx-04-2pO"/>
         <segue reference="bH6-jx-wsv"/>
-        <segue reference="3VL-jG-6rj"/>
         <segue reference="SPj-Ww-hit"/>
         <segue reference="xm0-zb-KWh"/>
     </inferredMetricsTieBreakers>

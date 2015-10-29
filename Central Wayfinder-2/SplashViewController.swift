@@ -17,7 +17,6 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     // Declaring the location manager.
     var locationManager = CLLocationManager()
     let userDefaults = UserDefaultsController()
-    let databaseManager = DatabaseManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,12 +26,12 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         // Configuring the location manager.
         locationManager.delegate = self
         
-        databaseManager.setup()
-        print(databaseManager.checkTable())
-        //databaseManager.createCampus()
-        databaseManager.findStudent("Lucas")
-        databaseManager.findCampus("PE")
-        databaseManager.findCampus("NE")
+        sharedInstance.setup()
+        print(sharedInstance.checkTable())
+        sharedInstance.createCampus()
+        sharedInstance.findStudent("Lucas")
+        sharedInstance.findCampus("PE")
+        sharedInstance.findCampus("NE")
     }
     
     // Handling the alert window in the right hierarchy.
