@@ -1,6 +1,5 @@
-
 //
-//  Floor.swift
+//  CampusLocation.swift
 //  Central Wayfinder-2
 //
 //  Created by Lucas Angelon Arouca on 28/10/2015.
@@ -9,10 +8,10 @@
 
 import Foundation
 
-class Floor: NSObject {
+class Room: NSObject {
     
-    var id: Int = Int()
+    var id: String = String()
+    var name: String = String()
+    var image: String = String()
     var buildingId: Int = Int()
-    var floorMap: String = String()
-    var floorColorMap: String = String()
 }

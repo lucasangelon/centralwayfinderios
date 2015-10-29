@@ -11,10 +11,8 @@ import Foundation
 class Building: NSObject {
     
     var id: Int = Int()
-    var campusId: String = String()
     var name: String = String()
-    var path: String = String()
-    var address: String = String()
     var lat: Double = Double()
     var long: Double = Double()
+    var campusId: String = String()
 }
