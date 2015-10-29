@@ -56,10 +56,40 @@ class DatabaseStatements {
     let DROP_ALL_TABLES: String = "DROP TABLE room; DROP TABLE building; DROP TABLE campus;"
     
     
-    // Insert Test Data.
-    func getTestCampus() -> [Campus] {
+    /* Test Data Methods */
+    
+    // Campuses
+    func getTestCampuses() -> [Campus] {
         var campuses: [Campus] = [Campus]()
         
-        campuses.append(Campus)
+        campuses.append(Campus(id: "NC", name: "New Campus", lat: 22.2, long: 22.3, zoom: 10.0))
+        campuses.append(Campus(id: "SC", name: "Second Campus", lat: 33.4, long: 32.476, zoom: 7.5))
+        
+        return campuses
+    }
+    
+    // Buildings
+    func getTestBuildings() -> [Building] {
+        var buildings: [Building] = [Building]()
+        
+        buildings.append(Building(id: 1, name: "New Campus Building 1", lat: 22.2, long: 22.30003, campusId: "NC"))
+        buildings.append(Building(id: 2, name: "New Campus Building 2", lat: 22.2, long: 22.4, campusId: "NC"))
+        buildings.append(Building(id: 3, name: "Second Campus Building 1", lat: 33.4, long: 32.476555, campusId: "SC"))
+        
+        return buildings
+    }
+    
+    // Rooms
+    func getTestRooms() -> [Room] {
+        var rooms: [Room] = [Room]()
+        
+        rooms.append(Room(id: 1, name: "B223", image: "", buildingId: 1, campusId: "NC"))
+        rooms.append(Room(id: 2, name: "C132", image: nil, buildingId: 1, campusId: "NC"))
+        rooms.append(Room(id: 3, name: "Student Services", image: "ss.jpg", buildingId: 2, campusId: "NC"))
+        rooms.append(Room(id: 4, name: "International Center", image: "ic.jpg", buildingId: 3, campusId: "SC"))
+        rooms.append(Room(id: 5, name: "D444", image: "", buildingId: 3, campusId: "SC"))
+        rooms.append(Room(id: 6, name: "Koolark Center", image: "kc.jpg", buildingId: 3, campusId: "SC"))
+        
+            return rooms
     }
 }
