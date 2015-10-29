@@ -10,8 +10,71 @@ import Foundation
 
 class Room: NSObject {
     
-    var id: String = String()
-    var name: String = String()
-    var image: String = String()
-    var buildingId: Int = Int()
+    var id: Int {
+        get {
+            return self.id
+        }
+        
+        set {
+            self.id = newValue
+        }
+    }
+    
+    var name: String {
+        get {
+            return self.name
+        }
+        
+        set {
+            self.name = newValue
+        }
+    }
+    
+    var image: String {
+        get {
+            return self.image
+        }
+        
+        set {
+            self.image = newValue
+        }
+    }
+    
+    var buildingId: Int {
+        get {
+            return self.buildingId
+        }
+        
+        set {
+            self.buildingId = newValue
+        }
+    }
+    
+    var campusId: String {
+        get {
+            return self.campusId
+        }
+        
+        set {
+            self.campusId = newValue
+        }
+    }
+    
+    init(id: Int, name: String, image: String? = "", buildingId: Int, campusId: String) {
+        super.init()
+        
+        self.id = id
+        self.name = name
+        
+        // If the image variable is not empty, insert the value into the property.
+        if (image != "") {
+            self.image = image!
+        } else {
+            self.image = ""
+        }
+        
+        self.buildingId = buildingId
+        self.campusId = campusId
+        
+    }
 }

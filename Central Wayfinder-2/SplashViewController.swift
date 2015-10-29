@@ -26,7 +26,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         // Configuring the location manager.
         locationManager.delegate = self
         
-        sharedInstance.setup()
+        sharedInstance.setupQueue()
         print(sharedInstance.checkTable())
         sharedInstance.createCampus()
         sharedInstance.findStudent("Lucas")

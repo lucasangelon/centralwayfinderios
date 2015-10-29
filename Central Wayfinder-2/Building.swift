@@ -10,9 +10,63 @@ import Foundation
 
 class Building: NSObject {
     
-    var id: Int = Int()
-    var name: String = String()
-    var lat: Double = Double()
-    var long: Double = Double()
-    var campusId: String = String()
+    var id: Int {
+        get {
+            return self.id
+        }
+        
+        set {
+            self.id = newValue
+        }
+    }
+    
+    var name: String {
+        get {
+            return self.name
+        }
+        
+        set {
+            self.name = newValue
+        }
+    }
+    
+    var lat: Double {
+        get {
+            return self.lat
+        }
+        
+        set {
+            self.lat = newValue
+        }
+    }
+    
+    var long: Double {
+        get {
+            return self.long
+        }
+        
+        set {
+            self.long = newValue
+        }
+    }
+    
+    var campusId: String {
+        get {
+            return self.campusId
+        }
+        
+        set {
+            self.campusId = newValue
+        }
+    }
+    
+    init(id: Int, name: String, lat: Double, long: Double, campusId: String) {
+        super.init()
+        
+        self.id = id
+        self.name = name
+        self.lat = lat
+        self.long = long
+        self.campusId = campusId
+    }
 }
