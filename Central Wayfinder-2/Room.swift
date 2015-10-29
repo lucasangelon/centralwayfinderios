@@ -10,54 +10,29 @@ import Foundation
 
 class Room: NSObject {
     
-    var id: Int {
-        get {
-            return self.id
-        }
-        
-        set {
-            self.id = newValue
-        }
+    var id: Int = Int()
+    init(id: Int) {
+        self.id = id
     }
     
-    var name: String {
-        get {
-            return self.name
-        }
-        
-        set {
-            self.name = newValue
-        }
+    var name: String = String()
+    init(name: String) {
+        self.name = name
     }
     
-    var image: String {
-        get {
-            return self.image
-        }
-        
-        set {
-            self.image = newValue
-        }
+    var image: String = String()
+    init(image: String) {
+        self.image = image
     }
     
-    var buildingId: Int {
-        get {
-            return self.buildingId
-        }
-        
-        set {
-            self.buildingId = newValue
-        }
+    var buildingId: Int = Int()
+    init(buildingId: Int) {
+        self.buildingId = buildingId
     }
     
-    var campusId: String {
-        get {
-            return self.campusId
-        }
-        
-        set {
-            self.campusId = newValue
-        }
+    var campusId: String = String()
+    init(campusId: String) {
+        self.campusId = campusId
     }
     
     init(id: Int, name: String, image: String? = "", buildingId: Int, campusId: String) {
@@ -67,10 +42,10 @@ class Room: NSObject {
         self.name = name
         
         // If the image variable is not empty, insert the value into the property.
-        if (image != "") {
+        if (image != "NoImage") {
             self.image = image!
         } else {
-            self.image = ""
+            self.image = "NoImage"
         }
         
         self.buildingId = buildingId

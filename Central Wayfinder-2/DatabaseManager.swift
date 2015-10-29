@@ -16,10 +16,14 @@ let sharedInstance = DatabaseManager()
 // Handles the database interaction.
 class DatabaseManager : NSObject {
     
+    let dbStatements: DatabaseStatements = DatabaseStatements()
+    
     var databasePath = NSString()
     var queue: FMDatabaseQueue?
     
-    func setupQueue() {
+    // Finds the file and sets it up.
+    func setupDatabase() {
+        
         let filemgr = NSFileManager.defaultManager()
         
         // Gets the database from the folder.
@@ -35,9 +39,11 @@ class DatabaseManager : NSObject {
             // If it is nil, print the last error message.
             if centralWayfinderDB == nil {
                 print("Error: \(centralWayfinderDB.lastErrorMessage())")
+            } else {
+                print("Database loaded successfully.")
             }
             
-            // If it opened, generate the tables required for the Central Wayfinder application.
+            /*// If it opened, generate the tables required for the Central Wayfinder application.
             if centralWayfinderDB.open() {
                 let sql_stmt = "CREATE TABLE IF NOT EXISTS CONTACTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, ADDRESS TEXT, PHONE TEXT)"
                 if !centralWayfinderDB.executeStatements(sql_stmt) {
@@ -46,90 +52,111 @@ class DatabaseManager : NSObject {
                 centralWayfinderDB.close()
             } else {
                 print("Error: \(centralWayfinderDB.lastErrorMessage())")
-            }
+            }*/
         }
     }
     
-    func checkTable() -> Bool {
-        let contactDB = FMDatabase(path: databasePath as String)
+    // Sets up the queue and creates / checks tables in the database.
+    func setupQueue() {
         
-        if contactDB.open() {
-            contactDB.tableExists("contacts")
-            contactDB.close()
-            return true
-        }
-        contactDB.close()
-        return false
-    }
-    
-    func createCampus() {
-        let contactDB = FMDatabase(path: databasePath as String)
+        // Defines the queue.
+        queue = FMDatabaseQueue(path: databasePath as String)
         
-        if contactDB.open() {
-            let sql_stmt = "CREATE TABLE IF NOT EXISTS [campuses] ('Campus_ID' TEXT NOT NULL PRIMARY KEY, 'Campus_Name' TEXT NOT NULL, 'Campus_Lat' REAL NOT NULL, 'Campus_Long' REAL NOT NULL, 'Campus_Zoom' REAL NOT NULL);"
-            if !contactDB.executeStatements(sql_stmt) {
-                print("Error: \(contactDB.lastErrorMessage())")
+        // Use the queue.
+        queue?.inDatabase() {
+            db in
+            
+            // Create the tables in the database if they do not already exist.
+            let success = db.executeStatements(self.dbStatements.CREATE_TABLE_CAMPUS + self.dbStatements.CREATE_TABLE_BUILDINGS + self.dbStatements.CREATE_TABLE_ROOMS)
+            
+            // If unsuccessful, print the error.
+            if !success {
+                print("Table Creation Failure: \(db.lastErrorMessage())")
             }
             
-            if !contactDB.executeUpdate("INSERT INTO campuses (Campus_ID, Campus_Name, Campus_Lat, Campus_Long, Campus_Zoom) VALUES (?, ?, ?, ?, ?)", withArgumentsInArray: ["PE", "Non-Existant", 21, 22, 10]) {
-                print("Works")
-            } else {
-                print("Error: \(contactDB.lastErrorMessage())")
+            // Otherwise check the tables to see if they are there.
+            else {
+                print("Table Creation Statements were successful.")
+                print(db.tableExists("campus"))
+                print(db.tableExists("building"))
+                print(db.tableExists("room"))
             }
-            
-            contactDB.close()
-        } else {
-            print("Error: \(contactDB.lastErrorMessage())")
         }
     }
     
-    func insertData() {
-        let contactDB = FMDatabase(path: databasePath as String)
-        
-        if contactDB.open() {
-            if !contactDB.executeUpdate("INSERT INTO contacts (name, address, phone) VALUES (?, ?, ?)", withArgumentsInArray: [("Lucas"), ("19 Aberdeen Street"), ("04133483")]) {
-                print("ERROR")
-            } else {
-                let student: FMResultSet = contactDB.executeQuery("SELECT * FROM contacts WHERE name = 'Lucas'", withArgumentsInArray: nil)
+    // Inserts test data.
+    func prepareTestData() {
+        queue?.inDatabase() {
+            db in
+            
+            var success: Bool = Bool()
+            
+            // Define a temporary Campus object and retrieve the test data.
+            var tempCampus: Campus!
+            let campuses = self.dbStatements.getTestCampuses()
+            
+            // Add the test campuses to the table.
+            for index in 0...(campuses.count - 1) {
+                tempCampus = campuses[index]
                 
-                if student.next() == true {
-                    print(student.stringForColumn("name"))
-                    print(student.stringForColumn("address"))
-                    print(student.stringForColumn("phone"))
+                success = db.executeUpdate(self.dbStatements.INSERT_CAMPUS, withArgumentsInArray: [(tempCampus.id), (tempCampus.name), (tempCampus.lat), (tempCampus.long), (tempCampus.zoom)])
+                
+                if success {
+                    print(tempCampus.name + " added to the database.")
+                } else {
+                    print("An error has occured: \(db.lastErrorMessage())")
+                }
+            }
+            
+            var tempBuilding: Building!
+            let buildings = self.dbStatements.getTestBuildings()
+            
+            // Add the test buildings to the table.
+            for index in 0...(buildings.count - 1) {
+                tempBuilding = buildings[index]
+                
+                success = db.executeUpdate(self.dbStatements.INSERT_BUILDING, withArgumentsInArray: [(tempBuilding.id), (tempBuilding.name), (tempBuilding.lat), (tempBuilding.long), (tempBuilding.campusId)])
+                
+                if success {
+                    print(tempBuilding.name + " added to the database.")
+                } else {
+                    print("An error has occurred: \(db.lastErrorMessage())")
+                }
+            }
+            
+            var tempRoom: Room!
+            let rooms = self.dbStatements.getTestRooms()
+            
+            // Add the rooms to the table.
+            for index in 0...(rooms.count - 1) {
+                tempRoom = rooms[index]
+                
+                if tempRoom.image != "NoImage" {
+                    success = db.executeUpdate(self.dbStatements.INSERT_ROOM, withArgumentsInArray: [(tempRoom.id), (tempRoom.name), (tempRoom.image), (tempRoom.buildingId), (tempRoom.campusId)])
+                } else {
+                    success = db.executeUpdate(self.dbStatements.INSERT_ROOM, withArgumentsInArray: [(tempRoom.id), (tempRoom.name), ("NoImage"), (tempRoom.buildingId), (tempRoom.campusId)])
+                }
+                
+                if success {
+                    print(tempRoom.name + " added to the database.")
+                } else {
+                    print("An error has occurred: \(db.lastErrorMessage())")
                 }
             }
         }
-        
-        contactDB.close()
     }
     
-    func findStudent(name: String) {
-        let contactDB = FMDatabase(path: databasePath as String)
-        
-        if contactDB.open() {
-            let student: FMResultSet = contactDB.executeQuery("SELECT * FROM contacts WHERE name = 'Lucas'", withArgumentsInArray: nil)
-        
-            if student.next() == true {
-                print(student.stringForColumn("name"))
-                print(student.stringForColumn("address"))
-                print(student.stringForColumn("phone"))
-            }
-        }
-
-    }
-    
-    func findCampus(id: String) {
-        let contactDB = FMDatabase(path: databasePath as String)
-        
-        if contactDB.open() {
-            let student: FMResultSet = contactDB.executeQuery("SELECT * FROM campuses WHERE Campus_ID = (?)", withArgumentsInArray: [id])
+    func clearTest() {
+        queue?.inDatabase() {
+            db in
             
-            if student.next() == true {
-                print(student.stringForColumn("Campus_ID"))
-                print(student.stringForColumn("Campus_Name"))
-                print(student.stringForColumn("Campus_Zoom"))
+            let success = db.executeStatements(self.dbStatements.clearTest())
+            
+            if success {
+                print("Test Data Cleared.")
+            } else {
+                print("An error has occured: \(db.lastErrorMessage())")
             }
         }
-        
     }
 }

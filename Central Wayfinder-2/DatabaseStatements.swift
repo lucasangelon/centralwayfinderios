@@ -12,11 +12,11 @@ class DatabaseStatements {
     
     /* Table Creation Statements */
     
-    let CREATE_TABLE_CAMPUS: String = "CREATE TABLE campus(id TEXT NOT NULL PRIMARY KEY, name TEXT NOT NULL, lat REAL NOT NULL, long REAL NOT NULL, zoom REAL NOT NULL);"
+    let CREATE_TABLE_CAMPUS: String = "CREATE TABLE IF NOT EXISTS campus(id TEXT NOT NULL PRIMARY KEY, name TEXT NOT NULL, lat REAL NOT NULL, long REAL NOT NULL, zoom REAL NOT NULL);"
     
-    let CREATE_TABLE_BUILDINGS: String = "CREATE TABLE building(id INTEGER NOT NULL PRIMARY KEY,  name TEXT NOT NULL, lat REAL NOT NULL, long REAL NOT NULL, campus_id TEXT NOT NULL);"
+    let CREATE_TABLE_BUILDINGS: String = "CREATE TABLE IF NOT EXISTS building(id INTEGER NOT NULL PRIMARY KEY,  name TEXT NOT NULL, lat REAL NOT NULL, long REAL NOT NULL, campus_id TEXT NOT NULL);"
     
-    let CREATE_TABLE_ROOMS: String = "CREATE TABLE room(id INTEGER NOT NULL PRIMARY KEY, name TEXT NOT NULL, image TEXT, building_id INTEGER NOT NULL, campus_id TEXT NOT NULL);"
+    let CREATE_TABLE_ROOMS: String = "CREATE TABLE IF NOT EXISTS room(id INTEGER NOT NULL PRIMARY KEY, name TEXT NOT NULL, image TEXT, building_id INTEGER NOT NULL, campus_id TEXT NOT NULL);"
     
     
     /* Data Insertion Statements */
@@ -52,6 +52,9 @@ class DatabaseStatements {
     
     let DELETE_SELECTED_CAMPUS_BUILDINGS: String = "DELETE FROM building WHERE campus_id = (?);"
     
+    // Deletes the data within all tables if required.
+    private let DELETE_DATA_FROM_ALL_TABLES: String = "DELETE FROM campus; DELETE FROM building; DELETE FROM room;"
+    
     // Drop all tables if required.
     let DROP_ALL_TABLES: String = "DROP TABLE room; DROP TABLE building; DROP TABLE campus;"
     
@@ -83,13 +86,17 @@ class DatabaseStatements {
     func getTestRooms() -> [Room] {
         var rooms: [Room] = [Room]()
         
-        rooms.append(Room(id: 1, name: "B223", image: "", buildingId: 1, campusId: "NC"))
-        rooms.append(Room(id: 2, name: "C132", image: nil, buildingId: 1, campusId: "NC"))
+        rooms.append(Room(id: 1, name: "B223", image: "NoImage", buildingId: 1, campusId: "NC"))
+        rooms.append(Room(id: 2, name: "C132", image: "NoImage", buildingId: 1, campusId: "NC"))
         rooms.append(Room(id: 3, name: "Student Services", image: "ss.jpg", buildingId: 2, campusId: "NC"))
         rooms.append(Room(id: 4, name: "International Center", image: "ic.jpg", buildingId: 3, campusId: "SC"))
-        rooms.append(Room(id: 5, name: "D444", image: "", buildingId: 3, campusId: "SC"))
+        rooms.append(Room(id: 5, name: "D444", image: "NoImage", buildingId: 3, campusId: "SC"))
         rooms.append(Room(id: 6, name: "Koolark Center", image: "kc.jpg", buildingId: 3, campusId: "SC"))
         
             return rooms
+    }
+    
+    func clearTest() -> String {
+        return self.DELETE_DATA_FROM_ALL_TABLES
     }
 }

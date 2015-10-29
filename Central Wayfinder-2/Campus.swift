@@ -10,54 +10,29 @@ import Foundation
 
 class Campus: NSObject {
     
-    var id: String {
-        get {
-            return self.id
-        }
-        
-        set {
-            self.id = newValue
-        }
+    var id: String = String()
+    init(id: String) {
+        self.id = id
     }
     
-    var name: String {
-        get {
-            return self.name
-        }
-        
-        set {
-            self.name = newValue
-        }
+    var name: String = String()
+    init(name: String) {
+        self.name = name
     }
     
-    var lat: Double {
-        get {
-            return self.lat
-        }
-        
-        set {
-            self.lat = newValue
-        }
+    var lat: Double = Double()
+    init(lat: Double) {
+        self.lat = lat
     }
     
-    var long: Double {
-        get {
-            return self.long
-        }
-        
-        set {
-            self.long = newValue
-        }
+    var long: Double = Double()
+    init(long: Double) {
+        self.long = long
     }
     
-    var zoom: Double {
-        get {
-            return self.zoom
-        }
-        
-        set {
-            self.zoom = newValue
-        }
+    var zoom: Double = Double()
+    init(zoom: Double) {
+        self.zoom = zoom
     }
     
     init(id: String, name: String, lat: Double, long: Double, zoom: Double) {
