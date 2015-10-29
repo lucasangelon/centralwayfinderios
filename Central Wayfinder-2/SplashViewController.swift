@@ -9,7 +9,6 @@
 import UIKit
 import CoreLocation
 
-@available(iOS 8.0, *)
 class SplashViewController: UIViewController, CLLocationManagerDelegate, UIApplicationDelegate, UITabBarDelegate {
     
     @IBOutlet var startButton: UIButton!
@@ -28,6 +27,8 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         
         sharedInstance.setupDatabase()
         sharedInstance.setupQueue()
+        
+        // Testing purposes.
         sharedInstance.prepareTestData()
         
         // Uncomment to clear test data.

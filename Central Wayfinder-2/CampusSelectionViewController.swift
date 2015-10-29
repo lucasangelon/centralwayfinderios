@@ -13,8 +13,8 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     @IBOutlet var tableView: UITableView!
     
     let userDefaults = UserDefaultsController()
-    let cellContent = ["Perth", "Leederville", "East Perth", "Mount Lawley", "Nedlands"]
-    let campusInformation = [("Perth", -31.9476680755615, 115.862129211426), ("Leederville", -31.9339389801025, 115.842643737793), ("East Perth", -31.9512138366699, 115.872375488281), ("Mount Lawley", -31.939432144165, 115.875679016113), ("Nedlands", -31.9700088500977, 115.81575012207)]
+    var campuses: [Campus] = [Campus]()
+    var campus: Campus = Campus()
     
     var firstUse = false
     
@@ -25,6 +25,9 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         self.navigationItem.backBarButtonItem?.enabled = false
         let campusSelectionBackButton = UIBarButtonItem(title: "< Back", style: UIBarButtonItemStyle.Bordered, target: self, action: "back:")
         self.navigationItem.leftBarButtonItem = campusSelectionBackButton
+        
+        // Database Interaction
+        campuses = sharedInstance.getCampuses(campuses)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -40,7 +43,7 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     
     // Returns the item count from the list based on the cellContent variable.
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cellContent.count
+        return campuses.count
     }
     
     // Returns the properly set up items for the list.
@@ -48,17 +51,16 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         
         let cell = tableView.dequeueReusableCellWithIdentifier("TextCell", forIndexPath: indexPath)
         
-        cell.textLabel?.text = cellContent[indexPath.row]
+        cell.textLabel?.text = campuses[indexPath.row].name
         
         return cell
     }
     
     // handling the clicks on the table items.
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        userDefaults.campusName = campusInformation[indexPath.row].0
-        userDefaults.campusDefaultLat = campusInformation[indexPath.row].1
-        userDefaults.campusDefaultLong = campusInformation[indexPath.row].2
-        
+        userDefaults.campusName = campuses[indexPath.row].name
+        userDefaults.campusDefaultLat = campuses[indexPath.row].lat
+        userDefaults.campusDefaultLong = campuses[indexPath.row].long
         if firstUse {
             firstUse = false
             self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
@@ -73,6 +75,8 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         // If using the application for the first time.
         if firstUse {
             
+            campus = sharedInstance.getCampus("PE", campus: campus)
+            
             // Declaring the userDefaults again in order to check for nulls.
             let nsud = NSUserDefaults()
             
@@ -80,10 +84,12 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
             else {
                 
                 // If the user clicked the back button instead of selecting a campus, default to Perth Campus.
-                userDefaults.campusName = campusInformation[0].0
-                userDefaults.campusDefaultLat = campusInformation[0].1
-                userDefaults.campusDefaultLong = campusInformation[0].2
+                userDefaults.campusName = campus.name
+                userDefaults.campusDefaultLat = campus.lat
+                userDefaults.campusDefaultLong = campus.long
             }
+            
+            
             
             firstUse = false
             

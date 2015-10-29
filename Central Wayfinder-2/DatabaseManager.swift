@@ -42,17 +42,6 @@ class DatabaseManager : NSObject {
             } else {
                 print("Database loaded successfully.")
             }
-            
-            /*// If it opened, generate the tables required for the Central Wayfinder application.
-            if centralWayfinderDB.open() {
-                let sql_stmt = "CREATE TABLE IF NOT EXISTS CONTACTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, ADDRESS TEXT, PHONE TEXT)"
-                if !centralWayfinderDB.executeStatements(sql_stmt) {
-                    print("Error: \(centralWayfinderDB.lastErrorMessage())")
-                }
-                centralWayfinderDB.close()
-            } else {
-                print("Error: \(centralWayfinderDB.lastErrorMessage())")
-            }*/
         }
     }
     
@@ -83,6 +72,46 @@ class DatabaseManager : NSObject {
             }
         }
     }
+    
+    
+    /* Database Interaction */
+    
+    // Returns all available campuses.
+    func getCampuses(var campuses: [Campus]) -> [Campus]{
+        queue?.inDatabase() {
+            db in
+            
+            let resultSet: FMResultSet = db.executeQuery(self.dbStatements.GET_ALL_CAMPUSES, withArgumentsInArray: nil)
+            
+            while resultSet.next() {
+                campuses.append(Campus(id: resultSet.stringForColumn("id"), name: resultSet.stringForColumn("name"), lat: resultSet.doubleForColumn("lat"), long: resultSet.doubleForColumn("long"), zoom: resultSet.doubleForColumn("zoom")))
+            }
+            
+            // Ensures the resultSet is closed in order to avoid leaks.
+            resultSet.close()
+        }
+        
+        return campuses
+    }
+    
+    // Returns a single Campus.
+    func getCampus(id: String, var campus: Campus) -> Campus {
+        queue?.inDatabase() {
+            db in
+            
+            let result: FMResultSet = db.executeQuery(self.dbStatements.SELECT_CAMPUS, withArgumentsInArray: [id])
+            
+            if result.next() {
+                campus = Campus(id: result.stringForColumn("id"), name: result.stringForColumn("name"), lat: result.doubleForColumn("lat"), long: result.doubleForColumn("long"), zoom: result.doubleForColumn("zoom"))
+                
+                // Ensures result is closed.
+                result.close()
+            }
+        }
+        return campus
+    }
+    
+    /* Test Functions */
     
     // Inserts test data.
     func prepareTestData() {

@@ -45,5 +45,9 @@ class Campus: NSObject {
         self.zoom = zoom
     }
     
+    override init() {
+        super.init()
+    }
+    
     
 }
