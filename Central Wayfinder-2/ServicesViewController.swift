@@ -12,8 +12,8 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet var tableView: UITableView!
     
-    let servicesLocations = [(-31.948085, 115.861103, "Bookshop"), (-31.948085, 115.861103, "Student Services"), (-31.9475169, 115.8610747, "Library"), (-31.9475169, 115.8610747, "Cafe"), (-31.948085, 115.861103, "Gym"), (-31.9475169, 115.8610747, "International Centre")]
-    var currentRow = (0.1, 0.1, "")
+    var services: [Room] = [Room]()
+    var currentRow: Room = Room()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +21,13 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         // Show the navigation bar.
         self.navigationController?.navigationBarHidden = false
         self.tabBarController?.tabBar.hidden = false
+        
+        services = sharedInstance.getServices(sharedDefaults.campusId, rooms: services)
+        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return servicesLocations.count
+        return services.count
     }
     
     // Prepare the tableView.
@@ -33,8 +36,8 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         let cell = tableView.dequeueReusableCellWithIdentifier("TextImageCell", forIndexPath: indexPath)
         
         // Set up the information based on the, currently, hardcoded list.
-        cell.textLabel?.text = servicesLocations[indexPath.row].2
-        cell.imageView?.image = UIImage(named: "swiftIcon")
+        cell.textLabel?.text = services[indexPath.row].name
+        cell.imageView?.image = UIImage(named: services[indexPath.row].image)
         
         return cell
     }
@@ -43,10 +46,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         // Set the service coordinates and the title to a variable to be sent to Google Maps.
-        currentRow = servicesLocations[indexPath.row]
-        
-        // TODO: Remove, testing purposes only.
-        print(currentRow)
+        currentRow = services[indexPath.row]
         
         performSegueWithIdentifier("ShowMapsFromServices", sender: self)
         
@@ -59,7 +59,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         if segue.identifier != "ReturnFromServices" {
             // Set up the coordinates and the title of the location.
             let destinationSegue = segue.destinationViewController as! MapsViewController
-            destinationSegue.createRoute(currentRow.0, dLong: currentRow.1, dTitle: currentRow.2)
+            destinationSegue.createRoute(currentRow.name, buildingId: currentRow.buildingId)
         }
     }
     

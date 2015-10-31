@@ -50,6 +50,9 @@ class Room: NSObject {
         
         self.buildingId = buildingId
         self.campusId = campusId
-        
+    }
+    
+    override init() {
+        super.init()
     }
 }

@@ -15,7 +15,6 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     
     // Declaring the location manager.
     var locationManager = CLLocationManager()
-    let userDefaults = UserDefaultsController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,14 +24,20 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         // Configuring the location manager.
         locationManager.delegate = self
         
+        
+        
         sharedInstance.setupDatabase()
+        
         sharedInstance.setupQueue()
+        
         
         // Testing purposes.
         sharedInstance.prepareTestData()
         
         // Uncomment to clear test data.
         //sharedInstance.clearTest()
+        
+        
     }
     
     // Handling the alert window in the right hierarchy.
@@ -113,8 +118,8 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     
     @IBAction func startButton(sender: AnyObject) {
         // Detecting if the user is opening the application for the first time.
-        if (!userDefaults.isFirstLaunch) {
-            userDefaults.isFirstLaunch = true
+        if (!sharedDefaults.isFirstLaunch) {
+            sharedDefaults.isFirstLaunch = true
             self.performSegueWithIdentifier("FirstUseToCampusSelection", sender: nil)
         } else {
             self.performSegueWithIdentifier("ShowMainMenuViewController", sender: nil)

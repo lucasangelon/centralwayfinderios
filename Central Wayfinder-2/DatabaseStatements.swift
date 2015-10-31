@@ -26,7 +26,7 @@ class DatabaseStatements {
     let INSERT_BUILDING: String = "INSERT INTO building (id, name, lat, long, campus_id) VALUES (?, ?, ?, ?, ?);"
     
     // Inserting a normal room in the table.
-    let INSERT_ROOM: String = "INSERT INTO room (id, name, image, building_id, campus_id) VALUES (?, ?, NULL, ?, ?);"
+    let INSERT_ROOM: String = "INSERT INTO room (id, name, image, building_id, campus_id) VALUES (?, ?, ?, ?, ?);"
     
     // Inserting a service location in the table.
     let INSERT_SERVICE: String = "INSERT INTO room (id, name, image, building_id, campus_id) VALUES (?, ?, ?, ?, ?);"
@@ -40,7 +40,7 @@ class DatabaseStatements {
     
     let SELECT_ROOMS: String = "SELECT * FROM room WHERE campus_id = (?);"
     
-    let SELECT_SERVICES: String = "SELECT * FROM room WHERE campus_id = (?) AND image IS NOT NULL;"
+    let SELECT_SERVICES: String = "SELECT * FROM room WHERE campus_id = (?) AND image != 'NoImage';"
     
     let SELECT_SPECIFIC_ROOM: String = "SELECT * FROM room WHERE name = (?);"
     
@@ -50,7 +50,7 @@ class DatabaseStatements {
     /* Data Removal Statements */
     
     // Removal upon Campus update.
-    let DELETE_SELECTED_CAMPUS_ROOMS: String = "DELETE FROM room WHERE campus_id = (?) AND image != NULL;"
+    let DELETE_SELECTED_CAMPUS_ROOMS: String = "DELETE FROM room WHERE campus_id = (?);"
     
     let DELETE_SELECTED_CAMPUS_BUILDINGS: String = "DELETE FROM building WHERE campus_id = (?);"
     
@@ -81,9 +81,10 @@ class DatabaseStatements {
     func getTestBuildings() -> [Building] {
         var buildings: [Building] = [Building]()
         
-        buildings.append(Building(id: 1, name: "New Campus Building 1", lat: 22.2, long: 22.30003, campusId: "NC"))
-        buildings.append(Building(id: 2, name: "New Campus Building 2", lat: 22.2, long: 22.4, campusId: "NC"))
-        buildings.append(Building(id: 3, name: "Second Campus Building 1", lat: 33.4, long: 32.476555, campusId: "SC"))
+        buildings.append(Building(id: 1, name: "New Campus Building 1", lat: 22.2, long: 22.30003, campusId: "PE"))
+        buildings.append(Building(id: 2, name: "Perth Campus Building 2", lat: -31.947358, long: 115.861375, campusId: "PE"))
+        buildings.append(Building(id: 3, name: "Perth Campus Building 3", lat: -31.948004, long: 115.860957, campusId: "PE"))
+        buildings.append(Building(id: 4, name: "Leederville Building 1", lat: 11.1, long: 12.1, campusId: "LE"))
         
         return buildings
     }
@@ -92,12 +93,12 @@ class DatabaseStatements {
     func getTestRooms() -> [Room] {
         var rooms: [Room] = [Room]()
         
-        rooms.append(Room(id: 1, name: "B223", image: "NoImage", buildingId: 1, campusId: "NC"))
-        rooms.append(Room(id: 2, name: "C132", image: "NoImage", buildingId: 1, campusId: "NC"))
-        rooms.append(Room(id: 3, name: "Student Services", image: "ss.jpg", buildingId: 2, campusId: "NC"))
-        rooms.append(Room(id: 4, name: "International Center", image: "ic.jpg", buildingId: 3, campusId: "SC"))
-        rooms.append(Room(id: 5, name: "D444", image: "NoImage", buildingId: 3, campusId: "SC"))
-        rooms.append(Room(id: 6, name: "Koolark Center", image: "kc.jpg", buildingId: 3, campusId: "SC"))
+        rooms.append(Room(id: 1, name: "B223", image: "NoImage", buildingId: 1, campusId: "PE"))
+        rooms.append(Room(id: 2, name: "C132", image: "NoImage", buildingId: 1, campusId: "PE"))
+        rooms.append(Room(id: 3, name: "Student Services", image: "ss.jpg", buildingId: 2, campusId: "PE"))
+        rooms.append(Room(id: 4, name: "International Center", image: "ic.jpg", buildingId: 3, campusId: "PE"))
+        rooms.append(Room(id: 5, name: "D444", image: "NoImage", buildingId: 3, campusId: "PE"))
+        rooms.append(Room(id: 6, name: "Koolark Center", image: "kc.jpg", buildingId: 4, campusId: "LE"))
         
             return rooms
     }

@@ -9,8 +9,8 @@
 import Foundation
 
 // Based on: http://www.techotopia.com/index.php/An_Example_SQLite_based_iOS_8_Application_using_Swift_and_FMDB
+// Based on: http://metrozines.com/
 
-// Check this for Queue FMDB: http://metrozines.com/
 let sharedInstance = DatabaseManager()
 
 // Handles the database interaction.
@@ -28,7 +28,7 @@ class DatabaseManager : NSObject {
         
         // Gets the database from the folder.
         let documentFolder = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        databasePath = documentFolder.stringByAppendingString("centralWayfinder.db")
+        databasePath = documentFolder.stringByAppendingString("/centralWayfinder.db")
         
         // If the file does not exist, generate a new one.
         if !filemgr.fileExistsAtPath(databasePath as String) {
@@ -74,17 +74,23 @@ class DatabaseManager : NSObject {
     }
     
     
-    /* Database Interaction */
+    // MARK - Database Interaction
     
     // Returns all available campuses.
     func getCampuses(var campuses: [Campus]) -> [Campus]{
         queue?.inDatabase() {
             db in
             
-            let resultSet: FMResultSet = db.executeQuery(self.dbStatements.GET_ALL_CAMPUSES, withArgumentsInArray: nil)
+            let resultSet: FMResultSet! = db.executeQuery(self.dbStatements.GET_ALL_CAMPUSES, withArgumentsInArray: nil)
             
-            while resultSet.next() {
-                campuses.append(Campus(id: resultSet.stringForColumn("id"), name: resultSet.stringForColumn("name"), lat: resultSet.doubleForColumn("lat"), long: resultSet.doubleForColumn("long"), zoom: resultSet.doubleForColumn("zoom")))
+            if (resultSet != nil) {
+                while resultSet.next() {
+                    campuses.append(Campus(id: resultSet.stringForColumn("id"), name: resultSet.stringForColumn("name"), lat: resultSet.doubleForColumn("lat"), long: resultSet.doubleForColumn("long"), zoom: resultSet.doubleForColumn("zoom")))
+                }
+            }
+            
+            else {
+                print("An error has occurred: \(db.lastErrorMessage())")
             }
             
             // Ensures the resultSet is closed in order to avoid leaks.
@@ -107,8 +113,55 @@ class DatabaseManager : NSObject {
                 // Ensures result is closed.
                 result.close()
             }
+            
+            else {
+                print("An error has occurred: \(db.lastErrorMessage())")
+            }
         }
         return campus
+    }
+    
+    // Returns all available services in a given campus.
+    func getServices(id: String, var rooms: [Room]) -> [Room] {
+        queue?.inDatabase() {
+            db in
+            
+            let resultSet: FMResultSet! = db.executeQuery(self.dbStatements.SELECT_SERVICES, withArgumentsInArray: [id])
+            
+            if (resultSet != nil) {
+                while (resultSet.next()) {
+                    rooms.append(Room(id: Int(resultSet.intForColumn("id")), name: resultSet.stringForColumn("name"), image: resultSet.stringForColumn("image"), buildingId: Int(resultSet.intForColumn("building_id")), campusId: resultSet.stringForColumn("campus_id")))
+                }
+            }
+            
+            else {
+                print("An error has occurred: \(db.lastErrorMessage())")
+            }
+            
+            resultSet.close()
+        }
+        return rooms
+    }
+    
+    // Returns the building a given room is located in through an id.
+    func getBuilding(id: Int, var building: Building) -> Building {
+        queue?.inDatabase() {
+            db in
+            
+            let result: FMResultSet = db.executeQuery(self.dbStatements.SELECT_BUILDING_BASED_ON_ROOM, withArgumentsInArray: [Int(id)])
+            
+            if result.next() {
+                building = Building(id: Int(result.intForColumn("id")), name: result.stringForColumn("Name"), lat: result.doubleForColumn("lat"), long: result.doubleForColumn("long"), campusId: result.stringForColumn("campus_id"))
+                
+                result.close()
+            }
+            
+            else {
+                print("An error has occured: \(db.lastErrorMessage())")
+            }
+        }
+        
+        return building
     }
     
     /* Test Functions */
@@ -144,7 +197,7 @@ class DatabaseManager : NSObject {
             for index in 0...(buildings.count - 1) {
                 tempBuilding = buildings[index]
                 
-                success = db.executeUpdate(self.dbStatements.INSERT_BUILDING, withArgumentsInArray: [(tempBuilding.id), (tempBuilding.name), (tempBuilding.lat), (tempBuilding.long), (tempBuilding.campusId)])
+                success = db.executeUpdate(self.dbStatements.INSERT_BUILDING, withArgumentsInArray: [Int(tempBuilding.id as Int), (tempBuilding.name), (tempBuilding.lat), (tempBuilding.long), (tempBuilding.campusId)])
                 
                 if success {
                     print(tempBuilding.name + " added to the database.")
@@ -161,13 +214,13 @@ class DatabaseManager : NSObject {
                 tempRoom = rooms[index]
                 
                 if tempRoom.image != "NoImage" {
-                    success = db.executeUpdate(self.dbStatements.INSERT_ROOM, withArgumentsInArray: [(tempRoom.id), (tempRoom.name), (tempRoom.image), (tempRoom.buildingId), (tempRoom.campusId)])
+                    success = db.executeUpdate(self.dbStatements.INSERT_ROOM, withArgumentsInArray: [Int(tempRoom.id as Int), (tempRoom.name), (tempRoom.image), Int(tempRoom.buildingId as Int), (tempRoom.campusId)])
                 } else {
-                    success = db.executeUpdate(self.dbStatements.INSERT_ROOM, withArgumentsInArray: [(tempRoom.id), (tempRoom.name), ("NoImage"), (tempRoom.buildingId), (tempRoom.campusId)])
+                    success = db.executeUpdate(self.dbStatements.INSERT_ROOM, withArgumentsInArray: [Int(tempRoom.id as Int), (tempRoom.name), ("NoImage"), Int(tempRoom.buildingId as Int), (tempRoom.campusId)])
                 }
                 
                 if success {
-                    print(tempRoom.name + " added to the database.")
+                    print(tempRoom.name + " added to the database." + String(tempRoom.id))
                 } else {
                     print("An error has occurred: \(db.lastErrorMessage())")
                 }

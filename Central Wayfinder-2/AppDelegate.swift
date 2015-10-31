@@ -39,23 +39,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-    // MARK: Flying Meat Database Start
-    // Based on: http://metrozines.com/
-    
-    /*let DATABASE_RESOURCE_NAME = "centralWayfinderDb"
-    let DATABASE_RESOURCE_TYPE = "sqlite"
-    let DATABASE_FILE_NAME = "centralWayfinderDb.sqlite"
-    
-    func initializeDatabase() -> {
-        let documentFolderPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        
-        let databaseFile = "/" + DATABASE_FILE_NAME
-        
-        self.databaseFilePath = documentFolderPath.stringByAppendingString(databaseFile)
-        
-        let fileManager = document
-    }*/
-
 }
 

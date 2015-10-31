@@ -13,8 +13,6 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var accessibilitySwitch: UISwitch!
     @IBOutlet var tableView: UITableView!
     
-    let userDefaults = UserDefaultsController()
-    
     // List items for the menu.
     let cellContent = [["Accessibility", "Select Campus"], ["About", "Terms of Service", "Privacy Policy"]]
     
@@ -65,13 +63,13 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             
             // Checking the variable to retrieve the initial status of the switch.
             if nsud.objectForKey("accessibility") != nil {
-                if userDefaults.accessibility {
+                if sharedDefaults.accessibility {
                     accessibilitySwitch.on = true
                 } else {
                     accessibilitySwitch.on = false
                 }
             } else {
-                userDefaults.accessibility = false
+                sharedDefaults.accessibility = false
                 accessibilitySwitch.on = false
             }
             
@@ -102,7 +100,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             switch indexPath.row {
                 
             case 0:
-                userDefaults.accessibility = true
+                sharedDefaults.accessibility = true
             // When the "Select Campus" item is clicked.
             case 1:
                 self.performSegueWithIdentifier("ShowCampusSelectionViewController", sender: self)
@@ -119,11 +117,11 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     // Handling the tap on the accessibility switch.
     func accessibilityTap(sender: UISwitch!) {
         if sender.on {
-            userDefaults.accessibility = true
-            print(userDefaults.accessibility)
+            sharedDefaults.accessibility = true
+            print(sharedDefaults.accessibility)
         } else {
-            userDefaults.accessibility = false
-            print(userDefaults.accessibility)
+            sharedDefaults.accessibility = false
+            print(sharedDefaults.accessibility)
         }
     }
 }

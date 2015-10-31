@@ -44,4 +44,8 @@ class Building: NSObject {
         self.long = long
         self.campusId = campusId
     }
+    
+    override init() {
+        super.init()
+    }
 }

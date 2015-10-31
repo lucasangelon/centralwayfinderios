@@ -8,13 +8,15 @@
 
 import Foundation
 
+let sharedDefaults = UserDefaultsController()
+
 class UserDefaultsController {
     
     private let defaults = NSUserDefaults.standardUserDefaults()
     
     // Getters and Setters
     // Campus Name
-    var campusName: String {
+    var campusId: String {
         get {
             return defaults.stringForKey("selectedCampus")!
         }

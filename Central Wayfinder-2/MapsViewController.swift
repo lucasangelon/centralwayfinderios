@@ -18,10 +18,10 @@ import MapKit
 class MapsViewController : UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
-    let userDefaults = UserDefaultsController()
     
     var destination: MapLocation!
     var start: MapLocation!
+    var building: Building = Building()
     
     var userLat = 0.0
     var userLong = 0.0
@@ -38,7 +38,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
         // Make the navigation bar visible after the main menu view controller.
         self.navigationController?.navigationBarHidden = false
         
-        let initialLocation = CLLocation(latitude: userDefaults.campusDefaultLat, longitude: userDefaults.campusDefaultLong)
+        let initialLocation = CLLocation(latitude: sharedDefaults.campusDefaultLat, longitude: sharedDefaults.campusDefaultLong)
         
         mapView.delegate = self
         
@@ -63,17 +63,20 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
     }
     
     // Generating a route to be placed in the map.
-    func createRoute(dLat: Double, dLong: Double, dTitle: String) {
+    func createRoute(roomName: String, buildingId: Int
+        ) {
+        
+        building = sharedInstance.getBuilding(buildingId, building: building)
         
         // Set up the coordinates for the destination.
-        destLat = dLat
-        destLong = dLong
-        destTitle = dTitle
-        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: dLat, longitude: dLong), title: dTitle, subtitle: "Destination")
+        destLat = building.lat
+        destLong = building.long
+        destTitle = roomName
+        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: destLat, longitude: destLong), title: destTitle, subtitle: "Destination")
         
         // Set up the coordinates for the user.
-        userLat = userDefaults.campusDefaultLat
-        userLong = userDefaults.campusDefaultLong
+        userLat = sharedDefaults.campusDefaultLat
+        userLong = sharedDefaults.campusDefaultLong
         userTitle = "You are here"
         start = MapLocation(coordinate: CLLocationCoordinate2D(latitude: userLat, longitude: userLong), title: userTitle, subtitle: "Your Location")
         

@@ -12,7 +12,6 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     
     @IBOutlet var tableView: UITableView!
     
-    let userDefaults = UserDefaultsController()
     var campuses: [Campus] = [Campus]()
     var campus: Campus = Campus()
     
@@ -58,9 +57,11 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     
     // handling the clicks on the table items.
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        userDefaults.campusName = campuses[indexPath.row].name
-        userDefaults.campusDefaultLat = campuses[indexPath.row].lat
-        userDefaults.campusDefaultLong = campuses[indexPath.row].long
+        
+        sharedDefaults.campusId = campuses[indexPath.row].id
+        sharedDefaults.campusDefaultLat = campuses[indexPath.row].lat
+        sharedDefaults.campusDefaultLong = campuses[indexPath.row].long
+        
         if firstUse {
             firstUse = false
             self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
@@ -84,9 +85,9 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
             else {
                 
                 // If the user clicked the back button instead of selecting a campus, default to Perth Campus.
-                userDefaults.campusName = campus.name
-                userDefaults.campusDefaultLat = campus.lat
-                userDefaults.campusDefaultLong = campus.long
+                sharedDefaults.campusId = campus.id
+                sharedDefaults.campusDefaultLat = campus.lat
+                sharedDefaults.campusDefaultLong = campus.long
             }
             
             
