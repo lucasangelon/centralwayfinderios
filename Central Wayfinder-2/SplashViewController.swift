@@ -13,6 +13,8 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     
     @IBOutlet var startButton: UIButton!
     
+    let util: Util = Util()
+    
     // Declaring the location manager.
     var locationManager = CLLocationManager()
     
@@ -55,7 +57,12 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         // If the location services has been refused or restricted, show an alert to the user.
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Denied || CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Restricted {
             
-            alert("Location Services Alert", message: "In order to improve your experience with Central Wayfinder, please authorize location services to be used while the application is open.")
+            alertLocation("Location Services Alert", message: "In order to improve your experience with Central Wayfinder, please authorize location services to be used while the application is open.")
+        }
+        
+        // If there is no internet connection:
+        if !(util.isConnectedToNetwork()) {
+            alertInternet("Internet Connection Alert", message: "Internet (Cellular or Wi-fi) is required to use this application. Turn on Wi-fi or Cellular data usage in order to use Central Wayfinder.")
         }
     }
     
@@ -64,7 +71,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     }
     
     // Handles the alerts related to the location service options and authorizations.
-    func alert(title: String, message: String) {
+    func alertLocation(title: String, message: String) {
         
         // If iOS 8:
         if #available(iOS 8.0, *) {
@@ -101,6 +108,29 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
             
             // Adding the extra bit to the message.
             alert.message = message + "To do so, open Settings > Privacy > Location Services > Central Wayfinder."
+            alert.addButtonWithTitle("Ok")
+            
+            alert.show()
+        }
+    }
+    
+    // Alert regarding the internet connection status.
+    func alertInternet(title: String, message: String) {
+        
+        if #available(iOS 8.0, *) {
+            let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+            
+            let okAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            alert.addAction(okAction)
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        } else {
+            let alert: UIAlertView = UIAlertView()
+            
+            alert.delegate = self
+            alert.title = title
+            
+            alert.message = message
             alert.addButtonWithTitle("Ok")
             
             alert.show()
