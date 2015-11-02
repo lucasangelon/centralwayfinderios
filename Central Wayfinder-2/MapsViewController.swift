@@ -15,13 +15,14 @@ import MapKit
 // Based on: http://stackoverflow.com/questions/30867937/redundant-conformance-error-message-swift-2
 // Based on: http://stackoverflow.com/questions/29764337/subclassing-mkannotation-error-conform-to-protocol
 
-class MapsViewController : UIViewController, MKMapViewDelegate {
+class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
     var destination: MapLocation!
     var start: MapLocation!
     var building: Building = Building()
+    var locationManager = CLLocationManager()
     
     var userLat = 0.0
     var userLong = 0.0
@@ -29,6 +30,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
     var destLat = 0.0
     var destLong = 0.0
     var destTitle = ""
+    var initialLocation: CLLocation = CLLocation()
     
     var destinationItem: MKMapItem?
     
@@ -38,7 +40,9 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
         // Make the navigation bar visible after the main menu view controller.
         self.navigationController?.navigationBarHidden = false
         
-        let initialLocation = CLLocation(latitude: sharedDefaults.campusDefaultLat, longitude: sharedDefaults.campusDefaultLong)
+
+        
+        initialLocation = CLLocation(latitude: sharedDefaults.campusDefaultLat, longitude: sharedDefaults.campusDefaultLong)
         
         mapView.delegate = self
         
@@ -122,4 +126,19 @@ class MapsViewController : UIViewController, MKMapViewDelegate {
             return false
         }
     }
+    
+    // Gets the user location through Location Services.
+    /*func getUserLocation() -> [Double] {
+        if #available(iOS 8.0, *) {
+            if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
+                CLLocationManager.startUpdatingLocation(locationManager)
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+    }*/
+    
+    /*func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        userLat = locations.
+    }*/
 }

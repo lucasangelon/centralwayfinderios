@@ -50,7 +50,9 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
             if #available(iOS 8.0, *) {
                 locationManager.requestWhenInUseAuthorization()
             } else {
-                // Fallback on earlier versions
+                
+                // This line *Should* call the location request on iOS 7. Do not have a device to test it at the moment.
+                locationManager.startUpdatingLocation()
             }
         }
         
