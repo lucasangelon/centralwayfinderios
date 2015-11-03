@@ -24,7 +24,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     var destination: MapLocation!
     var start: MapLocation!
     var building: Building = Building()
-    var locationManager: CLLocationManager = CLLocationManager()
+    let locationManager = CLLocationManager()
     
     // User Information
     var userTitle = ""
@@ -34,8 +34,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     var destBuildingId = 0
     
     // Locations
-    var initialLocation: CLLocation = CLLocation()
-    var userLocation: CLLocation = CLLocation()
+    var initialLocation = CLLocationCoordinate2D()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,61 +42,62 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         self.navigationController?.navigationBarHidden = false
         
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startMonitoringSignificantLocationChanges()
         locationManager.startUpdatingLocation()
-        locationManager.pausesLocationUpdatesAutomatically = true
         
         mapView.delegate = self
-        //mapView.showsUserLocation = true
         
         // If the user was sent here from another page with data.
         if destinationExists() {
             
-            // Sets the user location.
-            setInitialLocation()
-            
             // Generates the route.
             generateRoute(destBuildingId)
             
-            // Centers the map on the destination.
-            centerMapOnLocation(CLLocation(latitude: destination.coordinate.latitude, longitude: destination.coordinate.longitude))
+            if start != nil {
+                mapView.addAnnotation(start)
+            }
+            mapView.addAnnotation(destination)
             
-            mapView.addAnnotations([destination, start])
+            // Centers the map between the start and destination positions.
+            if start != nil {
+                mapView.showAnnotations([start, destination], animated: true)
+            } else {
+                mapView.showAnnotations([MKMapItem.mapItemForCurrentLocation().placemark, destination], animated: true)
+            }
+            
+            mapView.selectAnnotation(destination, animated: true)
         } else {
-            centerMapOnLocation(CLLocation(latitude: start.coordinate.latitude, longitude: start.coordinate.longitude))
+            // Sets the default initial location.
+            setInitialLocation()
+            
+            // Set a default location, center and select it.
+            start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "You are here")
+            mapView.addAnnotation(start)
+            mapView.selectAnnotation(start, animated: true)
+            mapView.showAnnotations([start], animated: true)
         }
     }
     
-    // Focuses the center of the map on a given location.
-    func centerMapOnLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
-            regionRadius * 2.0, regionRadius * 2.0)
-        mapView.setRegion(coordinateRegion, animated: true)
-    }
-    
-    // Sets the initial location for the user to the default if there are no location services or to the user's location.
+    // Sets the initial location for the user to the default if there are no location services.
+    // Creates the start object for the MKDirections Request.
     func setInitialLocation() {
-        if checkLocationServices() {
-            locationManager.startUpdatingLocation()
-        } else {
-            initialLocation = CLLocation(latitude: sharedDefaults.campusDefaultLat, longitude: sharedDefaults.campusDefaultLong)
-        }
-        
-        userTitle = "You are here"
+        initialLocation = CLLocationCoordinate2D(latitude: sharedDefaults.campusDefaultLat, longitude: sharedDefaults.campusDefaultLong)
     }
     
     // Checks if the location services are on.
     func checkLocationServices() -> Bool {
         switch CLLocationManager.authorizationStatus() {
         case CLAuthorizationStatus.Restricted, CLAuthorizationStatus.Denied:
-            
+            print("Restricted or Denided")
             // TODO: Alert about authorization.
             return false
         case CLAuthorizationStatus.NotDetermined:
-            
+            print("Indetermined")
             // TODO: Prompt acceptance.
             return false
         case CLAuthorizationStatus.Authorized, CLAuthorizationStatus.AuthorizedWhenInUse:
+            print("Authorized or AuthorizedWhenInUse")
             return true
         }
     }
@@ -115,9 +115,9 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager.stopUpdatingLocation()
         
-        let userLocation: CLLocation = locations[locations.count - 1]
-        
-        initialLocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        let userLocation: CLLocation = locations[locations.count - 1] as CLLocation
+
+        initialLocation = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
         
         print("\(userLocation.coordinate.latitude) -> Lat \(userLocation.coordinate.longitude) -> Long")
     }
@@ -138,19 +138,41 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         // Creates the destination object.
         destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: building.lat, longitude: building.long), title: destTitle, subtitle: "Destination")
         
-        // Creates the start object.
-        start = MapLocation(coordinate: CLLocationCoordinate2D(latitude: Double(initialLocation.coordinate.latitude), longitude: Double(initialLocation.coordinate.longitude)), title: userTitle, subtitle: userTitle)
-        
         // Start a request for maps.
         let request = MKDirectionsRequest()
-        let markDestination = MKPlacemark(coordinate: CLLocationCoordinate2DMake(destination.coordinate.latitude, destination.coordinate.longitude), addressDictionary: nil)
-        let markStart = MKPlacemark(coordinate: CLLocationCoordinate2DMake(initialLocation.coordinate.latitude, initialLocation.coordinate.longitude), addressDictionary: nil)
         
-        // Define the request information.
-        request.source = MKMapItem(placemark: markStart)
-        request.destination = MKMapItem(placemark: markDestination)
-        request.transportType = MKDirectionsTransportType.Automobile
-        request.requestsAlternateRoutes = false
+        // If location services are enabled.
+        if checkLocationServices() {
+            
+            // Define the required data for the annotations on the map.
+            let markDestination = MKPlacemark(coordinate: CLLocationCoordinate2DMake(destination.coordinate.latitude, destination.coordinate.longitude), addressDictionary: nil)
+            
+            // Define the request information.
+            request.source = MKMapItem.mapItemForCurrentLocation()
+            request.destination = MKMapItem(placemark: markDestination)
+            request.transportType = MKDirectionsTransportType.Any
+            request.requestsAlternateRoutes = false
+            
+            mapView.showsUserLocation = true
+
+        } else {
+            
+            // Sets the default location.
+            setInitialLocation()
+            
+            // Sets the start object for the route.
+            start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "You are here")
+            
+            // Define the required data for the annotations on the map.
+            let markDestination = MKPlacemark(coordinate: CLLocationCoordinate2DMake(destination.coordinate.latitude, destination.coordinate.longitude), addressDictionary: nil)
+            let markStart = MKPlacemark(coordinate: CLLocationCoordinate2DMake(start.coordinate.latitude, start.coordinate.longitude), addressDictionary: nil)
+            
+            // Define the request information.
+            request.source = MKMapItem(placemark: markStart)
+            request.destination = MKMapItem(placemark: markDestination)
+            request.transportType = MKDirectionsTransportType.Any
+            request.requestsAlternateRoutes = false
+        }
         
         let directions = MKDirections(request: request)
         
@@ -178,21 +200,15 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         
         switch status {
         case CLAuthorizationStatus.Restricted, CLAuthorizationStatus.Denied:
-            initialLocation = CLLocation(latitude: sharedDefaults.campusDefaultLat, longitude: sharedDefaults.campusDefaultLong)
+            initialLocation = CLLocationCoordinate2D(latitude: sharedDefaults.campusDefaultLat, longitude: sharedDefaults.campusDefaultLong)
             // TODO: Alert about authorization.
             break
         case CLAuthorizationStatus.NotDetermined:
-            initialLocation = CLLocation(latitude: sharedDefaults.campusDefaultLat, longitude: sharedDefaults.campusDefaultLong)
+            initialLocation = CLLocationCoordinate2D(latitude: sharedDefaults.campusDefaultLat, longitude: sharedDefaults.campusDefaultLong)
             // TODO: Prompt acceptance.
             break
         case CLAuthorizationStatus.Authorized, CLAuthorizationStatus.AuthorizedWhenInUse:
-            locationManager.startUpdatingLocation()
+            locationManager.stopUpdatingLocation()
         }
-    }
-    
-
-    // If the location manager paused for any reason.
-    func locationManagerDidPauseLocationUpdates(manager: CLLocationManager) {
-        print("Paused")
     }
 }

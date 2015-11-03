@@ -26,6 +26,7 @@ extension MapsViewController {
             } else {
                 view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 view.canShowCallout = true
+                view.animatesDrop = true
                 
                 // Changes the pin color to green for the starting position and red for destination.
                 if (view.annotation?.subtitle)! == "Destination" {
