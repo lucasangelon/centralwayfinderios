@@ -15,10 +15,25 @@ import MapKit
 // Based on: http://stackoverflow.com/questions/30867937/redundant-conformance-error-message-swift-2
 // Based on: http://stackoverflow.com/questions/29764337/subclassing-mkannotation-error-conform-to-protocol
 
-class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+@available(iOS 8.0, *)
+class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate {
+    
+    /*
+     *  Table and Search Bar Declarations
+     */
+    
+    @IBOutlet weak var mapTypeControl: UISegmentedControl!
+    @IBOutlet weak var searchTable: UITableView!
+
+    let defaultItems = ["1","1112","113","143","145","Blob","B223", "B221"]
+    var filteredItems = [String]()
+    var resultSearchController = UISearchController()
+    
+    /*
+     *  Map Declarations
+     */
     
     @IBOutlet weak var mapView: MKMapView!
-    
     let regionRadius: CLLocationDistance = 300
     
     var destination: MapLocation!
@@ -36,10 +51,51 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     // Locations
     var initialLocation = CLLocationCoordinate2D()
     
+    var requiresSearch: Bool = false
+    ////////////////////
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBarHidden = false
+        self.title = ""
+        self.searchTable.hidden = true
+        
+        //Set Map Type Control Action
+        self.mapTypeControl.addTarget(self, action: "mapTypeToggle:", forControlEvents: UIControlEvents.ValueChanged)
+        
+        if requiresSearch {
+            if #available(iOS 9.0, *) {
+                self.resultSearchController.loadViewIfNeeded()
+            } else {
+                // Fallback on earlier versions
+            }
+            self.searchTable?.hidden = false
+            
+            /* Table and Search Bar Section */
+            
+            // Setting up the search bar.
+            resultSearchController.searchBar.placeholder = "Enter text"
+            resultSearchController.searchBar.delegate = self
+            
+            self.resultSearchController = ({
+                let controller = UISearchController(searchResultsController: nil)
+                controller.searchResultsUpdater = self
+                controller.dimsBackgroundDuringPresentation = false
+                controller.searchBar.sizeToFit()
+                
+                self.searchTable!.tableHeaderView = controller.searchBar
+                
+                return controller
+            })()
+            
+            self.searchTable!.reloadData()
+        } else {
+            self.searchTable?.hidden = true
+        }
+        
+        /* Map Section */
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -47,6 +103,12 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         locationManager.startUpdatingLocation()
         
         mapView.delegate = self
+        
+        setUpMaps()
+    }
+    
+    // Sets up the page / refreshes it.
+    func setUpMaps() {
         
         // If the user was sent here from another page with data.
         if destinationExists() {
@@ -70,9 +132,9 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         } else {
             // Sets the default initial location.
             setInitialLocation()
-            
+                
             // Set a default location, center and select it.
-            start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "You are here")
+            start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "Default Campus Location")
             mapView.addAnnotation(start)
             mapView.selectAnnotation(start, animated: true)
             mapView.showAnnotations([start], animated: true)
@@ -109,22 +171,6 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         } else {
             return false
         }
-    }
-    
-    // Runs once the locationManager has updated the user's location.
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        locationManager.stopUpdatingLocation()
-        
-        let userLocation: CLLocation = locations[locations.count - 1] as CLLocation
-
-        initialLocation = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-        
-        print("\(userLocation.coordinate.latitude) -> Lat \(userLocation.coordinate.longitude) -> Long")
-    }
-    
-    // In case an error occurrs while pulling the locationManager coordinates.
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print(error.localizedDescription)
     }
     
     /*
@@ -189,6 +235,10 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         }
     }
     
+    /*
+     * Location Manager Functions
+     */
+    
     // Renders the route on the Map View.
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
@@ -196,6 +246,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         return renderer
     }
     
+    // Upon change of the authorization status.
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         
         switch status {
@@ -209,6 +260,96 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             break
         case CLAuthorizationStatus.Authorized, CLAuthorizationStatus.AuthorizedWhenInUse:
             locationManager.stopUpdatingLocation()
+        }
+    }
+    
+    // Runs once the locationManager has updated the user's location.
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        locationManager.stopUpdatingLocation()
+        
+        let userLocation: CLLocation = locations[locations.count - 1] as CLLocation
+        
+        initialLocation = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+    }
+    
+    // In case an error occurrs while pulling the locationManager coordinates.
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print(error.localizedDescription)
+    }
+    
+    /*
+     * Search Table Functions
+     */
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if (self.resultSearchController.active) {
+            return filteredItems.count
+        } else {
+            return defaultItems.count
+        }
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        
+        if (self.resultSearchController.active) {
+            cell.textLabel?.text = filteredItems[indexPath.row]
+        } else {
+            cell.textLabel?.text = defaultItems[indexPath.row]
+        }
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if (self.resultSearchController.active) {
+            print(filteredItems[indexPath.row])
+        } else {
+            print(defaultItems[indexPath.row])
+        }
+        resignFirstResponder()
+        self.searchTable.hidden = true
+    }
+    
+    /*
+     *  Search Bar Functions
+     */
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        
+        filteredItems.removeAll(keepCapacity: false)
+        
+        let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
+        let array = (defaultItems as NSArray).filteredArrayUsingPredicate(searchPredicate)
+        filteredItems = array as! [String]
+        
+        self.searchTable!.reloadData()
+    }
+    
+    
+    // Map Type Toggle handler.
+    func mapTypeToggle(sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            self.mapView.mapType = MKMapType.Standard
+        case 1:
+            self.mapView.mapType = MKMapType.Satellite
+        case 2:
+            self.mapView.mapType = MKMapType.Hybrid
+        default:
+            break
         }
     }
 }
