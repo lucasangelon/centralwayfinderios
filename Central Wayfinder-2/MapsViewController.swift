@@ -22,6 +22,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
      *  Table and Search Bar Declarations
      */
     
+    @IBOutlet weak var mapTypeControl: UISegmentedControl!
     @IBOutlet weak var searchTable: UITableView!
 
     let defaultItems = ["1","1112","113","143","145","Blob","B223", "B221"]
@@ -60,6 +61,9 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         self.navigationController?.navigationBarHidden = false
         self.title = ""
         self.searchTable.hidden = true
+        
+        //Set Map Type Control Action
+        self.mapTypeControl.addTarget(self, action: "mapTypeToggle:", forControlEvents: UIControlEvents.ValueChanged)
         
         if requiresSearch {
             if #available(iOS 9.0, *) {
@@ -332,5 +336,20 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         filteredItems = array as! [String]
         
         self.searchTable!.reloadData()
+    }
+    
+    
+    // Map Type Toggle handler.
+    func mapTypeToggle(sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            self.mapView.mapType = MKMapType.Standard
+        case 1:
+            self.mapView.mapType = MKMapType.Satellite
+        case 2:
+            self.mapView.mapType = MKMapType.Hybrid
+        default:
+            break
+        }
     }
 }

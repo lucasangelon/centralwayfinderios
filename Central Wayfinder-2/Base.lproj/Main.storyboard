@@ -343,23 +343,38 @@
                                     <outlet property="delegate" destination="Qz0-gV-owB" id="jsK-nV-zES"/>
                                 </connections>
                             </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gbU-mU-hz3">
+                                <rect key="frame" x="114" y="520" width="186" height="29"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.95523595328282829" green="0.89533457324974641" blue="0.82309428065559964" alpha="1" colorSpace="calibratedRGB"/>
+                                <segments>
+                                    <segment title="Standard"/>
+                                    <segment title="Satellite"/>
+                                    <segment title="Hybrid"/>
+                                </segments>
+                                <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </segmentedControl>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="4cl-pe-HbB" firstAttribute="bottom" secondItem="uEc-8b-GEl" secondAttribute="top" id="4QW-Fh-LdZ"/>
-                            <constraint firstItem="53n-P3-LMo" firstAttribute="bottom" secondItem="uEc-8b-GEl" secondAttribute="top" id="ANY-n1-wm2"/>
-                            <constraint firstItem="53n-P3-LMo" firstAttribute="leading" secondItem="4cl-pe-HbB" secondAttribute="leading" id="CjB-5H-YJC"/>
-                            <constraint firstAttribute="trailing" secondItem="53n-P3-LMo" secondAttribute="trailing" id="DnN-w8-zqI"/>
-                            <constraint firstItem="4cl-pe-HbB" firstAttribute="top" secondItem="53n-P3-LMo" secondAttribute="top" id="GaO-k5-s5z"/>
-                            <constraint firstItem="4cl-pe-HbB" firstAttribute="leading" secondItem="KOn-V8-Ix9" secondAttribute="leading" id="KDu-1y-N7B"/>
-                            <constraint firstItem="4cl-pe-HbB" firstAttribute="top" secondItem="1ZN-K5-Y6n" secondAttribute="bottom" constant="44" id="YrF-VN-Hbf"/>
-                            <constraint firstItem="4cl-pe-HbB" firstAttribute="trailing" secondItem="53n-P3-LMo" secondAttribute="trailing" id="fRE-hD-VrM"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="bottom" secondItem="uEc-8b-GEl" secondAttribute="top" id="8vN-0Y-af6"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="leading" secondItem="KOn-V8-Ix9" secondAttribute="leading" id="9sg-W7-nO5"/>
+                            <constraint firstItem="gbU-mU-hz3" firstAttribute="leading" secondItem="KOn-V8-Ix9" secondAttribute="leadingMargin" constant="98" id="Cmk-Pq-Ojp"/>
+                            <constraint firstAttribute="trailing" secondItem="4cl-pe-HbB" secondAttribute="trailing" id="GTg-Ac-AGi"/>
+                            <constraint firstAttribute="bottom" secondItem="gbU-mU-hz3" secondAttribute="bottom" constant="20" symbolic="YES" id="PDk-Cz-Wa8"/>
+                            <constraint firstItem="4cl-pe-HbB" firstAttribute="bottom" secondItem="uEc-8b-GEl" secondAttribute="top" id="QaR-HD-ngO"/>
+                            <constraint firstItem="4cl-pe-HbB" firstAttribute="top" secondItem="1ZN-K5-Y6n" secondAttribute="bottom" constant="44" id="RiL-fA-iK4"/>
+                            <constraint firstItem="4cl-pe-HbB" firstAttribute="top" secondItem="53n-P3-LMo" secondAttribute="top" id="VOR-qg-lGy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gbU-mU-hz3" secondAttribute="trailing" constant="4" id="VYN-RP-HsM"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="trailing" secondItem="4cl-pe-HbB" secondAttribute="trailing" id="bLi-DM-Sne"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="leading" secondItem="4cl-pe-HbB" secondAttribute="leading" id="i0u-tq-Q0z"/>
                         </constraints>
                     </view>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="mapTypeControl" destination="gbU-mU-hz3" id="osV-7W-OJa"/>
                         <outlet property="mapView" destination="53n-P3-LMo" id="tjh-LF-HnI"/>
                         <outlet property="searchTable" destination="4cl-pe-HbB" id="skj-sk-awv"/>
                         <segue destination="4vM-RG-K3c" kind="show" identifier="ShowPostMapsViewController" id="ESu-x3-lEX"/>
