@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class ServicesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -58,8 +59,11 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if segue.identifier != "ReturnFromServices" {
             // Set up the coordinates and the title of the location.
+            let manager: CLLocationManager = CLLocationManager()
+            manager.startUpdatingLocation()
             let destinationSegue = segue.destinationViewController as! MapsViewController
-            destinationSegue.createRoute(currentRow.name, buildingId: currentRow.buildingId)
+            destinationSegue.destTitle = currentRow.name
+            destinationSegue.destBuildingId = currentRow.buildingId
         }
     }
     
