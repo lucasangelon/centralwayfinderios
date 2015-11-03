@@ -126,23 +126,14 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             
             mapView.selectAnnotation(destination, animated: true)
         } else {
-            
-            if checkLocationServices() {
-                mapView.showsUserLocation = true
-               // mapView.showAnnotations([MKMapItem.mapItemForCurrentLocation().placemark], animated: true)
-                mapView.selectAnnotation(MKMapItem.mapItemForCurrentLocation().placemark, animated: true)
-                mapView.showAnnotations([MKMapItem.mapItemForCurrentLocation().placemark], animated: true)
+            // Sets the default initial location.
+            setInitialLocation()
                 
-            } else {
-                // Sets the default initial location.
-                setInitialLocation()
-                
-                // Set a default location, center and select it.
-                start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "You are here")
-                mapView.addAnnotation(start)
-                mapView.selectAnnotation(start, animated: true)
-                mapView.showAnnotations([start], animated: true)
-            }
+            // Set a default location, center and select it.
+            start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "Default Campus Location")
+            mapView.addAnnotation(start)
+            mapView.selectAnnotation(start, animated: true)
+            mapView.showAnnotations([start], animated: true)
         }
     }
     
