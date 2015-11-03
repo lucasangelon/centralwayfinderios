@@ -62,6 +62,11 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         self.searchTable.hidden = true
         
         if requiresSearch {
+            if #available(iOS 9.0, *) {
+                self.resultSearchController.loadViewIfNeeded()
+            } else {
+                // Fallback on earlier versions
+            }
             self.searchTable?.hidden = false
             
             /* Table and Search Bar Section */
@@ -124,8 +129,8 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             
             if checkLocationServices() {
                 mapView.showsUserLocation = true
-                mapView.addAnnotation(MKMapItem.mapItemForCurrentLocation().placemark)
-                
+               // mapView.showAnnotations([MKMapItem.mapItemForCurrentLocation().placemark], animated: true)
+                mapView.selectAnnotation(MKMapItem.mapItemForCurrentLocation().placemark, animated: true)
                 mapView.showAnnotations([MKMapItem.mapItemForCurrentLocation().placemark], animated: true)
                 
             } else {
