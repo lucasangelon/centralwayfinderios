@@ -8,6 +8,7 @@
 
 import MapKit
 
+
 extension MapsViewController {
     
     // Adding the custom method for annotations on the map.
@@ -59,6 +60,7 @@ extension MapsViewController {
     }
     
     // Prepares to send the user to the location information page.
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowPostMapsViewController" {
             let destinationSegue = segue.destinationViewController as! PostMapsViewController

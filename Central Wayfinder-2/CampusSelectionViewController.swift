@@ -22,7 +22,7 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         
         // Hiding the usual back button and implementing a special one for the campus selection page.
         self.navigationItem.backBarButtonItem?.enabled = false
-        let campusSelectionBackButton = UIBarButtonItem(title: "< Back", style: UIBarButtonItemStyle.Bordered, target: self, action: "back:")
+        let campusSelectionBackButton = UIBarButtonItem(title: "< Back", style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
         self.navigationItem.leftBarButtonItem = campusSelectionBackButton
         
         // Database Interaction

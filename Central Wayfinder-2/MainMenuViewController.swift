@@ -81,8 +81,11 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowMapsViewController" {
+            let destinationSegue = segue.destinationViewController as! MapsViewController
+            destinationSegue.requiresSearch = true
+        }
     }
     
 }
