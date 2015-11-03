@@ -10,21 +10,28 @@ import MapKit
 
 extension MapsViewController {
     
-    //TODO: Comment this D=
+    // Adding the custom method for annotations on the map.
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
+        // Defining an annotation as a MapLocation.
         if let annotation = annotation as? MapLocation {
             
+            // Creating an identifier and declaring a Pin.
             let identifier = "pin"
             var view: MKPinAnnotationView
             
+            // Linking the identifier to the view.
             if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
                 as? MKPinAnnotationView {
 
                     dequeuedView.annotation = annotation
                     view = dequeuedView
             } else {
+                
+                // Personalizing the view.
                 view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                
+                // Adding the information icon as well as the animation.
                 view.canShowCallout = true
                 view.animatesDrop = true
                 
@@ -38,6 +45,7 @@ extension MapsViewController {
                     setPinColor(view, color: UIColor.greenColor(), annotationColor: MKPinAnnotationColor.Green)
                 }
                 
+                // Ensuring the icon is placed properly on the information ballon.
                 view.calloutOffset = CGPoint(x: -5, y: 5)
             }
             return view
