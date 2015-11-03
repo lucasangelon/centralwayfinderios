@@ -122,16 +122,23 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             mapView.selectAnnotation(destination, animated: true)
         } else {
             
-            // Sets the default initial location.
-            setInitialLocation()
-            
-            // Set a default location, center and select it.
-            start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "You are here")
-            mapView.addAnnotation(start)
-            mapView.selectAnnotation(start, animated: true)
-            mapView.showAnnotations([start], animated: true)
+            if checkLocationServices() {
+                mapView.showsUserLocation = true
+                mapView.addAnnotation(MKMapItem.mapItemForCurrentLocation().placemark)
+                
+                mapView.showAnnotations([MKMapItem.mapItemForCurrentLocation().placemark], animated: true)
+                
+            } else {
+                // Sets the default initial location.
+                setInitialLocation()
+                
+                // Set a default location, center and select it.
+                start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "You are here")
+                mapView.addAnnotation(start)
+                mapView.selectAnnotation(start, animated: true)
+                mapView.showAnnotations([start], animated: true)
+            }
         }
-
     }
     
     // Sets the initial location for the user to the default if there are no location services.
@@ -263,8 +270,6 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         let userLocation: CLLocation = locations[locations.count - 1] as CLLocation
         
         initialLocation = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-        
-        print("\(userLocation.coordinate.latitude) -> Lat \(userLocation.coordinate.longitude) -> Long")
     }
     
     // In case an error occurrs while pulling the locationManager coordinates.
@@ -303,8 +308,13 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        print(filteredItems[indexPath.row])
+        if (self.resultSearchController.active) {
+            print(filteredItems[indexPath.row])
+        } else {
+            print(defaultItems[indexPath.row])
+        }
         resignFirstResponder()
+        self.searchTable.hidden = true
     }
     
     /*
