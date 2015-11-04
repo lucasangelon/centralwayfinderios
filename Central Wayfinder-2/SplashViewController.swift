@@ -29,6 +29,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         // Setting up the database and the queue for general access.
         sharedInstance.setupDatabase()
         sharedInstance.setupQueue()
+        sharedInstance.prepareTestData()
     }
     
     // Handling the alert window in the right hierarchy.
@@ -134,6 +135,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
             
             let destinationSegue = segue.destinationViewController as! CampusSelectionViewController
             destinationSegue.firstTimeUse()
+            self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
         }
     }
     
