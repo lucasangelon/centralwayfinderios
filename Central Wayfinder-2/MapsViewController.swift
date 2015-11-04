@@ -22,34 +22,35 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
      *  Table and Search Bar Declarations
      */
     
+    @IBOutlet weak var directionsTypeControl: UISegmentedControl!
     @IBOutlet weak var mapTypeControl: UISegmentedControl!
     @IBOutlet weak var searchTable: UITableView!
 
-    let defaultItems = ["1","1112","113","143","145","Blob","B223", "B221"]
-    var filteredItems = [String]()
-    var resultSearchController = UISearchController()
+    private let defaultItems = ["1","1112","113","143","145","Blob","B223", "B221"]
+    private var filteredItems = [String]()
+    private var resultSearchController = UISearchController()
     
     /*
      *  Map Declarations
      */
     
     @IBOutlet weak var mapView: MKMapView!
-    let regionRadius: CLLocationDistance = 300
+    private final let regionRadius: CLLocationDistance = 300
     
-    var destination: MapLocation!
-    var start: MapLocation!
-    var building: Building = Building()
-    let locationManager = CLLocationManager()
+    private var destination: MapLocation!
+    private var start: MapLocation!
+    private var building: Building = Building()
+    private let locationManager = CLLocationManager()
     
     // User Information
-    var userTitle = ""
+    private var userTitle = ""
     
     // Destination Information
     var destTitle = ""
     var destBuildingId = 0
     
     // Locations
-    var initialLocation = CLLocationCoordinate2D()
+    private var initialLocation = CLLocationCoordinate2D()
     
     var requiresSearch: Bool = false
     ////////////////////
@@ -64,6 +65,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         
         //Set Map Type Control Action
         self.mapTypeControl.addTarget(self, action: "mapTypeToggle:", forControlEvents: UIControlEvents.ValueChanged)
+        self.directionsTypeControl.addTarget(self, action: "directionsTypeToggle:", forControlEvents: UIControlEvents.ValueChanged)
         
         if requiresSearch {
             if #available(iOS 9.0, *) {
@@ -99,7 +101,6 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startMonitoringSignificantLocationChanges()
         locationManager.startUpdatingLocation()
         
         mapView.delegate = self
@@ -108,13 +109,13 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     }
     
     // Sets up the page / refreshes it.
-    func setUpMaps() {
+    private func setUpMaps() {
         
         // If the user was sent here from another page with data.
         if destinationExists() {
             
             // Generates the route.
-            generateRoute(destBuildingId)
+            generateRoute(destBuildingId, directionsType: MKDirectionsTransportType.Walking)
             
             if start != nil {
                 mapView.addAnnotation(start)
@@ -143,12 +144,12 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     // Sets the initial location for the user to the default if there are no location services.
     // Creates the start object for the MKDirections Request.
-    func setInitialLocation() {
+    private func setInitialLocation() {
         initialLocation = CLLocationCoordinate2D(latitude: sharedDefaults.campusDefaultLat, longitude: sharedDefaults.campusDefaultLong)
     }
     
     // Checks if the location services are on.
-    func checkLocationServices() -> Bool {
+    private func checkLocationServices() -> Bool {
         switch CLLocationManager.authorizationStatus() {
         case CLAuthorizationStatus.Restricted, CLAuthorizationStatus.Denied:
             print("Restricted or Denided")
@@ -165,7 +166,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     }
     
     // Checks if the application sent the user to this page with a destination from Services.
-    func destinationExists() -> Bool {
+    private func destinationExists() -> Bool {
         if destBuildingId != 0 {
             return true
         } else {
@@ -176,7 +177,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     /*
      * Generates a route for the mapView.
      */
-    func generateRoute(buildingId: Int) {
+    private func generateRoute(buildingId: Int, directionsType: MKDirectionsTransportType) {
         
         // Retrieves the building from the database.
         building = sharedInstance.getBuilding(buildingId, building: building)
@@ -196,7 +197,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             // Define the request information.
             request.source = MKMapItem.mapItemForCurrentLocation()
             request.destination = MKMapItem(placemark: markDestination)
-            request.transportType = MKDirectionsTransportType.Any
+            request.transportType = directionsType
             request.requestsAlternateRoutes = false
             
             mapView.showsUserLocation = true
@@ -216,7 +217,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             // Define the request information.
             request.source = MKMapItem(placemark: markStart)
             request.destination = MKMapItem(placemark: markDestination)
-            request.transportType = MKDirectionsTransportType.Any
+            request.transportType = directionsType
             request.requestsAlternateRoutes = false
         }
         
@@ -321,12 +322,6 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
      *  Search Bar Functions
      */
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-    }
-    
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-    }
-    
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         
         filteredItems.removeAll(keepCapacity: false)
@@ -351,5 +346,25 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         default:
             break
         }
+    }
+    
+    // Directions Type Toggle handler.
+    func directionsTypeToggle(sender: UISegmentedControl) {
+        clearRoute()
+        
+        switch sender.selectedSegmentIndex {
+        case 0:
+            generateRoute(destBuildingId, directionsType: MKDirectionsTransportType.Walking)
+        case 1:
+            
+            generateRoute(destBuildingId, directionsType: MKDirectionsTransportType.Automobile)
+        default:
+            break
+        }
+    }
+    
+    private func clearRoute() {
+        let overlays = mapView.overlays
+        mapView.removeOverlays(overlays)
     }
 }

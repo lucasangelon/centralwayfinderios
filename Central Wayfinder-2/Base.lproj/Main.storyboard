@@ -312,8 +312,32 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <animations/>
                             </mapView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gbU-mU-hz3">
+                                <rect key="frame" x="114" y="520" width="186" height="29"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.95523595328282829" green="0.89533457324974641" blue="0.82309428065559964" alpha="1" colorSpace="calibratedRGB"/>
+                                <segments>
+                                    <segment title="Standard"/>
+                                    <segment title="Satellite"/>
+                                    <segment title="Hybrid"/>
+                                </segments>
+                                <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </segmentedControl>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rpZ-ta-sA2">
+                                <rect key="frame" x="174" y="484" width="126" height="29"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.9552359533" green="0.89533457319999998" blue="0.82309428070000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="126" id="tlr-6E-OIl"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Walking"/>
+                                    <segment title="Driving"/>
+                                </segments>
+                                <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4cl-pe-HbB">
-                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="496"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -321,11 +345,11 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6Kb-Lh-Qbh" id="yDy-cc-cTa">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gwh-rR-Fmn">
-                                                    <rect key="frame" x="15" y="0.0" width="290" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="290" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -343,37 +367,29 @@
                                     <outlet property="delegate" destination="Qz0-gV-owB" id="jsK-nV-zES"/>
                                 </connections>
                             </tableView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gbU-mU-hz3">
-                                <rect key="frame" x="114" y="520" width="186" height="29"/>
-                                <animations/>
-                                <color key="backgroundColor" red="0.95523595328282829" green="0.89533457324974641" blue="0.82309428065559964" alpha="1" colorSpace="calibratedRGB"/>
-                                <segments>
-                                    <segment title="Standard"/>
-                                    <segment title="Satellite"/>
-                                    <segment title="Hybrid"/>
-                                </segments>
-                                <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </segmentedControl>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="53n-P3-LMo" firstAttribute="bottom" secondItem="uEc-8b-GEl" secondAttribute="top" id="8vN-0Y-af6"/>
-                            <constraint firstItem="53n-P3-LMo" firstAttribute="leading" secondItem="KOn-V8-Ix9" secondAttribute="leading" id="9sg-W7-nO5"/>
-                            <constraint firstItem="gbU-mU-hz3" firstAttribute="leading" secondItem="KOn-V8-Ix9" secondAttribute="leadingMargin" constant="98" id="Cmk-Pq-Ojp"/>
-                            <constraint firstAttribute="trailing" secondItem="4cl-pe-HbB" secondAttribute="trailing" id="GTg-Ac-AGi"/>
-                            <constraint firstAttribute="bottom" secondItem="gbU-mU-hz3" secondAttribute="bottom" constant="20" symbolic="YES" id="PDk-Cz-Wa8"/>
-                            <constraint firstItem="4cl-pe-HbB" firstAttribute="bottom" secondItem="uEc-8b-GEl" secondAttribute="top" id="QaR-HD-ngO"/>
-                            <constraint firstItem="4cl-pe-HbB" firstAttribute="top" secondItem="1ZN-K5-Y6n" secondAttribute="bottom" constant="44" id="RiL-fA-iK4"/>
-                            <constraint firstItem="4cl-pe-HbB" firstAttribute="top" secondItem="53n-P3-LMo" secondAttribute="top" id="VOR-qg-lGy"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="gbU-mU-hz3" secondAttribute="trailing" constant="4" id="VYN-RP-HsM"/>
-                            <constraint firstItem="53n-P3-LMo" firstAttribute="trailing" secondItem="4cl-pe-HbB" secondAttribute="trailing" id="bLi-DM-Sne"/>
-                            <constraint firstItem="53n-P3-LMo" firstAttribute="leading" secondItem="4cl-pe-HbB" secondAttribute="leading" id="i0u-tq-Q0z"/>
+                            <constraint firstItem="gbU-mU-hz3" firstAttribute="leading" secondItem="KOn-V8-Ix9" secondAttribute="leadingMargin" constant="98" id="8sq-AS-xtq"/>
+                            <constraint firstItem="gbU-mU-hz3" firstAttribute="top" secondItem="rpZ-ta-sA2" secondAttribute="bottom" constant="8" symbolic="YES" id="8yx-fz-k46"/>
+                            <constraint firstItem="rpZ-ta-sA2" firstAttribute="trailing" secondItem="gbU-mU-hz3" secondAttribute="trailing" id="908-38-TR3"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="rpZ-ta-sA2" secondAttribute="trailing" constant="4" id="9IT-KX-TlB"/>
+                            <constraint firstAttribute="trailing" secondItem="4cl-pe-HbB" secondAttribute="trailing" id="HKy-9t-Tq2"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="bottom" secondItem="uEc-8b-GEl" secondAttribute="top" id="OPm-9d-koM"/>
+                            <constraint firstItem="4cl-pe-HbB" firstAttribute="top" secondItem="1ZN-K5-Y6n" secondAttribute="bottom" constant="44" id="Qdx-vF-etl"/>
+                            <constraint firstItem="uEc-8b-GEl" firstAttribute="top" secondItem="4cl-pe-HbB" secondAttribute="bottom" constant="8" symbolic="YES" id="UuK-Zo-s1B"/>
+                            <constraint firstItem="4cl-pe-HbB" firstAttribute="leading" secondItem="KOn-V8-Ix9" secondAttribute="leading" id="ieT-eX-7eG"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="leading" secondItem="4cl-pe-HbB" secondAttribute="leading" id="mEm-Rh-1mP"/>
+                            <constraint firstAttribute="bottom" secondItem="gbU-mU-hz3" secondAttribute="bottom" constant="20" symbolic="YES" id="nfq-Dw-y7V"/>
+                            <constraint firstItem="4cl-pe-HbB" firstAttribute="top" secondItem="53n-P3-LMo" secondAttribute="top" id="oMf-Ei-Xp3"/>
+                            <constraint firstItem="4cl-pe-HbB" firstAttribute="trailing" secondItem="53n-P3-LMo" secondAttribute="trailing" id="sR5-7R-lrl"/>
                         </constraints>
                     </view>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="directionsTypeControl" destination="rpZ-ta-sA2" id="cBP-Pu-5ti"/>
                         <outlet property="mapTypeControl" destination="gbU-mU-hz3" id="osV-7W-OJa"/>
                         <outlet property="mapView" destination="53n-P3-LMo" id="tjh-LF-HnI"/>
                         <outlet property="searchTable" destination="4cl-pe-HbB" id="skj-sk-awv"/>
