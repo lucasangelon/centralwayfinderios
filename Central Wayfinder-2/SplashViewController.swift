@@ -135,6 +135,10 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
             
             let destinationSegue = segue.destinationViewController as! CampusSelectionViewController
             destinationSegue.firstTimeUse()
+            
+            // As this is the parent to the next viewController, setting the 
+            //white color here overrides the color in the child view controllers 
+            //as well.
             self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
         }
     }

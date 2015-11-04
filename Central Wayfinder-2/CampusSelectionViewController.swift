@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CampusSelectionViewController : UIViewController, UITableViewDataSource, UITableViewDelegate {
+class CampusSelectionViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate {
     
     @IBOutlet var tableView: UITableView!
     
@@ -86,12 +86,33 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
                 sharedDefaults.campusDefaultLong = campus.long
             }
             
-            
-            
             firstUse = false
             
-            self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
+            // Handling the alert to explain the default Perth campus to the user.
+            if #available(iOS 8.0, *) {
+                let alert: UIAlertController = UIAlertController(title: "Perth Campus", message: "The default campus has been set to Perth.", preferredStyle: .Alert)
+                
+                let okAction = UIAlertAction(title: "Ok", style: .Default) {
+                    (action) in
+                    self.returnToMainMenu()
+                }
+                alert.addAction(okAction)
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
             
+            // iOS 7.* or lower:
+            else {
+                let alert: UIAlertView = UIAlertView()
+                
+                alert.delegate = self
+                alert.title = "Perth Campus"
+                
+                alert.message = "The default campus has been set to Perth."
+                alert.addButtonWithTitle("Ok")
+                
+                alert.show()
+            }
         } else {
             self.navigationController?.popViewControllerAnimated(true)
         }
@@ -100,5 +121,15 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     // Sets a boolean depending on previous viewController's prepareForSegue (SplashScreen during first use).
     func firstTimeUse() {
         firstUse = true
+    }
+    
+    // Returns to the main menu after cancelling the default campus selection in iOS 8.0+.
+    private func returnToMainMenu() {
+        self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
+    }
+    
+    // Returns to the main menu after cancelling the default campus selection in iOS versions prior to 8.0.
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
     }
 }
