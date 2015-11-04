@@ -28,6 +28,7 @@
 		A0781F2A1BCF72FC002A65AF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0781F291BCF72FC002A65AF /* CoreLocation.framework */; };
 		A0781F2C1BCF869B002A65AF /* MapLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F2B1BCF869B002A65AF /* MapLocation.swift */; };
 		A0781F2F1BCF8BA5002A65AF /* MapsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */; };
+		A0A1105C1BE9D9BD00DC40AA /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A1105B1BE9D9BD00DC40AA /* SwiftyJSON.swift */; };
 		A0A15B3F1BD9C1B800B27A22 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A15B3E1BD9C1B800B27A22 /* DatabaseManager.swift */; };
 		A0A15B411BD9C4FC00B27A22 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */; };
 		A0A15B431BD9CAF400B27A22 /* CampusSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A15B421BD9CAF400B27A22 /* CampusSelectionViewController.swift */; };
@@ -84,6 +85,7 @@
 		A0781F291BCF72FC002A65AF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A0781F2B1BCF869B002A65AF /* MapLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocation.swift; sourceTree = "<group>"; };
 		A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsViewHelper.swift; sourceTree = "<group>"; };
+		A0A1105B1BE9D9BD00DC40AA /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		A0A15B3E1BD9C1B800B27A22 /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsController.swift; sourceTree = "<group>"; };
 		A0A15B421BD9CAF400B27A22 /* CampusSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusSelectionViewController.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 		A0781F1A1BCF3623002A65AF /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				A0A1105B1BE9D9BD00DC40AA /* SwiftyJSON.swift */,
 				A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */,
 				A0A15B3E1BD9C1B800B27A22 /* DatabaseManager.swift */,
 				A064B0301BDFE18E00A1D55B /* Util.swift */,
@@ -403,6 +406,7 @@
 				A064B0311BDFE18E00A1D55B /* Util.swift in Sources */,
 				A0781F241BCF4B38002A65AF /* MainMenuViewController.swift in Sources */,
 				A0781F1E1BCF368D002A65AF /* ServicesViewController.swift in Sources */,
+				A0A1105C1BE9D9BD00DC40AA /* SwiftyJSON.swift in Sources */,
 				A06DEAC61BE1BDB2003BE704 /* DatabaseStatements.swift in Sources */,
 				A0A15B411BD9C4FC00B27A22 /* UserDefaultsController.swift in Sources */,
 				A064B0341BE0640900A1D55B /* Campus.swift in Sources */,

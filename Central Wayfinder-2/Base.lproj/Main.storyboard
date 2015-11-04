@@ -328,7 +328,7 @@
                                 <animations/>
                                 <color key="backgroundColor" red="0.9552359533" green="0.89533457319999998" blue="0.82309428070000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="126" id="tlr-6E-OIl"/>
+                                    <constraint firstAttribute="width" constant="126" id="lGO-3c-DFs"/>
                                 </constraints>
                                 <segments>
                                     <segment title="Walking"/>
@@ -371,19 +371,19 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="gbU-mU-hz3" firstAttribute="leading" secondItem="KOn-V8-Ix9" secondAttribute="leadingMargin" constant="98" id="8sq-AS-xtq"/>
-                            <constraint firstItem="gbU-mU-hz3" firstAttribute="top" secondItem="rpZ-ta-sA2" secondAttribute="bottom" constant="8" symbolic="YES" id="8yx-fz-k46"/>
-                            <constraint firstItem="rpZ-ta-sA2" firstAttribute="trailing" secondItem="gbU-mU-hz3" secondAttribute="trailing" id="908-38-TR3"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="rpZ-ta-sA2" secondAttribute="trailing" constant="4" id="9IT-KX-TlB"/>
-                            <constraint firstAttribute="trailing" secondItem="4cl-pe-HbB" secondAttribute="trailing" id="HKy-9t-Tq2"/>
-                            <constraint firstItem="53n-P3-LMo" firstAttribute="bottom" secondItem="uEc-8b-GEl" secondAttribute="top" id="OPm-9d-koM"/>
-                            <constraint firstItem="4cl-pe-HbB" firstAttribute="top" secondItem="1ZN-K5-Y6n" secondAttribute="bottom" constant="44" id="Qdx-vF-etl"/>
-                            <constraint firstItem="uEc-8b-GEl" firstAttribute="top" secondItem="4cl-pe-HbB" secondAttribute="bottom" constant="8" symbolic="YES" id="UuK-Zo-s1B"/>
-                            <constraint firstItem="4cl-pe-HbB" firstAttribute="leading" secondItem="KOn-V8-Ix9" secondAttribute="leading" id="ieT-eX-7eG"/>
-                            <constraint firstItem="53n-P3-LMo" firstAttribute="leading" secondItem="4cl-pe-HbB" secondAttribute="leading" id="mEm-Rh-1mP"/>
-                            <constraint firstAttribute="bottom" secondItem="gbU-mU-hz3" secondAttribute="bottom" constant="20" symbolic="YES" id="nfq-Dw-y7V"/>
-                            <constraint firstItem="4cl-pe-HbB" firstAttribute="top" secondItem="53n-P3-LMo" secondAttribute="top" id="oMf-Ei-Xp3"/>
-                            <constraint firstItem="4cl-pe-HbB" firstAttribute="trailing" secondItem="53n-P3-LMo" secondAttribute="trailing" id="sR5-7R-lrl"/>
+                            <constraint firstAttribute="trailing" secondItem="53n-P3-LMo" secondAttribute="trailing" id="0Gb-DO-zyz"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="leading" secondItem="KOn-V8-Ix9" secondAttribute="leading" id="34j-1w-zCR"/>
+                            <constraint firstItem="gbU-mU-hz3" firstAttribute="top" secondItem="rpZ-ta-sA2" secondAttribute="bottom" constant="8" symbolic="YES" id="FYY-Y5-voE"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="bottom" secondItem="uEc-8b-GEl" secondAttribute="top" id="KpT-06-71s"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="rpZ-ta-sA2" secondAttribute="trailing" constant="4" id="Pdh-0q-dLm"/>
+                            <constraint firstItem="4cl-pe-HbB" firstAttribute="top" secondItem="53n-P3-LMo" secondAttribute="top" id="fRe-7R-Jta"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="top" secondItem="1ZN-K5-Y6n" secondAttribute="bottom" constant="44" id="kpO-pB-8hM"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="leading" secondItem="4cl-pe-HbB" secondAttribute="leading" id="oas-N6-m9t"/>
+                            <constraint firstItem="gbU-mU-hz3" firstAttribute="trailing" secondItem="rpZ-ta-sA2" secondAttribute="trailing" id="pao-gI-rpc"/>
+                            <constraint firstItem="gbU-mU-hz3" firstAttribute="leading" secondItem="KOn-V8-Ix9" secondAttribute="leadingMargin" constant="98" id="r02-jB-twM"/>
+                            <constraint firstAttribute="bottom" secondItem="gbU-mU-hz3" secondAttribute="bottom" constant="20" symbolic="YES" id="rdg-w4-a95"/>
+                            <constraint firstItem="uEc-8b-GEl" firstAttribute="top" secondItem="4cl-pe-HbB" secondAttribute="bottom" constant="8" symbolic="YES" id="z4m-f7-AQe"/>
+                            <constraint firstItem="53n-P3-LMo" firstAttribute="trailing" secondItem="4cl-pe-HbB" secondAttribute="trailing" id="zWE-Jp-ezc"/>
                         </constraints>
                     </view>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -653,10 +653,10 @@
         <image name="tree.jpg" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dj3-vt-ghr"/>
-        <segue reference="xm0-zb-KWh"/>
         <segue reference="3VL-jG-6rj"/>
-        <segue reference="bH6-jx-wsv"/>
+        <segue reference="xm0-zb-KWh"/>
         <segue reference="SPj-Ww-hit"/>
+        <segue reference="nrC-DR-EDC"/>
+        <segue reference="dj3-vt-ghr"/>
     </inferredMetricsTieBreakers>
 </document>

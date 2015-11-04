@@ -15,6 +15,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     private var services: [Room] = [Room]()
     private var currentRow: Room = Room()
+    var activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +50,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         // Set the service coordinates and the title to a variable to be sent to Google Maps.
         currentRow = services[indexPath.row]
         
-        performSegueWithIdentifier("ShowMapsFromServices", sender: self)
+        self.performSegueWithIdentifier("ShowMapsFromServices", sender: self)
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }

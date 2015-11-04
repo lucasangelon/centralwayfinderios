@@ -19,7 +19,7 @@ import MapKit
 class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate {
     
     /*
-     *  Table and Search Bar Declarations
+     *  Table, Segmented Controls and Activity Indicator declarations.
      */
     
     @IBOutlet weak var directionsTypeControl: UISegmentedControl!
@@ -31,7 +31,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     private var resultSearchController = UISearchController()
     
     /*
-     *  Map Declarations
+     *  Map Declarations.
      */
     
     @IBOutlet weak var mapView: MKMapView!
@@ -178,6 +178,8 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
      * Generates a route for the mapView.
      */
     private func generateRoute(buildingId: Int, directionsType: MKDirectionsTransportType) {
+        
+        
         
         // Retrieves the building from the database.
         building = sharedInstance.getBuilding(buildingId, building: building)
@@ -356,7 +358,6 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         case 0:
             generateRoute(destBuildingId, directionsType: MKDirectionsTransportType.Walking)
         case 1:
-            
             generateRoute(destBuildingId, directionsType: MKDirectionsTransportType.Automobile)
         default:
             break
