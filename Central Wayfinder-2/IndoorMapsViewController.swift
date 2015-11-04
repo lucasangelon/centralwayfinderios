@@ -13,7 +13,7 @@ class IndoorMapsViewController : UIViewController, UIScrollViewDelegate {
     
     @IBOutlet var scrollView: UIScrollView!
     
-    var imageView: UIImageView!
+    private var imageView: UIImageView!
     
     // Based on: http://www.raywenderlich.com/76436/use-uiscrollview-scroll-zoom-content-swift
     override func viewDidLoad() {

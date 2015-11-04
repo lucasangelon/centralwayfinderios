@@ -48,6 +48,4 @@ class Campus: NSObject {
     override init() {
         super.init()
     }
-    
-    
 }

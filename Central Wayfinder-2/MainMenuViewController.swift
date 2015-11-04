@@ -14,7 +14,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet var tableView: UITableView!
     
     // List items for the main menu.
-    let cellContent = ["Map", "Services", "Central Web", "Settings"]
+    private let cellContent = ["Map", "Services", "Central Web", "Settings"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,9 +87,4 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             destinationSegue.requiresSearch = true
         }
     }
-    
 }
-
-
-
-

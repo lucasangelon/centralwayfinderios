@@ -13,8 +13,8 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet var tableView: UITableView!
     
-    var services: [Room] = [Room]()
-    var currentRow: Room = Room()
+    private var services: [Room] = [Room]()
+    private var currentRow: Room = Room()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,9 +67,4 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
             destinationSegue.requiresSearch = false
         }
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
 }

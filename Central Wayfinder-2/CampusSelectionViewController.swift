@@ -12,10 +12,10 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     
     @IBOutlet var tableView: UITableView!
     
-    var campuses: [Campus] = [Campus]()
-    var campus: Campus = Campus()
+    private var campuses: [Campus] = [Campus]()
+    private var campus: Campus = Campus()
     
-    var firstUse = false
+    private var firstUse = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,10 +27,6 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         
         // Database Interaction
         campuses = sharedInstance.getCampuses(campuses)
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        
     }
     
     // Setting up the footer.

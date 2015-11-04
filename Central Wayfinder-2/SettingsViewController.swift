@@ -14,7 +14,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet var tableView: UITableView!
     
     // List items for the menu.
-    let cellContent = [["Accessibility", "Select Campus"], ["About", "Terms of Service", "Privacy Policy"]]
+    private let cellContent = [["Accessibility", "Select Campus"], ["About", "Terms of Service", "Privacy Policy"]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,4 +125,3 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
 }
-

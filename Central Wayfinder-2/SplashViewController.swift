@@ -13,10 +13,10 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     
     @IBOutlet var startButton: UIButton!
     
-    let util: Util = Util()
+    private let util: Util = Util()
     
     // Declaring the location manager.
-    var locationManager = CLLocationManager()
+    private var locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,20 +26,9 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         // Configuring the location manager.
         locationManager.delegate = self
         
-        
-        
+        // Setting up the database and the queue for general access.
         sharedInstance.setupDatabase()
-        
         sharedInstance.setupQueue()
-        
-        
-        // Testing purposes.
-        sharedInstance.prepareTestData()
-        
-        // Uncomment to clear test data.
-        //sharedInstance.clearTest()
-        
-        
     }
     
     // Handling the alert window in the right hierarchy.
@@ -73,7 +62,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     }
     
     // Handles the alerts related to the location service options and authorizations.
-    func alertLocation(title: String, message: String) {
+    private func alertLocation(title: String, message: String) {
         
         // If iOS 8:
         if #available(iOS 8.0, *) {
@@ -117,7 +106,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     }
     
     // Alert regarding the internet connection status.
-    func alertInternet(title: String, message: String) {
+    private func alertInternet(title: String, message: String) {
         
         if #available(iOS 8.0, *) {
             let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
