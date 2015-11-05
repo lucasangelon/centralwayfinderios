@@ -65,7 +65,6 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
             let destinationSegue = segue.destinationViewController as! MapsViewController
             destinationSegue.destTitle = currentRow.name
             destinationSegue.destBuildingId = currentRow.buildingId
-            destinationSegue.requiresSearch = false
         }
     }
 }
