@@ -299,7 +299,7 @@
         <!--Find Location-->
         <scene sceneID="pTf-XX-5uO">
             <objects>
-                <viewController title="Find Location" id="Ntv-4a-r2d" customClass="SearchViewController" customModule="Central_Wayfinder_2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchViewController" title="Find Location" id="Ntv-4a-r2d" customClass="SearchViewController" customModule="Central_Wayfinder_2" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="VnT-OC-hQ4"/>
                         <viewControllerLayoutGuide type="bottom" id="Oaq-C1-iKa"/>
@@ -541,7 +541,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U69-lk-an8" id="yMV-Ku-wyv">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
                                         </tableViewCellContentView>
@@ -551,7 +551,7 @@
                                         <rect key="frame" x="0.0" y="72" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SbG-zO-SXl" id="DYS-Bv-X9c">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
                                         </tableViewCellContentView>
@@ -686,10 +686,10 @@
         <image name="tree.jpg" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qUz-w0-Y6o"/>
-        <segue reference="3VL-jG-6rj"/>
-        <segue reference="xm0-zb-KWh"/>
-        <segue reference="n2Y-8Q-uSB"/>
+        <segue reference="zv2-Fd-USE"/>
+        <segue reference="SPj-Ww-hit"/>
+        <segue reference="oyr-x9-z7Z"/>
         <segue reference="9Pr-z6-JSA"/>
+        <segue reference="qUz-w0-Y6o"/>
     </inferredMetricsTieBreakers>
 </document>
