@@ -30,6 +30,32 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         sharedInstance.setupDatabase()
         sharedInstance.setupQueue()
         sharedInstance.prepareTestData()
+        
+        /*// Get the #1 app name from iTunes and SwiftyJSON
+        DataManager.getTopAppsDataFromItunesWithSuccess { (iTunesData) -> Void in
+            let json = JSON(data: iTunesData)
+            if let appName = json["feed"]["entry"][0]["im:name"]["label"].string {
+                print("NSURLSession: \(appName)")
+            }
+            // More soon...
+            
+            if let appArray = json["feed"]["entry"].array {
+                //2
+                var apps = [AppModel]()
+                
+                //3
+                for appDict in appArray {
+                    var appName: String? = appDict["im:name"]["label"].string
+                    var appURL: String? = appDict["im:image"][0]["label"].string
+                    
+                    var app = AppModel(name: appName, appStoreURL: appURL)
+                    apps.append(app)
+                }
+                
+                //4
+                print(apps)
+            }
+        }*/
     }
     
     // Handling the alert window in the right hierarchy.

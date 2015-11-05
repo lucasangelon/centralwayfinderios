@@ -28,7 +28,10 @@
 		A0781F2A1BCF72FC002A65AF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0781F291BCF72FC002A65AF /* CoreLocation.framework */; };
 		A0781F2C1BCF869B002A65AF /* MapLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F2B1BCF869B002A65AF /* MapLocation.swift */; };
 		A0781F2F1BCF8BA5002A65AF /* MapsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */; };
-		A0A1105C1BE9D9BD00DC40AA /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A1105B1BE9D9BD00DC40AA /* SwiftyJSON.swift */; };
+		A0A1105E1BE9DA8600DC40AA /* WebServicesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A1105D1BE9DA8600DC40AA /* WebServicesHelper.swift */; };
+		A0A110601BE9DB7400DC40AA /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A1105F1BE9DB7400DC40AA /* DataManager.swift */; };
+		A0A110621BE9DC6200DC40AA /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A110611BE9DC6200DC40AA /* AppModel.swift */; };
+		A0A110631BE9E32C00DC40AA /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A1105B1BE9D9BD00DC40AA /* SwiftyJSON.swift */; };
 		A0A15B3F1BD9C1B800B27A22 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A15B3E1BD9C1B800B27A22 /* DatabaseManager.swift */; };
 		A0A15B411BD9C4FC00B27A22 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */; };
 		A0A15B431BD9CAF400B27A22 /* CampusSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A15B421BD9CAF400B27A22 /* CampusSelectionViewController.swift */; };
@@ -86,6 +89,9 @@
 		A0781F2B1BCF869B002A65AF /* MapLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocation.swift; sourceTree = "<group>"; };
 		A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsViewHelper.swift; sourceTree = "<group>"; };
 		A0A1105B1BE9D9BD00DC40AA /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		A0A1105D1BE9DA8600DC40AA /* WebServicesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebServicesHelper.swift; sourceTree = "<group>"; };
+		A0A1105F1BE9DB7400DC40AA /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		A0A110611BE9DC6200DC40AA /* AppModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		A0A15B3E1BD9C1B800B27A22 /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsController.swift; sourceTree = "<group>"; };
 		A0A15B421BD9CAF400B27A22 /* CampusSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusSelectionViewController.swift; sourceTree = "<group>"; };
@@ -213,11 +219,13 @@
 		A0781F1A1BCF3623002A65AF /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				A0A1105F1BE9DB7400DC40AA /* DataManager.swift */,
 				A0A1105B1BE9D9BD00DC40AA /* SwiftyJSON.swift */,
 				A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */,
 				A0A15B3E1BD9C1B800B27A22 /* DatabaseManager.swift */,
 				A064B0301BDFE18E00A1D55B /* Util.swift */,
 				A06DEAC51BE1BDB2003BE704 /* DatabaseStatements.swift */,
+				A0A1105D1BE9DA8600DC40AA /* WebServicesHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -242,6 +250,7 @@
 		A0781F2D1BCF8987002A65AF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A0A110611BE9DC6200DC40AA /* AppModel.swift */,
 				A0781F2B1BCF869B002A65AF /* MapLocation.swift */,
 				A064B0331BE0640900A1D55B /* Campus.swift */,
 				A064B0351BE0657900A1D55B /* Building.swift */,
@@ -406,16 +415,19 @@
 				A064B0311BDFE18E00A1D55B /* Util.swift in Sources */,
 				A0781F241BCF4B38002A65AF /* MainMenuViewController.swift in Sources */,
 				A0781F1E1BCF368D002A65AF /* ServicesViewController.swift in Sources */,
-				A0A1105C1BE9D9BD00DC40AA /* SwiftyJSON.swift in Sources */,
 				A06DEAC61BE1BDB2003BE704 /* DatabaseStatements.swift in Sources */,
 				A0A15B411BD9C4FC00B27A22 /* UserDefaultsController.swift in Sources */,
 				A064B0341BE0640900A1D55B /* Campus.swift in Sources */,
 				A0A15B3F1BD9C1B800B27A22 /* DatabaseManager.swift in Sources */,
 				A0781F261BCF4BB4002A65AF /* MapsViewController.swift in Sources */,
 				A0C5057F1BD8D2E40084A9E8 /* FMDatabase.m in Sources */,
+				A0A1105E1BE9DA8600DC40AA /* WebServicesHelper.swift in Sources */,
+				A0A110601BE9DB7400DC40AA /* DataManager.swift in Sources */,
 				A0781F2C1BCF869B002A65AF /* MapLocation.swift in Sources */,
+				A0A110621BE9DC6200DC40AA /* AppModel.swift in Sources */,
 				A0C505811BD8D2E40084A9E8 /* FMDatabaseQueue.m in Sources */,
 				A02DD7881BDB66CC00951F5C /* PostMapsViewController.swift in Sources */,
+				A0A110631BE9E32C00DC40AA /* SwiftyJSON.swift in Sources */,
 				A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */,
 				A0C505821BD8D2E40084A9E8 /* FMDatabaseAdditions.m in Sources */,
 				A064B0361BE0657900A1D55B /* Building.swift in Sources */,

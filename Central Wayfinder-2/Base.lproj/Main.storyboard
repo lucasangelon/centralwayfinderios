@@ -289,7 +289,7 @@
                     <connections>
                         <segue destination="jtF-An-wbS" kind="show" identifier="ShowSettingsViewController" id="n2Y-8Q-uSB"/>
                         <segue destination="Gf9-nl-Us8" kind="show" identifier="ShowServicesViewController" id="6n0-QH-20b"/>
-                        <segue destination="Qz0-gV-owB" kind="show" identifier="ShowMapsViewController" id="bH6-jx-wsv"/>
+                        <segue destination="2qD-E0-gQ4" kind="show" identifier="ShowSearchViewController" id="6Wz-5d-Ot9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P6d-HQ-orE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -398,7 +398,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yv4-Sj-hvw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2633" y="292"/>
+            <point key="canvasLocation" x="2941" y="292"/>
         </scene>
         <!--Location-->
         <scene sceneID="9Be-6Z-msh">
@@ -445,7 +445,30 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SgV-Uv-loA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3074" y="292"/>
+            <point key="canvasLocation" x="3412" y="292"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="85L-4L-dnm">
+            <objects>
+                <viewController id="2qD-E0-gQ4" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="K3o-f7-8LP"/>
+                        <viewControllerLayoutGuide type="bottom" id="1jn-PH-5B2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nA9-ed-Q8O">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <segue destination="Qz0-gV-owB" kind="show" identifier="ShowMapsViewController" id="UaT-bw-jwP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0j7-in-Oeo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2542" y="292"/>
         </scene>
         <!--Indoor Maps-->
         <scene sceneID="A6w-rA-avF">
@@ -484,7 +507,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5nD-kn-9hp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3512" y="292"/>
+            <point key="canvasLocation" x="3844" y="292"/>
         </scene>
         <!--Settings-->
         <scene sceneID="cS0-Q0-sZt">
@@ -653,10 +676,10 @@
         <image name="tree.jpg" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="dj3-vt-ghr"/>
         <segue reference="3VL-jG-6rj"/>
         <segue reference="xm0-zb-KWh"/>
-        <segue reference="SPj-Ww-hit"/>
-        <segue reference="nrC-DR-EDC"/>
-        <segue reference="dj3-vt-ghr"/>
+        <segue reference="n2Y-8Q-uSB"/>
+        <segue reference="UaT-bw-jwP"/>
     </inferredMetricsTieBreakers>
 </document>
