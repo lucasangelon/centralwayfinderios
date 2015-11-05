@@ -102,7 +102,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             setInitialLocation()
                 
             // Set a default location, center and select it.
-            start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "Default Campus Location")
+            start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "Default Campus Location", destination: false)
             mapView.addAnnotation(start)
             mapView.selectAnnotation(start, animated: true)
             mapView.showAnnotations([start], animated: true)
@@ -150,7 +150,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         building = sharedInstance.getBuilding(buildingId, building: building)
         
         // Creates the destination object.
-        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: building.lat, longitude: building.long), title: "\(building.name) - \(destTitle)", subtitle: "Destination")
+        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: building.lat, longitude: building.long), title: building.name, subtitle: destTitle, destination: true)
         
         // Start a request for maps.
         let request = MKDirectionsRequest()
@@ -175,7 +175,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             setInitialLocation()
             
             // Sets the start object for the route.
-            start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "You are here")
+            start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "You are here", destination: false)
             
             // Define the required data for the annotations on the map.
             let markDestination = MKPlacemark(coordinate: CLLocationCoordinate2DMake(destination.coordinate.latitude, destination.coordinate.longitude), addressDictionary: nil)

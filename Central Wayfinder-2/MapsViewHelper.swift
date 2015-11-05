@@ -37,7 +37,7 @@ extension MapsViewController {
                 view.animatesDrop = true
                 
                 // Changes the pin color to green for the starting position and red for destination.
-                if (view.annotation?.subtitle)! == "Destination" {
+                if (annotation.destination == true) {
                     setPinColor(view, color: UIColor.redColor(), annotationColor: MKPinAnnotationColor.Red)
                     
                     // Adds the information button to the annotation.
