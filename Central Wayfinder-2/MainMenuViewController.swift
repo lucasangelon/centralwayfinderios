@@ -14,7 +14,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet var tableView: UITableView!
     
     // List items for the main menu.
-    private let cellContent = ["Map", "Services", "Central Web", "Settings"]
+    private let cellContent = ["Find Location", "Services", "Central Web", "Settings"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +56,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         case 0:
             
             // Perform Segue.
-            self.performSegueWithIdentifier("ShowMapsViewController", sender: self)
+            self.performSegueWithIdentifier("ShowSearchViewController", sender: self)
             
             // When the "Services" item is clicked.
         case 1:
@@ -79,12 +79,5 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "ShowMapsViewController" {
-            let destinationSegue = segue.destinationViewController as! MapsViewController
-            destinationSegue.requiresSearch = true
-        }
     }
 }

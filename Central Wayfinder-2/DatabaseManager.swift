@@ -143,6 +143,29 @@ class DatabaseManager : NSObject {
         return rooms
     }
     
+    // Returns all available rooms (including services) in a given campus.
+    func getRooms(campusId: String, var rooms: [Room]) -> [Room] {
+        queue?.inDatabase() {
+            db in
+            
+            let  resultSet: FMResultSet! = db.executeQuery((self.dbStatements.SELECT_ROOMS), withArgumentsInArray: [campusId])
+            
+            if (resultSet != nil) {
+                while (resultSet.next()) {
+                    rooms.append(Room(id: Int(resultSet.intForColumn("id")), name: resultSet.stringForColumn("name"), image: resultSet.stringForColumn("image"), buildingId: Int(resultSet.intForColumn("building_id")), campusId: resultSet.stringForColumn("campus_id")))
+                }
+            }
+            
+            else {
+                print("An error has occured: \(db.lastErrorMessage())")
+            }
+            
+            resultSet.close()
+        }
+        
+        return rooms
+    }
+    
     // Returns the building a given room is located in through an id.
     func getBuilding(id: Int, var building: Building) -> Building {
         queue?.inDatabase() {
