@@ -43,6 +43,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
                 
                 // This line *Should* call the location request on iOS 7. Do not have a device to test it at the moment.
                 locationManager.startUpdatingLocation()
+                locationManager.stopUpdatingLocation()
             }
         }
         

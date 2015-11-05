@@ -55,6 +55,13 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
+    // Setting up the footer.
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 10))
+        
+        return footerView
+    }
+    
     // Prepare for the Segue by sending all information required to the Google Maps View Controller.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         

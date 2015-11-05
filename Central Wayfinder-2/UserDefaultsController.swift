@@ -15,7 +15,7 @@ class UserDefaultsController {
     private let defaults = NSUserDefaults.standardUserDefaults()
     
     // Getters and Setters
-    // Campus Name
+    // Campus Id
     var campusId: String {
         get {
             return defaults.stringForKey("selectedCampus")!
@@ -23,6 +23,17 @@ class UserDefaultsController {
         
         set {
             defaults.setObject(newValue, forKey: "selectedCampus")
+        }
+    }
+    
+    // Campus Name
+    var campusName: String {
+        get {
+            return defaults.stringForKey("selectedCampusName")!
+        }
+        
+        set {
+            defaults.setObject(newValue, forKey: "selectedCampusName")
         }
     }
     

@@ -57,6 +57,7 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         sharedDefaults.campusId = campuses[indexPath.row].id
         sharedDefaults.campusDefaultLat = campuses[indexPath.row].lat
         sharedDefaults.campusDefaultLong = campuses[indexPath.row].long
+        sharedDefaults.campusName = campuses[indexPath.row].name
         
         if firstUse {
             firstUse = false
@@ -84,6 +85,7 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
                 sharedDefaults.campusId = campus.id
                 sharedDefaults.campusDefaultLat = campus.lat
                 sharedDefaults.campusDefaultLong = campus.long
+                sharedDefaults.campusName = campus.name
             }
             
             firstUse = false
