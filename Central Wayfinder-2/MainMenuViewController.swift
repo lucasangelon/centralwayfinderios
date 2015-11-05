@@ -8,22 +8,53 @@
 
 import UIKit
 
-class MainMenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MainMenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     // Declaring the base tableView.
     @IBOutlet var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    private var rooms: [Room] = [Room]()
+    private var roomNames: [String] = [String]()
+    private var selectedRoom: Room = Room()
     
     // List items for the main menu.
-    private let cellContent = ["Find Location", "Services", "Central Web", "Settings"]
+    private let cellContent = ["Services", "Central Web", "Settings"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Adds a tap gesture to dismiss the keyboard anywhere in the screen.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        
+        // Ensures the keyboard dismissal will not stop touches in the table view.
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
         
         // Paint the navigation bar in white after the Splash Screen.
         self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
         
         // Ensures the tab bar is hidden on the main menu in order to avoid duplicate options on the page.
         self.tabBarController?.tabBar.hidden = true
+        
+        // Setting up the arrays for the searching cell.
+        rooms = sharedInstance.getRooms(sharedDefaults.campusId, rooms: rooms)
+        
+        if rooms.count > 0 {
+            for index in 0...(rooms.count - 1) {
+                roomNames.append(rooms[index].name)
+            }
+        } else {
+            print("No Rooms found for this campus.")
+        }
+        
+        
+        self.searchBar.placeholder = "Enter Room"
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
     }
     
     // Ensures the navigation bar is hidden in this page.
@@ -52,25 +83,19 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
             
-            // When the "Map" item is clicked.
-        case 0:
-            
-            // Perform Segue.
-            self.performSegueWithIdentifier("ShowSearchViewController", sender: self)
-            
             // When the "Services" item is clicked.
-        case 1:
+        case 0:
             self.performSegueWithIdentifier("ShowServicesViewController", sender: self)
             
             // When the "Central Web" item is clicked, open the website on the default browser for the system.
-        case 2:
+        case 1:
             
             // Open the browser and go to central.wa.edu.au
             let url = NSURL(string: "http://central.wa.edu.au")!
             UIApplication.sharedApplication().openURL(url)
             
             // When the "Settings" item is clicked.
-        case 3:
+        case 2:
             self.performSegueWithIdentifier("ShowSettingsViewController", sender: self)
             
             // Default action.
@@ -79,5 +104,68 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    // When the user clicks on the search button.
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        var found = false
+        var positionFound = 0
+        
+        if rooms.count > 0 {
+            
+            // Search for the room.
+            for index in 0...(roomNames.count - 1) {
+                if roomNames[index] == searchBar.text {
+                    found = true
+                    positionFound = index
+                }
+            }
+        }
+        
+        if found {
+            selectedRoom = rooms[positionFound]
+            self.performSegueWithIdentifier("ShowMapsFromMenu", sender: self)
+        } else {
+            // Handling the alert to explain the room could not be found at this specific campus.
+            if #available(iOS 8.0, *) {
+                let alert: UIAlertController = UIAlertController(title: "Could not find location", message: "The location you searched for does not exist at the \(sharedDefaults.campusName) campus.", preferredStyle: .Alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+                
+                // iOS 7.* or lower:
+            else {
+                let alert: UIAlertView = UIAlertView()
+                
+                alert.delegate = self
+                alert.title = "Could not find location"
+                
+                alert.message = "The location you searched for does not exist at this campus."
+                alert.addButtonWithTitle("Ok")
+                
+                alert.show()
+            }
+        }
+        
+        self.searchBar.endEditing(true)
+
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowMapsFromMenu" {
+            let destinationSegue = segue.destinationViewController as! MapsViewController
+            destinationSegue.destTitle = selectedRoom.name
+            destinationSegue.destBuildingId = selectedRoom.buildingId
+        }
+        
+        // Clears the search bar prior to changing screens.
+        searchBar.text = ""
+    }
+    
+    // Dismisses the keyboard.
+    func dismissKeyboard() {
+        self.searchBar.endEditing(true)
     }
 }

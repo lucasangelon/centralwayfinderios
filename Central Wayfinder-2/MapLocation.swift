@@ -13,10 +13,12 @@ class MapLocation : NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var subtitle: String?
+    var destination: Bool?
     
-    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String) {
+    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String, destination: Bool) {
         self.title = title
         self.subtitle = subtitle
         self.coordinate = coordinate
+        self.destination = destination
     }
 }

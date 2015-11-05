@@ -30,7 +30,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
      */
     
     @IBOutlet weak var mapView: MKMapView!
-    private final let regionRadius: CLLocationDistance = 300
+    private final let regionRadius: CLLocationDistance = 375
     
     private var destination: MapLocation!
     private var start: MapLocation!
@@ -68,10 +68,11 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         setUpMaps()
     }
     
-    private func setRegion() {
-        let span = MKCoordinateSpanMake(0.075, 0.075)
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: initialLocation.latitude, longitude: initialLocation.longitude), span: span)
-        mapView.setRegion(region, animated: true)
+    // Centers map on a given location. Used to set the default zoom for campuses.
+    func centerMapOnLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
+            regionRadius * 2.0, regionRadius * 2.0)
+        mapView.setRegion(coordinateRegion, animated: true)
     }
     
     // Sets up the page / refreshes it.
@@ -80,7 +81,6 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         // If the user was sent here from another page with data.
         if destinationExists() {
             
-            setRegion()
             // Generates the route.
             generateRoute(destBuildingId, directionsType: MKDirectionsTransportType.Walking)
             
@@ -102,11 +102,13 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             setInitialLocation()
                 
             // Set a default location, center and select it.
-            start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "Default Campus Location")
+            start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "Default Campus Location", destination: false)
             mapView.addAnnotation(start)
             mapView.selectAnnotation(start, animated: true)
             mapView.showAnnotations([start], animated: true)
         }
+        
+        centerMapOnLocation(CLLocation(latitude: sharedDefaults.campusDefaultLat, longitude: sharedDefaults.campusDefaultLong))
     }
     
     // Sets the initial location for the user to the default if there are no location services.
@@ -150,7 +152,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         building = sharedInstance.getBuilding(buildingId, building: building)
         
         // Creates the destination object.
-        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: building.lat, longitude: building.long), title: "\(building.name) - \(destTitle)", subtitle: "Destination")
+        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: building.lat, longitude: building.long), title: building.name, subtitle: destTitle, destination: true)
         
         // Start a request for maps.
         let request = MKDirectionsRequest()
@@ -175,7 +177,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             setInitialLocation()
             
             // Sets the start object for the route.
-            start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "You are here")
+            start = MapLocation(coordinate: initialLocation, title: "Your Location", subtitle: "You are here", destination: false)
             
             // Define the required data for the annotations on the map.
             let markDestination = MKPlacemark(coordinate: CLLocationCoordinate2DMake(destination.coordinate.latitude, destination.coordinate.longitude), addressDictionary: nil)
