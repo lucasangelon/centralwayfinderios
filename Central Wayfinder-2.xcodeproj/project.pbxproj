@@ -29,12 +29,10 @@
 		A0781F2C1BCF869B002A65AF /* MapLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F2B1BCF869B002A65AF /* MapLocation.swift */; };
 		A0781F2F1BCF8BA5002A65AF /* MapsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */; };
 		A0A1105E1BE9DA8600DC40AA /* WebServicesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A1105D1BE9DA8600DC40AA /* WebServicesHelper.swift */; };
-		A0A110601BE9DB7400DC40AA /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A1105F1BE9DB7400DC40AA /* DataManager.swift */; };
-		A0A110621BE9DC6200DC40AA /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A110611BE9DC6200DC40AA /* AppModel.swift */; };
-		A0A110631BE9E32C00DC40AA /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A1105B1BE9D9BD00DC40AA /* SwiftyJSON.swift */; };
 		A0A15B3F1BD9C1B800B27A22 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A15B3E1BD9C1B800B27A22 /* DatabaseManager.swift */; };
 		A0A15B411BD9C4FC00B27A22 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */; };
 		A0A15B431BD9CAF400B27A22 /* CampusSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A15B421BD9CAF400B27A22 /* CampusSelectionViewController.swift */; };
+		A0AE55231BEAE5FF0006A364 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AE55221BEAE5FF0006A364 /* SearchViewController.swift */; };
 		A0C505711BD8AD380084A9E8 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0C505701BD8AD380084A9E8 /* libsqlite3.tbd */; };
 		A0C5057F1BD8D2E40084A9E8 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C505761BD8D2E40084A9E8 /* FMDatabase.m */; };
 		A0C505801BD8D2E40084A9E8 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C505781BD8D2E40084A9E8 /* FMResultSet.m */; };
@@ -88,13 +86,11 @@
 		A0781F291BCF72FC002A65AF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A0781F2B1BCF869B002A65AF /* MapLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocation.swift; sourceTree = "<group>"; };
 		A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapsViewHelper.swift; sourceTree = "<group>"; };
-		A0A1105B1BE9D9BD00DC40AA /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		A0A1105D1BE9DA8600DC40AA /* WebServicesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebServicesHelper.swift; sourceTree = "<group>"; };
-		A0A1105F1BE9DB7400DC40AA /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		A0A110611BE9DC6200DC40AA /* AppModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		A0A15B3E1BD9C1B800B27A22 /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsController.swift; sourceTree = "<group>"; };
 		A0A15B421BD9CAF400B27A22 /* CampusSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusSelectionViewController.swift; sourceTree = "<group>"; };
+		A0AE55221BEAE5FF0006A364 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A0C505701BD8AD380084A9E8 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A0C505731BD8D2E40084A9E8 /* Central Wayfinder-2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Central Wayfinder-2-Bridging-Header.h"; sourceTree = "<group>"; };
 		A0C505741BD8D2E40084A9E8 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
@@ -203,6 +199,7 @@
 				A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */,
 				A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */,
 				A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */,
+				A0AE55221BEAE5FF0006A364 /* SearchViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -219,8 +216,6 @@
 		A0781F1A1BCF3623002A65AF /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				A0A1105F1BE9DB7400DC40AA /* DataManager.swift */,
-				A0A1105B1BE9D9BD00DC40AA /* SwiftyJSON.swift */,
 				A0781F2E1BCF8BA5002A65AF /* MapsViewHelper.swift */,
 				A0A15B3E1BD9C1B800B27A22 /* DatabaseManager.swift */,
 				A064B0301BDFE18E00A1D55B /* Util.swift */,
@@ -250,7 +245,6 @@
 		A0781F2D1BCF8987002A65AF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A0A110611BE9DC6200DC40AA /* AppModel.swift */,
 				A0781F2B1BCF869B002A65AF /* MapLocation.swift */,
 				A064B0331BE0640900A1D55B /* Campus.swift */,
 				A064B0351BE0657900A1D55B /* Building.swift */,
@@ -422,18 +416,16 @@
 				A0781F261BCF4BB4002A65AF /* MapsViewController.swift in Sources */,
 				A0C5057F1BD8D2E40084A9E8 /* FMDatabase.m in Sources */,
 				A0A1105E1BE9DA8600DC40AA /* WebServicesHelper.swift in Sources */,
-				A0A110601BE9DB7400DC40AA /* DataManager.swift in Sources */,
 				A0781F2C1BCF869B002A65AF /* MapLocation.swift in Sources */,
-				A0A110621BE9DC6200DC40AA /* AppModel.swift in Sources */,
 				A0C505811BD8D2E40084A9E8 /* FMDatabaseQueue.m in Sources */,
 				A02DD7881BDB66CC00951F5C /* PostMapsViewController.swift in Sources */,
-				A0A110631BE9E32C00DC40AA /* SwiftyJSON.swift in Sources */,
 				A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */,
 				A0C505821BD8D2E40084A9E8 /* FMDatabaseAdditions.m in Sources */,
 				A064B0361BE0657900A1D55B /* Building.swift in Sources */,
 				A0781F2F1BCF8BA5002A65AF /* MapsViewHelper.swift in Sources */,
 				A0C505801BD8D2E40084A9E8 /* FMResultSet.m in Sources */,
 				A02DD78A1BDB74E600951F5C /* IndoorMapsViewController.swift in Sources */,
+				A0AE55231BEAE5FF0006A364 /* SearchViewController.swift in Sources */,
 				A064B0381BE0664400A1D55B /* Room.swift in Sources */,
 				A0A15B431BD9CAF400B27A22 /* CampusSelectionViewController.swift in Sources */,
 				A0C505831BD8D2E40084A9E8 /* FMDatabasePool.m in Sources */,

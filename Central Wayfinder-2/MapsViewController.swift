@@ -16,7 +16,7 @@ import MapKit
 // Based on: http://stackoverflow.com/questions/29764337/subclassing-mkannotation-error-conform-to-protocol
 
 @available(iOS 8.0, *)
-class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate {
+class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     /*
      *  Table, Segmented Controls and Activity Indicator declarations.
@@ -24,11 +24,6 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     @IBOutlet weak var directionsTypeControl: UISegmentedControl!
     @IBOutlet weak var mapTypeControl: UISegmentedControl!
-    @IBOutlet weak var searchTable: UITableView!
-
-    private let defaultItems = ["1","1112","113","143","145","Blob","B223", "B221"]
-    private var filteredItems = [String]()
-    private var resultSearchController = UISearchController()
     
     /*
      *  Map Declarations.
@@ -52,50 +47,15 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     // Locations
     private var initialLocation = CLLocationCoordinate2D()
     
-    var requiresSearch: Bool = false
-    ////////////////////
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBarHidden = false
         self.title = ""
-        self.searchTable.hidden = true
         
         //Set Map Type Control Action
         self.mapTypeControl.addTarget(self, action: "mapTypeToggle:", forControlEvents: UIControlEvents.ValueChanged)
         self.directionsTypeControl.addTarget(self, action: "directionsTypeToggle:", forControlEvents: UIControlEvents.ValueChanged)
-        
-        if requiresSearch {
-            if #available(iOS 9.0, *) {
-                self.resultSearchController.loadViewIfNeeded()
-            } else {
-                // Fallback on earlier versions
-            }
-            self.searchTable?.hidden = false
-            
-            /* Table and Search Bar Section */
-            
-            // Setting up the search bar.
-            resultSearchController.searchBar.placeholder = "Enter text"
-            resultSearchController.searchBar.delegate = self
-            
-            self.resultSearchController = ({
-                let controller = UISearchController(searchResultsController: nil)
-                controller.searchResultsUpdater = self
-                controller.dimsBackgroundDuringPresentation = false
-                controller.searchBar.sizeToFit()
-                
-                self.searchTable!.tableHeaderView = controller.searchBar
-                
-                return controller
-            })()
-            
-            self.searchTable!.reloadData()
-        } else {
-            self.searchTable?.hidden = true
-        }
         
         /* Map Section */
         
@@ -108,12 +68,19 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         setUpMaps()
     }
     
+    private func setRegion() {
+        let span = MKCoordinateSpanMake(0.075, 0.075)
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: initialLocation.latitude, longitude: initialLocation.longitude), span: span)
+        mapView.setRegion(region, animated: true)
+    }
+    
     // Sets up the page / refreshes it.
     private func setUpMaps() {
         
         // If the user was sent here from another page with data.
         if destinationExists() {
             
+            setRegion()
             // Generates the route.
             generateRoute(destBuildingId, directionsType: MKDirectionsTransportType.Walking)
             
@@ -178,8 +145,6 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
      * Generates a route for the mapView.
      */
     private func generateRoute(buildingId: Int, directionsType: MKDirectionsTransportType) {
-        
-        
         
         // Retrieves the building from the database.
         building = sharedInstance.getBuilding(buildingId, building: building)
@@ -279,62 +244,6 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print(error.localizedDescription)
     }
-    
-    /*
-     * Search Table Functions
-     */
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if (self.resultSearchController.active) {
-            return filteredItems.count
-        } else {
-            return defaultItems.count
-        }
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        
-        if (self.resultSearchController.active) {
-            cell.textLabel?.text = filteredItems[indexPath.row]
-        } else {
-            cell.textLabel?.text = defaultItems[indexPath.row]
-        }
-        
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        if (self.resultSearchController.active) {
-            print(filteredItems[indexPath.row])
-        } else {
-            print(defaultItems[indexPath.row])
-        }
-        resignFirstResponder()
-        self.searchTable.hidden = true
-    }
-    
-    /*
-     *  Search Bar Functions
-     */
-    
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        
-        filteredItems.removeAll(keepCapacity: false)
-        
-        let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
-        let array = (defaultItems as NSArray).filteredArrayUsingPredicate(searchPredicate)
-        filteredItems = array as! [String]
-        
-        self.searchTable!.reloadData()
-    }
-    
     
     // Map Type Toggle handler.
     func mapTypeToggle(sender: UISegmentedControl) {

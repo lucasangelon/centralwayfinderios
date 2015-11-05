@@ -58,14 +58,10 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
     // Prepare for the Segue by sending all information required to the Google Maps View Controller.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier != "ReturnFromServices" {
-            // Set up the coordinates and the title of the location.
-            let manager: CLLocationManager = CLLocationManager()
-            manager.startUpdatingLocation()
+        if segue.identifier == "ShowMapsFromServices" {
             let destinationSegue = segue.destinationViewController as! MapsViewController
             destinationSegue.destTitle = currentRow.name
             destinationSegue.destBuildingId = currentRow.buildingId
-            destinationSegue.requiresSearch = false
         }
     }
 }
