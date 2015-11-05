@@ -40,7 +40,7 @@ class SearchViewController : UIViewController, UITableViewDelegate, UITableViewD
             controller.searchBar.sizeToFit()
             
             self.searchTable.tableHeaderView = controller.searchBar
-            
+
             return controller
         })()
         

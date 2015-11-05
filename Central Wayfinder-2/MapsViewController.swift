@@ -30,7 +30,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
      */
     
     @IBOutlet weak var mapView: MKMapView!
-    private final let regionRadius: CLLocationDistance = 300
+    private final let regionRadius: CLLocationDistance = 375
     
     private var destination: MapLocation!
     private var start: MapLocation!
@@ -68,10 +68,11 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         setUpMaps()
     }
     
-    private func setRegion() {
-        let span = MKCoordinateSpanMake(0.075, 0.075)
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: initialLocation.latitude, longitude: initialLocation.longitude), span: span)
-        mapView.setRegion(region, animated: true)
+    // Centers map on a given location. Used to set the default zoom for campuses.
+    func centerMapOnLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
+            regionRadius * 2.0, regionRadius * 2.0)
+        mapView.setRegion(coordinateRegion, animated: true)
     }
     
     // Sets up the page / refreshes it.
@@ -80,7 +81,6 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         // If the user was sent here from another page with data.
         if destinationExists() {
             
-            setRegion()
             // Generates the route.
             generateRoute(destBuildingId, directionsType: MKDirectionsTransportType.Walking)
             
@@ -107,6 +107,8 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
             mapView.selectAnnotation(start, animated: true)
             mapView.showAnnotations([start], animated: true)
         }
+        
+        centerMapOnLocation(CLLocation(latitude: sharedDefaults.campusDefaultLat, longitude: sharedDefaults.campusDefaultLong))
     }
     
     // Sets the initial location for the user to the default if there are no location services.
