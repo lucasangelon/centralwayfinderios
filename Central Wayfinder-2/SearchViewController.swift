@@ -13,13 +13,25 @@ class SearchViewController : UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var searchTable: UITableView!
     
-    private let defaultItems = ["1","1112","113","143","145","Blob","B223", "B221"]
+    // Declaring item arrays and search controller.
+    private var rooms: [Room] = [Room]()
+    private var defaultItems: [String] = [String]()
     private var filteredItems = [String]()
     private var resultSearchController = UISearchController()
+    private var selectedRoom: Room = Room()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBarHidden = false
+        
+        rooms = sharedInstance.getRooms(sharedDefaults.campusId, rooms: rooms)
+        
+        for index in 0...(rooms.count - 1) {
+            defaultItems.append(rooms[index].name)
+        }
+        
+        // Setting the search controller up.
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)
             
@@ -32,6 +44,7 @@ class SearchViewController : UIViewController, UITableViewDelegate, UITableViewD
             return controller
         })()
         
+        // Reloads table data.
         self.searchTable.reloadData()
     }
     
@@ -39,6 +52,7 @@ class SearchViewController : UIViewController, UITableViewDelegate, UITableViewD
         return 1
     }
     
+    // Returns the correct item count based on filtered / normal data.
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (self.resultSearchController.active) {
             return self.filteredItems.count
@@ -59,14 +73,44 @@ class SearchViewController : UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
+    // Upon selection of an item.
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        // Set the service coordinates and the title to a variable to be sent to Google Maps.
+        selectedRoom = rooms[indexPath.row]
+        
+        self.performSegueWithIdentifier("ShowMapsFromSearch", sender: self)
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    // Setting up the footer.
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 10))
+        
+        return footerView
+    }
+    
+    // Adding the autocomplete search for the table.
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         filteredItems.removeAll(keepCapacity: false)
         
+        // Creating a predicate to search for in the list items.
         let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
         
         let array = (defaultItems as NSArray).filteredArrayUsingPredicate(searchPredicate)
         filteredItems = array as! [String]
         
         self.searchTable.reloadData()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowMapsFromSearch" {
+            
+            // Set up the coordinates and the title of the location.
+            let destinationSegue = segue.destinationViewController as! MapsViewController
+            destinationSegue.destTitle = selectedRoom.name
+            destinationSegue.destBuildingId = selectedRoom.buildingId
+        }
     }
 }

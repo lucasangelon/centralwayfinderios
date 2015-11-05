@@ -146,8 +146,6 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
      */
     private func generateRoute(buildingId: Int, directionsType: MKDirectionsTransportType) {
         
-        
-        
         // Retrieves the building from the database.
         building = sharedInstance.getBuilding(buildingId, building: building)
         
