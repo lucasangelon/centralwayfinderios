@@ -19,7 +19,7 @@ class IndoorMapsViewController : UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
-        let image = UIImage(named: "Image.jpg")!
+        let image = UIImage(named: "TEST.png")!
         imageView = UIImageView(image: image)
         imageView.frame = CGRect(origin: CGPoint(x: 0, y:0), size: image.size)
         scrollView.addSubview(imageView)

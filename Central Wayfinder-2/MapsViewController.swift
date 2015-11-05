@@ -150,7 +150,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         building = sharedInstance.getBuilding(buildingId, building: building)
         
         // Creates the destination object.
-        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: building.lat, longitude: building.long), title: destTitle, subtitle: "Destination")
+        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: building.lat, longitude: building.long), title: "\(building.name) - \(destTitle)", subtitle: "Destination")
         
         // Start a request for maps.
         let request = MKDirectionsRequest()

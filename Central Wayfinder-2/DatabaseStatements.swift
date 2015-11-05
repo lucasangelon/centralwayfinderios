@@ -81,10 +81,11 @@ class DatabaseStatements {
     func getTestBuildings() -> [Building] {
         var buildings: [Building] = [Building]()
         
-        buildings.append(Building(id: 1, name: "New Campus Building 1", lat: 22.2, long: 22.30003, campusId: "PE"))
-        buildings.append(Building(id: 2, name: "Perth Campus Building 2", lat: -31.947358, long: 115.861375, campusId: "PE"))
-        buildings.append(Building(id: 3, name: "Perth Campus Building 3", lat: -31.948004, long: 115.860957, campusId: "PE"))
-        buildings.append(Building(id: 4, name: "Leederville Building 1", lat: 11.1, long: 12.1, campusId: "LE"))
+        buildings.append(Building(id: 1, name: "Building 1", lat: 22.2, long: 22.30003, campusId: "PE"))
+        buildings.append(Building(id: 2, name: "Building 2", lat: -31.947358, long: 115.861375, campusId: "PE"))
+        buildings.append(Building(id: 3, name: "Building 3", lat: -31.948004, long: 115.860957, campusId: "PE"))
+        buildings.append(Building(id: 4, name: "Building 1", lat: 11.1, long: 12.1, campusId: "LE"))
+        buildings.append(Building(id: 5, name: "Building 4", lat: -31.9474773406982, long: 115.863143920898, campusId: "PE"))
         
         return buildings
     }
@@ -99,6 +100,7 @@ class DatabaseStatements {
         rooms.append(Room(id: 4, name: "International Center", image: "ic.jpg", buildingId: 3, campusId: "PE"))
         rooms.append(Room(id: 5, name: "D444", image: "NoImage", buildingId: 3, campusId: "PE"))
         rooms.append(Room(id: 6, name: "Koolark Center", image: "kc.jpg", buildingId: 4, campusId: "LE"))
+        rooms.append(Room(id: 7, name: "D212", image: "NoImage", buildingId: 5, campusId: "PE"))
         
             return rooms
     }
