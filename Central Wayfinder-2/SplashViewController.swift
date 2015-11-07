@@ -13,6 +13,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     
     @IBOutlet var startButton: UIButton!
     
+    private let webServicesHelper: WebServicesHelper = WebServicesHelper()
     private let util: Util = Util()
     
     // Declaring the location manager.
@@ -30,6 +31,8 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         sharedInstance.setupDatabase()
         sharedInstance.setupQueue()
         sharedInstance.prepareTestData()
+        
+        webServicesHelper.checkServiceConnection()
     }
     
     // Handling the alert window in the right hierarchy.
