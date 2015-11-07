@@ -20,6 +20,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     final private let METHOD_GET_CAMPUSES = "SearchCampus"
     final private let METHOD_GET_ROOMS_BY_CAMPUS = "SearchRooms"
 
+    // CheckServiceConn Body Example for Web Service:
     var is_SoapMessage: String = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cgs=\"http://tempuri.org/WF_Service_Interface/\"><soapenv:Header/><soapenv:Body><checkServiceConn xmlns='http://tempuri.org/'/></soapenv:Body></soapenv:Envelope>"
     
     func checkServiceConnection() {
