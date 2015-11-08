@@ -38,6 +38,7 @@
 		A0C505811BD8D2E40084A9E8 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057A1BD8D2E40084A9E8 /* FMDatabaseQueue.m */; };
 		A0C505821BD8D2E40084A9E8 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057C1BD8D2E40084A9E8 /* FMDatabaseAdditions.m */; };
 		A0C505831BD8D2E40084A9E8 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057E1BD8D2E40084A9E8 /* FMDatabasePool.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A0C554D21BEF9A610089345F /* XMLParsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C554D11BEF9A610089345F /* XMLParsers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,7 @@
 		A0C5057C1BD8D2E40084A9E8 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
 		A0C5057D1BD8D2E40084A9E8 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
 		A0C5057E1BD8D2E40084A9E8 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		A0C554D11BEF9A610089345F /* XMLParsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLParsers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +220,7 @@
 				A064B0301BDFE18E00A1D55B /* Util.swift */,
 				A06DEAC51BE1BDB2003BE704 /* DatabaseStatements.swift */,
 				A0A1105D1BE9DA8600DC40AA /* WebServicesHelper.swift */,
+				A0C554D11BEF9A610089345F /* XMLParsers.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				A0A1105E1BE9DA8600DC40AA /* WebServicesHelper.swift in Sources */,
 				A0781F2C1BCF869B002A65AF /* MapLocation.swift in Sources */,
 				A0C505811BD8D2E40084A9E8 /* FMDatabaseQueue.m in Sources */,
+				A0C554D21BEF9A610089345F /* XMLParsers.swift in Sources */,
 				A02DD7881BDB66CC00951F5C /* PostMapsViewController.swift in Sources */,
 				A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */,
 				A0C505821BD8D2E40084A9E8 /* FMDatabaseAdditions.m in Sources */,
