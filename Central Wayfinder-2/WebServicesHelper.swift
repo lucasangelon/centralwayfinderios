@@ -27,6 +27,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     private var xmlActionResult = [String]()
     var serviceConnection = String()
     var databaseConnection = String()
+    var campuses: [Campus] = [Campus]()
     
     // Checks if the Service and Server are online.
     func checkServiceConnection() {
@@ -75,6 +76,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         task.resume()
     }
     
+    // Checks if the Service Database is online.
     func checkDatabaseConnection() {
         let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
         let session = NSURLSession.sharedSession()
@@ -101,6 +103,39 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         task.resume()
     }
     
+    // Retrieves the campuses from the Service Database.
+    func downloadCampuses() {
+        let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
+        let session = NSURLSession.sharedSession()
+        let _: NSError?
+        let checkServiceConnectionMessage = baseStartSoapMessage + "<" + getCampusesAction + " xmlns='http://tempuri.org/'/>" + baseEndSoapMessage
+        
+        request.HTTPMethod = "POST"
+        request.HTTPBody = checkServiceConnectionMessage.dataUsingEncoding(NSUTF8StringEncoding)
+        request.addValue("student.mydesign.central.wa.edu.au", forHTTPHeaderField: "Host")
+        request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.addValue(String((checkServiceConnectionMessage).characters.count), forHTTPHeaderField: "Content-Length")
+        request.addValue("http://tempuri.org/WF_Service_Interface/" + getCampusesAction, forHTTPHeaderField: "SOAPAction")
+        
+        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            let campusParser = CampusParser()
+            self.campuses = campusParser.parseXML(data!)
+            
+            // If an error occurred, print the description for it.
+            if error != nil
+            {
+                print("Error: " + error!.description)
+            }
+        })
+        
+        task.resume()
+    }
+    
+    // Returns the campuses.
+    func getCampuses() -> [Campus] {
+        return self.campuses
+    }
+    
     /*
      * XML Parser Methods
      */
@@ -121,7 +156,6 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     }
     
     func parser(parser: NSXMLParser, foundCharacters string: String) {
-        xmlActionResult.append(string)
         
         // If the element title matches any of the following, assign to the specific
         // variable.
@@ -130,10 +164,5 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         } else if element.isEqualToString("checkDBConnResult") {
             databaseConnection = string
         }
-    }
-    
-    // Retrieves the data extracted from the XML.
-    func getXMLData() -> [String] {
-        return self.xmlActionResult
     }
 }

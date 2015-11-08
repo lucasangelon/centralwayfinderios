@@ -16,6 +16,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     private let webServicesHelper: WebServicesHelper = WebServicesHelper()
     private let util: Util = Util()
     private let qualityOfServiceClass = QOS_CLASS_UTILITY
+    private var campuses: [Campus] = [Campus]()
     
     // Declaring the location manager.
     private var locationManager = CLLocationManager()
@@ -31,7 +32,6 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         // Setting up the database and the queue for general access.
         sharedInstance.setupDatabase()
         sharedInstance.setupQueue()
-        sharedInstance.prepareTestData()
         
         // Runs a request to the Web Service in order to check if it is on or off.
         // Done in the background thread with a forced delay.
@@ -39,14 +39,22 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         dispatch_async(backgroundQueue, {
             self.webServicesHelper.checkServiceConnection()
             self.webServicesHelper.checkDatabaseConnection()
+            self.webServicesHelper.downloadCampuses()
             
             // Forces a delay in order to show a spinner.
-            let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC)))
+            let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(8 * Double(NSEC_PER_SEC)))
             dispatch_after(popTime, dispatch_get_main_queue(), { () -> Void in
                 print(self.webServicesHelper.serviceConnection)
                 print(self.webServicesHelper.databaseConnection)
+                
+                self.campuses = self.webServicesHelper.getCampuses()
+
+                // Inserts campuses from the web service into the database.
+                sharedInstance.insertCampuses(self.campuses)
             })
         })
+
+        sharedInstance.prepareTestData()
     }
     
     // Handling the alert window in the right hierarchy.

@@ -73,6 +73,33 @@ class DatabaseManager : NSObject {
         }
     }
     
+    // MARK - Database Insertion
+    
+    // Inserts campuses into the Database.
+    func insertCampuses(var campuses: [Campus]) {
+        queue?.inDatabase() {
+            db in
+            
+            var success: Bool = Bool()
+            
+            // Define a temporary Campus object and retrieve the data.
+            var tempCampus: Campus!
+            
+            // Add the campuses to the table.
+            for index in 0...(campuses.count - 1) {
+                tempCampus = campuses[index]
+                
+                success = db.executeUpdate(self.dbStatements.INSERT_CAMPUS, withArgumentsInArray: [(tempCampus.id), (tempCampus.name), (tempCampus.lat), (tempCampus.long), (tempCampus.zoom)])
+                
+                if success {
+                    print(tempCampus.name + " added to the database.")
+                } else {
+                    print("An error has occured: \(db.lastErrorMessage())")
+                }
+            }
+        }
+    }
+    
     
     // MARK - Database Interaction
     
@@ -196,7 +223,7 @@ class DatabaseManager : NSObject {
             
             var success: Bool = Bool()
             
-            // Define a temporary Campus object and retrieve the test data.
+            /*// Define a temporary Campus object and retrieve the test data.
             var tempCampus: Campus!
             let campuses = self.dbStatements.getTestCampuses()
             
@@ -211,7 +238,7 @@ class DatabaseManager : NSObject {
                 } else {
                     print("An error has occured: \(db.lastErrorMessage())")
                 }
-            }
+            }*/
             
             var tempBuilding: Building!
             let buildings = self.dbStatements.getTestBuildings()
