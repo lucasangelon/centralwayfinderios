@@ -15,6 +15,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     
     private let webServicesHelper: WebServicesHelper = WebServicesHelper()
     private let util: Util = Util()
+    private let qualityOfServiceClass = QOS_CLASS_UTILITY
     
     // Declaring the location manager.
     private var locationManager = CLLocationManager()
@@ -32,7 +33,20 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         sharedInstance.setupQueue()
         sharedInstance.prepareTestData()
         
-        webServicesHelper.checkServiceConnection()
+        // Runs a request to the Web Service in order to check if it is on or off.
+        // Done in the background thread with a forced delay.
+        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+        dispatch_async(backgroundQueue, {
+            self.webServicesHelper.checkServiceConnection()
+            self.webServicesHelper.checkDatabaseConnection()
+            
+            // Forces a delay in order to show a spinner.
+            let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC)))
+            dispatch_after(popTime, dispatch_get_main_queue(), { () -> Void in
+                print(self.webServicesHelper.serviceConnection)
+                print(self.webServicesHelper.databaseConnection)
+            })
+        })
     }
     
     // Handling the alert window in the right hierarchy.
