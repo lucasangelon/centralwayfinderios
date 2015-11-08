@@ -38,11 +38,13 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
         dispatch_async(backgroundQueue, {
             self.webServicesHelper.checkServiceConnection()
+            self.webServicesHelper.checkDatabaseConnection()
             
             // Forces a delay in order to show a spinner.
             let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC)))
             dispatch_after(popTime, dispatch_get_main_queue(), { () -> Void in
                 print(self.webServicesHelper.serviceConnection)
+                print(self.webServicesHelper.databaseConnection)
             })
         })
     }

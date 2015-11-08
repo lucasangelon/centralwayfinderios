@@ -35,7 +35,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
         let session = NSURLSession.sharedSession()
         let _: NSError?
-        let checkServiceConnectionMessage = baseStartSoapMessage + "<checkServiceConn xmlns='http://tempuri.org/'/>" + baseEndSoapMessage
+        let checkServiceConnectionMessage = baseStartSoapMessage + "<" + checkServiceConnectionAction + " xmlns='http://tempuri.org/'/>" + baseEndSoapMessage
         
         // Adds information to it.
         request.HTTPMethod = "POST"
@@ -49,17 +49,17 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         
         // Adds the link to the action, it must use tempuri.org as it is 
         // the way it was defined on the web service.
-        request.addValue("http://tempuri.org/WF_Service_Interface/checkServiceConn", forHTTPHeaderField: "SOAPAction")
+        request.addValue("http://tempuri.org/WF_Service_Interface/" + checkServiceConnectionAction, forHTTPHeaderField: "SOAPAction")
         
         // Defines the task.
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             
             // Prints the response in order to test the service.
-            print("Response: \(response)")
+            //print("Response: \(response)")
             
             // Prints the actual data for testing purposes as well.
-            let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            print("Body: \(strData)")
+            //let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            //print("Body: \(strData)")
             
             // Parses the XML retrieved through the request.
             self.parseXML(data!)
@@ -72,6 +72,32 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         })
         
         // Resumes the task.
+        task.resume()
+    }
+    
+    func checkDatabaseConnection() {
+        let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
+        let session = NSURLSession.sharedSession()
+        let _: NSError?
+        let checkServiceConnectionMessage = baseStartSoapMessage + "<" + checkDatabaseConnectionAction + " xmlns='http://tempuri.org/'/>" + baseEndSoapMessage
+        
+        request.HTTPMethod = "POST"
+        request.HTTPBody = checkServiceConnectionMessage.dataUsingEncoding(NSUTF8StringEncoding)
+        request.addValue("student.mydesign.central.wa.edu.au", forHTTPHeaderField: "Host")
+        request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.addValue(String((checkServiceConnectionMessage).characters.count), forHTTPHeaderField: "Content-Length")
+        request.addValue("http://tempuri.org/WF_Service_Interface/" + checkDatabaseConnectionAction, forHTTPHeaderField: "SOAPAction")
+        
+        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            self.parseXML(data!)
+            
+            // If an error occurred, print the description for it.
+            if error != nil
+            {
+                print("Error: " + error!.description)
+            }
+        })
+        
         task.resume()
     }
     
@@ -101,7 +127,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         // variable.
         if element.isEqualToString("checkServiceConnResult") {
             serviceConnection = string
-        } else if element.isEqualToString("checkDatabaseConnResult") {
+        } else if element.isEqualToString("checkDBConnResult") {
             databaseConnection = string
         }
     }
