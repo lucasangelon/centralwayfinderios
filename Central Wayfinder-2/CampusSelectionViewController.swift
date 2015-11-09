@@ -12,8 +12,10 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     
     @IBOutlet var tableView: UITableView!
     
+    private let webServicesHelper: WebServicesHelper = WebServicesHelper()
     private var campuses: [Campus] = [Campus]()
     private var campus: Campus = Campus()
+    private var rooms: [Room] = [Room]()
     
     private var firstUse = false
     
@@ -59,8 +61,12 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         sharedDefaults.campusDefaultLong = campuses[indexPath.row].long
         sharedDefaults.campusName = campuses[indexPath.row].name
         
+        // Downloads rooms for a given campus.
+        getRooms()
+        
         if firstUse {
             firstUse = false
+            sharedDefaults.accessibility = false
             self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
         } else {
             self.navigationController?.popViewControllerAnimated(true)
@@ -86,7 +92,11 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
                 sharedDefaults.campusDefaultLat = campus.lat
                 sharedDefaults.campusDefaultLong = campus.long
                 sharedDefaults.campusName = campus.name
+                sharedDefaults.accessibility = false
             }
+            
+            // Downloads rooms from the web service.
+            getRooms()
             
             firstUse = false
             
@@ -133,5 +143,12 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     // Returns to the main menu after cancelling the default campus selection in iOS versions prior to 8.0.
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
+    }
+    
+    // Retrieves rooms from the web service based on the campus.
+    func getRooms() {
+        webServicesHelper.downloadRooms(sharedDefaults.campusId)
+        
+        self.rooms = self.webServicesHelper.getRooms()
     }
 }

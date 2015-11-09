@@ -19,15 +19,18 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     final private let checkDatabaseConnectionAction = "checkDBConn"
     final private let getCampusesAction = "SearchCampus"
     final private let getRoomsByCampusAction = "SearchRooms"
+    final private let getBuildingAction = "ResolvePath"
     
     // Base and End sections of the SOAP Message to be used.
-    final private let baseStartSoapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"><soapenv:Header/><soapenv:Body>"
+    final private let baseStartSoapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:wf=\"http://tempuri.org/\"><soapenv:Header/><soapenv:Body>"
     final private let baseEndSoapMessage = "</soapenv:Body></soapenv:Envelope>"
     
     private var xmlActionResult = [String]()
     var serviceConnection = String()
     var databaseConnection = String()
     var campuses: [Campus] = [Campus]()
+    var rooms: [Room] = [Room]()
+    var building: Building = Building()
     
     // Checks if the Service and Server are online.
     func checkServiceConnection() {
@@ -36,7 +39,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
         let session = NSURLSession.sharedSession()
         let _: NSError?
-        let checkServiceConnectionMessage = baseStartSoapMessage + "<" + checkServiceConnectionAction + " xmlns='http://tempuri.org/'/>" + baseEndSoapMessage
+        let checkServiceConnectionMessage = baseStartSoapMessage + "<wf:" + checkServiceConnectionAction + "/>" + baseEndSoapMessage
         
         // Adds information to it.
         request.HTTPMethod = "POST"
@@ -81,13 +84,13 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
         let session = NSURLSession.sharedSession()
         let _: NSError?
-        let checkServiceConnectionMessage = baseStartSoapMessage + "<" + checkDatabaseConnectionAction + " xmlns='http://tempuri.org/'/>" + baseEndSoapMessage
+        let checkDatabaseConnectionMessage = baseStartSoapMessage + "<wf:" + checkDatabaseConnectionAction + "/>" + baseEndSoapMessage
         
         request.HTTPMethod = "POST"
-        request.HTTPBody = checkServiceConnectionMessage.dataUsingEncoding(NSUTF8StringEncoding)
+        request.HTTPBody = checkDatabaseConnectionMessage.dataUsingEncoding(NSUTF8StringEncoding)
         request.addValue("student.mydesign.central.wa.edu.au", forHTTPHeaderField: "Host")
         request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        request.addValue(String((checkServiceConnectionMessage).characters.count), forHTTPHeaderField: "Content-Length")
+        request.addValue(String((checkDatabaseConnectionMessage).characters.count), forHTTPHeaderField: "Content-Length")
         request.addValue("http://tempuri.org/WF_Service_Interface/" + checkDatabaseConnectionAction, forHTTPHeaderField: "SOAPAction")
         
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
@@ -108,16 +111,98 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
         let session = NSURLSession.sharedSession()
         let _: NSError?
-        let checkServiceConnectionMessage = baseStartSoapMessage + "<" + getCampusesAction + " xmlns='http://tempuri.org/'/>" + baseEndSoapMessage
+        let getCampusesMessage = baseStartSoapMessage + "<wf:" + getCampusesAction + "/>" + baseEndSoapMessage
         
         request.HTTPMethod = "POST"
-        request.HTTPBody = checkServiceConnectionMessage.dataUsingEncoding(NSUTF8StringEncoding)
+        request.HTTPBody = getCampusesMessage.dataUsingEncoding(NSUTF8StringEncoding)
         request.addValue("student.mydesign.central.wa.edu.au", forHTTPHeaderField: "Host")
         request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        request.addValue(String((checkServiceConnectionMessage).characters.count), forHTTPHeaderField: "Content-Length")
+        request.addValue(String((getCampusesMessage).characters.count), forHTTPHeaderField: "Content-Length")
         request.addValue("http://tempuri.org/WF_Service_Interface/" + getCampusesAction, forHTTPHeaderField: "SOAPAction")
         
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            
+            // Uses a specific parser in order to properly retrieve the data from the XML file.
+            let campusParser = CampusParser()
+            self.campuses = campusParser.parseXML(data!)
+            
+            // If an error occurred, print the description for it.
+            if error != nil
+            {
+                print("Error: " + error!.description)
+            }
+        })
+        
+        task.resume()
+    }
+    
+    // Retrieves the rooms from a given campus from the service database.
+    func downloadRooms(campusId: String) {
+        let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
+        let session = NSURLSession.sharedSession()
+        let _: NSError?
+        
+        // Sends a parameter for the method.
+        let middleSoapMessage = "<wf:" + getRoomsByCampusAction + "><wf:CampusID>\(campusId)</wf:CampusID></wf:" + getRoomsByCampusAction + ">"
+        let getRoomsMessage = baseStartSoapMessage + middleSoapMessage + baseEndSoapMessage
+        print(getRoomsMessage)
+        
+        request.HTTPMethod = "POST"
+        request.HTTPBody = getRoomsMessage.dataUsingEncoding(NSUTF8StringEncoding)
+        request.addValue("student.mydesign.central.wa.edu.au", forHTTPHeaderField: "Host")
+        request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.addValue(String((getRoomsMessage).characters.count), forHTTPHeaderField: "Content-Length")
+        request.addValue("http://tempuri.org/WF_Service_Interface/" + getRoomsByCampusAction, forHTTPHeaderField: "SOAPAction")
+        
+        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            //TODO: Parse the XML once the buildingId parameter has been added to the returned file.
+            //TODO: Add the rooms to the database.
+            
+            // Uses a specific parser in order to properly retrieve the data from the XML file.
+            let campusParser = CampusParser()
+            self.campuses = campusParser.parseXML(data!)
+            
+            // If an error occurred, print the description for it.
+            if error != nil
+            {
+                print("Error: " + error!.description)
+            }
+        })
+        
+        task.resume()
+    }
+    
+    // Retrieves a given building based on a room id from the service database.
+    func downloadBuilding(buildingId: Int) {
+        let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
+        let session = NSURLSession.sharedSession()
+        let _: NSError?
+        let disability = sharedDefaults.accessibility
+        
+        // Sends a parameter for the method.
+        let middleSoapMessage = "<wf:" + getBuildingAction + "><wf:WaypointID>\(buildingId)</wf:WaypointID><wf:Disability>\(disability)</wf:disability></wf:" + getRoomsByCampusAction + ">"
+        let getRoomsMessage = baseStartSoapMessage + middleSoapMessage + baseEndSoapMessage
+        print(getRoomsMessage)
+        
+        request.HTTPMethod = "POST"
+        request.HTTPBody = getRoomsMessage.dataUsingEncoding(NSUTF8StringEncoding)
+        request.addValue("student.mydesign.central.wa.edu.au", forHTTPHeaderField: "Host")
+        request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.addValue(String((getRoomsMessage).characters.count), forHTTPHeaderField: "Content-Length")
+        request.addValue("http://tempuri.org/WF_Service_Interface/" + getBuildingAction, forHTTPHeaderField: "SOAPAction")
+        
+        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            let buildingParser = BuildingParser()
+            self.building = buildingParser.parseXML(data!)
+            
+            // Prints the response in order to test the service.
+            print("Response: \(response)")
+            
+            // Prints the actual data for testing purposes as well.
+            let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print("Body: \(strData)")
+            
+            // Uses a specific parser in order to properly retrieve the data from the XML file.
             let campusParser = CampusParser()
             self.campuses = campusParser.parseXML(data!)
             
@@ -134,6 +219,16 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     // Returns the campuses.
     func getCampuses() -> [Campus] {
         return self.campuses
+    }
+    
+    // Returns the rooms.
+    func getRooms() -> [Room] {
+        return self.rooms
+    }
+    
+    // Returns the building.
+    func getBuilding() -> Building {
+        return self.building
     }
     
     /*

@@ -275,8 +275,13 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         }
     }
     
+    // Clears the current route from the map.
     private func clearRoute() {
         let overlays = mapView.overlays
         mapView.removeOverlays(overlays)
+    }
+    
+    private func getBuilding() {
+        
     }
 }

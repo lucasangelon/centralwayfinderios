@@ -208,6 +208,7 @@ class DatabaseManager : NSObject {
             
             else {
                 print("An error has occured: \(db.lastErrorMessage())")
+                building = Building(id: 0, name: "Not Found", lat: 0.0, long: 0.0, campusId: "Not Found")
             }
         }
         

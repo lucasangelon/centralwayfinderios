@@ -13,10 +13,17 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet var tableView: UITableView!
     
+    private let qualityOfServiceClass = QOS_CLASS_UTILITY
+    private let webServicesHelper = WebServicesHelper()
     private var services: [Room] = [Room]()
     private var currentRow: Room = Room()
+    private var building: Building = Building()
     var activityIndicator = UIActivityIndicatorView()
+    var queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
+    var group = dispatch_group_create()
     
+    var spinner: UIActivityIndicatorView = UIActivityIndicatorView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,6 +32,8 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         self.tabBarController?.tabBar.hidden = false
         
         services = sharedInstance.getServices(sharedDefaults.campusId, rooms: services)
+        spinner.center = CGPointMake(160, 240);
+        spinner.hidesWhenStopped = true
         
     }
     
@@ -50,6 +59,28 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         // Set the service coordinates and the title to a variable to be sent to Google Maps.
         currentRow = services[indexPath.row]
         
+        self.view.addSubview(spinner)
+        spinner.startAnimating()
+        
+        building = Building(id: 0)//sharedInstance.getBuilding(currentRow.buildingId, building: building)
+        
+        // TODO: STOP THE MAIN THREAD TO CALL WEB SERVICE D=
+        if building.id == 0 {
+            dispatch_group_async(group, queue,  {
+                self.webServicesHelper.downloadBuilding(self.currentRow.buildingId)
+                
+                dispatch_sync(dispatch_get_main_queue(), {
+                    self.spinner.stopAnimating()
+                })
+            })
+            
+            dispatch_group_wait(group, 5)
+            
+            dispatch_resume(group)
+        }
+        
+
+        
         self.performSegueWithIdentifier("ShowMapsFromServices", sender: self)
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -67,6 +98,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if segue.identifier == "ShowMapsFromServices" {
             let destinationSegue = segue.destinationViewController as! MapsViewController
+            
             destinationSegue.destTitle = currentRow.name
             destinationSegue.destBuildingId = currentRow.buildingId
         }
