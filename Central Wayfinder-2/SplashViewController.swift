@@ -62,10 +62,14 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
             NSThread.sleepForTimeInterval(6.0)
             self.campuses = self.webServicesHelper.getCampuses()
             
-            // Inserts campuses from the web service into the database.
-            sharedInstance.insertCampuses(self.campuses)
-            
-            print("Campuses loaded.")
+            // Checking it "campuses" is not empty.
+            if self.webServicesHelper.checkCampuses() {
+                // Inserts campuses from the web service into the database.
+                sharedInstance.insertCampuses(self.campuses)
+                print("Campuses loaded.")
+            } else {
+                print("No campuses found.")
+            }
         })
         
         NSThread.sleepForTimeInterval(10.0)
