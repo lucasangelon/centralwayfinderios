@@ -208,6 +208,10 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         task.resume()
     }
     
+    /*
+     * Get web service objects
+     */
+    
     // Returns the campuses.
     func getCampuses() -> [Campus] {
         return self.campuses
@@ -221,6 +225,24 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     // Returns the building.
     func getBuilding() -> Building {
         return self.building
+    }
+    
+    // Checks if the campuses variable is not empty.
+    func checkCampuses() -> Bool {
+        if self.campuses.count < 1 {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    // Checks if the rooms variable is not empty.
+    func checkRooms() -> Bool {
+        if self.rooms.count < 1 {
+            return false
+        } else {
+            return true
+        }
     }
     
     /*

@@ -143,8 +143,12 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         dispatch_group_notify(dispatchGroup, dispatchQueue, {
             NSThread.sleepForTimeInterval(4.0)
             
-            sharedInstance.insertRooms(self.webServicesHelper.getRooms())
-            print("Loaded rooms.")
+            if self.webServicesHelper.checkRooms() {
+                sharedInstance.insertRooms(self.webServicesHelper.getRooms())
+                print("Loaded rooms.")
+            } else {
+                print("No rooms available for the campus: " + sharedDefaults.campusName)
+            }
         })
         
         NSThread.sleepForTimeInterval(7.0)

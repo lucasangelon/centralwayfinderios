@@ -39,7 +39,11 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return services.count
+        if services.count < 1 {
+            return 1
+        } else {
+            return services.count
+        }
     }
     
     // Prepare the tableView.
@@ -47,10 +51,16 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TextImageCell", forIndexPath: indexPath)
         
-        // Set up the information based on the, currently, hardcoded list.
-        cell.textLabel?.text = services[indexPath.row].name
-        cell.imageView?.image = UIImage(named: services[indexPath.row].image)
-        
+        // Showing the user that there are no services available in case the
+        // variable count is lower than 1. Disables selection on the tableView.
+        if services.count < 1 {
+            cell.textLabel?.text = "No services available."
+            tableView.allowsSelection = false
+        } else {
+            cell.textLabel?.text = services[indexPath.row].name
+            cell.imageView?.image = UIImage(named: services[indexPath.row].image)
+        }
+
         return cell
     }
     
