@@ -12,7 +12,7 @@ class DatabaseStatements {
     
     /* Table Creation Statements */
     
-    let CREATE_TABLE_CAMPUS: String = "CREATE TABLE IF NOT EXISTS campus(id TEXT NOT NULL PRIMARY KEY, name TEXT NOT NULL, lat REAL NOT NULL, long REAL NOT NULL, zoom REAL NOT NULL);"
+    let CREATE_TABLE_CAMPUS: String = "CREATE TABLE IF NOT EXISTS campus(id TEXT NOT NULL PRIMARY KEY, name TEXT NOT NULL, version INTEGER NOT NULL, lat REAL NOT NULL, long REAL NOT NULL, zoom REAL NOT NULL);"
     
     let CREATE_TABLE_BUILDINGS: String = "CREATE TABLE IF NOT EXISTS building(id INTEGER NOT NULL PRIMARY KEY,  name TEXT NOT NULL, lat REAL NOT NULL, long REAL NOT NULL, campus_id TEXT NOT NULL);"
     
@@ -21,7 +21,7 @@ class DatabaseStatements {
     
     /* Data Insertion Statements */
     
-    let INSERT_CAMPUS: String = "INSERT INTO campus (id, name, lat, long, zoom) VALUES (?, ?, ?, ?, ?);"
+    let INSERT_CAMPUS: String = "INSERT INTO campus (id, name, version, lat, long, zoom) VALUES (?, ?, ?, ?, ?, ?);"
     
     let INSERT_BUILDING: String = "INSERT INTO building (id, name, lat, long, campus_id) VALUES (?, ?, ?, ?, ?);"
     
@@ -37,6 +37,8 @@ class DatabaseStatements {
     let GET_ALL_CAMPUSES: String = "SELECT * FROM campus;"
     
     let SELECT_CAMPUS: String = "SELECT * FROM campus WHERE id = (?);"
+    
+    let SELECT_CAMPUS_VERSION: String = "SELECT version FROM campus WHERE id = (?)"
     
     let SELECT_ROOMS: String = "SELECT * FROM room WHERE campus_id = (?);"
     
@@ -67,12 +69,12 @@ class DatabaseStatements {
     func getTestCampuses() -> [Campus] {
         var campuses: [Campus] = [Campus]()
         
-        campuses.append(Campus(id: "EP", name: "East Perth", lat: -31.9512138366699, long: 115.872375488281, zoom: 19))
-        campuses.append(Campus(id: "LE", name: "Leederville", lat: -31.9339389801025, long: 115.842643737793, zoom: 19.5))
-        campuses.append(Campus(id: "ML", name: "Mount Lawley", lat: -31.939432144165, long: 115.875679016113, zoom: 19.5))
-        campuses.append(Campus(id: "OHCWA", name: "Nedlands", lat: -31.9700088500977, long: 115.81575012207, zoom: 19.5))
-        campuses.append(Campus(id: "PE", name: "Perth", lat: -31.9476680755615, long: 115.862129211426, zoom: 18.75))
-        campuses.append(Campus(id: "TE", name: "Test", lat: 2.2, long: 99.99999999, zoom: 1.5))
+        campuses.append(Campus(id: "EP", name: "East Perth", version: 0, lat: -31.9512138366699, long: 115.872375488281, zoom: 19))
+        campuses.append(Campus(id: "LE", name: "Leederville", version: 0, lat: -31.9339389801025, long: 115.842643737793, zoom: 19.5))
+        campuses.append(Campus(id: "ML", name: "Mount Lawley", version: 0, lat: -31.939432144165, long: 115.875679016113, zoom: 19.5))
+        campuses.append(Campus(id: "OHCWA", name: "Nedlands", version: 0, lat: -31.9700088500977, long: 115.81575012207, zoom: 19.5))
+        campuses.append(Campus(id: "PE", name: "Perth", version: 0, lat: -31.9476680755615, long: 115.862129211426, zoom: 18.75))
+        campuses.append(Campus(id: "TE", name: "Test", version: 0,lat: 2.2, long: 99.99999999, zoom: 1.5))
         
         return campuses
     }

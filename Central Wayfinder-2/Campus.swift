@@ -20,6 +20,11 @@ class Campus: NSObject {
         self.name = name
     }
     
+    var version: Int = Int()
+    init(version: Int) {
+        self.version = version
+    }
+    
     var lat: Double = Double()
     init(lat: Double) {
         self.lat = lat
@@ -35,11 +40,12 @@ class Campus: NSObject {
         self.zoom = zoom
     }
     
-    init(id: String, name: String, lat: Double, long: Double, zoom: Double) {
+    init(id: String, name: String, version: Int, lat: Double, long: Double, zoom: Double) {
         super.init()
         
         self.id = id
         self.name = name
+        self.version = version
         self.lat = lat
         self.long = long
         self.zoom = zoom

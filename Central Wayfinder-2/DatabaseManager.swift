@@ -62,14 +62,6 @@ class DatabaseManager : NSObject {
             if !success {
                 print("Table Creation Failure: \(db.lastErrorMessage())")
             }
-            
-            // Otherwise check the tables to see if they are there.
-            else {
-                print("Table Creation Statements were successful.")
-                print(db.tableExists("campus"))
-                print(db.tableExists("building"))
-                print(db.tableExists("room"))
-            }
         }
     }
     
@@ -89,17 +81,58 @@ class DatabaseManager : NSObject {
             for index in 0...(campuses.count - 1) {
                 tempCampus = campuses[index]
                 
-                success = db.executeUpdate(self.dbStatements.INSERT_CAMPUS, withArgumentsInArray: [(tempCampus.id), (tempCampus.name), (tempCampus.lat), (tempCampus.long), (tempCampus.zoom)])
+                success = db.executeUpdate(self.dbStatements.INSERT_CAMPUS, withArgumentsInArray: [(tempCampus.id), (tempCampus.name), (tempCampus.version), (tempCampus.lat), (tempCampus.long), (tempCampus.zoom)])
                 
                 if success {
                     print(tempCampus.name + " added to the database.")
                 } else {
-                    print("An error has occured: \(db.lastErrorMessage())")
+                    print("An error has occurred: \(db.lastErrorMessage())")
                 }
             }
         }
     }
     
+    // Inserts rooms into the Database.
+    func insertRooms(var rooms: [Room]) {
+        queue?.inDatabase() {
+            db in
+            
+            var success: Bool = Bool()
+            
+            // Define a temporary Room object and retrieve the data.
+            var tempRoom: Room!
+            let currentCampusId = sharedDefaults.campusId
+            
+            for index in 0...(rooms.count - 1) {
+                tempRoom = rooms[index]
+                
+                success = db.executeUpdate(self.dbStatements.INSERT_ROOM, withArgumentsInArray: [(tempRoom.id), (tempRoom.name), (tempRoom.image), (tempRoom.buildingId), (currentCampusId)])
+                
+                if success {
+                    print(tempRoom.name + " added to the database.")
+                } else {
+                    print("An error has occurred: \(db.lastErrorMessage())")
+                }
+            }
+        }
+    }
+    
+    // Inserts a building into the Database.
+    func insertBuilding(var building: Building) {
+        queue?.inDatabase() {
+            db in
+            
+            var success: Bool = Bool()
+            
+            success = db.executeUpdate(self.dbStatements.INSERT_BUILDING, withArgumentsInArray: [(building.id), (building.name), (building.lat), (building.long), (building.campusId)])
+            
+            if success {
+                print(building.name + " added to the database.")
+            } else {
+                print("An error has occurred: \(db.lastErrorMessage())")
+            }
+        }
+    }
     
     // MARK - Database Interaction
     
@@ -112,7 +145,7 @@ class DatabaseManager : NSObject {
             
             if (resultSet != nil) {
                 while resultSet.next() {
-                    campuses.append(Campus(id: resultSet.stringForColumn("id"), name: resultSet.stringForColumn("name"), lat: resultSet.doubleForColumn("lat"), long: resultSet.doubleForColumn("long"), zoom: resultSet.doubleForColumn("zoom")))
+                    campuses.append(Campus(id: resultSet.stringForColumn("id"), name: resultSet.stringForColumn("name"), version: Int(resultSet.intForColumn("version")), lat: resultSet.doubleForColumn("lat"), long: resultSet.doubleForColumn("long"), zoom: resultSet.doubleForColumn("zoom")))
                 }
             }
             
@@ -135,7 +168,7 @@ class DatabaseManager : NSObject {
             let result: FMResultSet = db.executeQuery(self.dbStatements.SELECT_CAMPUS, withArgumentsInArray: [id])
             
             if result.next() {
-                campus = Campus(id: result.stringForColumn("id"), name: result.stringForColumn("name"), lat: result.doubleForColumn("lat"), long: result.doubleForColumn("long"), zoom: result.doubleForColumn("zoom"))
+                campus = Campus(id: result.stringForColumn("id"), name: result.stringForColumn("name"), version: Int(result.intForColumn("version")), lat: result.doubleForColumn("lat"), long: result.doubleForColumn("long"), zoom: result.doubleForColumn("zoom"))
                 
                 // Ensures result is closed.
                 result.close()
@@ -217,14 +250,14 @@ class DatabaseManager : NSObject {
     
     /* Test Functions */
     
-    // Inserts test data.
+    /*// Inserts test data.
     func prepareTestData() {
         queue?.inDatabase() {
             db in
             
             var success: Bool = Bool()
             
-            /*// Define a temporary Campus object and retrieve the test data.
+            // Define a temporary Campus object and retrieve the test data.
             var tempCampus: Campus!
             let campuses = self.dbStatements.getTestCampuses()
             
@@ -234,12 +267,10 @@ class DatabaseManager : NSObject {
                 
                 success = db.executeUpdate(self.dbStatements.INSERT_CAMPUS, withArgumentsInArray: [(tempCampus.id), (tempCampus.name), (tempCampus.lat), (tempCampus.long), (tempCampus.zoom)])
                 
-                if success {
-                    print(tempCampus.name + " added to the database.")
-                } else {
-                    print("An error has occured: \(db.lastErrorMessage())")
+                if !success {
+                    print("An error has occurred: \(db.lastErrorMessage())")
                 }
-            }*/
+            }
             
             var tempBuilding: Building!
             let buildings = self.dbStatements.getTestBuildings()
@@ -250,10 +281,8 @@ class DatabaseManager : NSObject {
                 
                 success = db.executeUpdate(self.dbStatements.INSERT_BUILDING, withArgumentsInArray: [Int(tempBuilding.id as Int), (tempBuilding.name), (tempBuilding.lat), (tempBuilding.long), (tempBuilding.campusId)])
                 
-                if success {
-                    print(tempBuilding.name + " added to the database.")
-                } else {
-                    print("An error has occurred: \(db.lastErrorMessage())")
+                if !success {
+                    //print("An error has occurred: \(db.lastErrorMessage())")
                 }
             }
             
@@ -270,14 +299,12 @@ class DatabaseManager : NSObject {
                     success = db.executeUpdate(self.dbStatements.INSERT_ROOM, withArgumentsInArray: [Int(tempRoom.id as Int), (tempRoom.name), ("NoImage"), Int(tempRoom.buildingId as Int), (tempRoom.campusId)])
                 }
                 
-                if success {
-                    print(tempRoom.name + " added to the database." + String(tempRoom.id))
-                } else {
-                    print("An error has occurred: \(db.lastErrorMessage())")
+                if !success {
+                    //print("An error has occurred: \(db.lastErrorMessage())")
                 }
             }
         }
-    }
+    }*/
     
     func clearTest() {
         queue?.inDatabase() {

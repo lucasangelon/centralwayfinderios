@@ -34,15 +34,14 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     private var destination: MapLocation!
     private var start: MapLocation!
-    private var building: Building = Building()
+    var building: Building = Building()
     private let locationManager = CLLocationManager()
     
     // User Information
     private var userTitle = ""
     
     // Destination Information
-    var destTitle = ""
-    var destBuildingId = 0
+    var destSubtitle = ""
     
     // Locations
     private var initialLocation = CLLocationCoordinate2D()
@@ -82,7 +81,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         if destinationExists() {
             
             // Generates the route.
-            generateRoute(destBuildingId, directionsType: MKDirectionsTransportType.Walking)
+            generateRoute(building.id, directionsType: MKDirectionsTransportType.Walking)
             
             if start != nil {
                 mapView.addAnnotation(start)
@@ -136,7 +135,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     // Checks if the application sent the user to this page with a destination from Services.
     private func destinationExists() -> Bool {
-        if destBuildingId != 0 {
+        if building.id != 0 {
             return true
         } else {
             return false
@@ -148,11 +147,8 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
      */
     private func generateRoute(buildingId: Int, directionsType: MKDirectionsTransportType) {
         
-        // Retrieves the building from the database.
-        building = sharedInstance.getBuilding(buildingId, building: building)
-        
         // Creates the destination object.
-        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: building.lat, longitude: building.long), title: building.name, subtitle: destTitle, destination: true)
+        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: building.lat, longitude: building.long), title: building.name, subtitle: destSubtitle, destination: true)
         
         // Start a request for maps.
         let request = MKDirectionsRequest()
@@ -267,9 +263,9 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         
         switch sender.selectedSegmentIndex {
         case 0:
-            generateRoute(destBuildingId, directionsType: MKDirectionsTransportType.Walking)
+            generateRoute(building.id, directionsType: MKDirectionsTransportType.Walking)
         case 1:
-            generateRoute(destBuildingId, directionsType: MKDirectionsTransportType.Automobile)
+            generateRoute(building.id, directionsType: MKDirectionsTransportType.Automobile)
         default:
             break
         }

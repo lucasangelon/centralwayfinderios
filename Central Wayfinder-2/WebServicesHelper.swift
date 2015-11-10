@@ -58,12 +58,12 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         // Defines the task.
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             
-            // Prints the response in order to test the service.
-            //print("Response: \(response)")
+            /*// Prints the response in order to test the service.
+            print("Response: \(response)")
             
             // Prints the actual data for testing purposes as well.
-            //let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            //print("Body: \(strData)")
+            let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print("Body: \(strData)")*/
             
             // Parses the XML retrieved through the request.
             self.parseXML(data!)
@@ -155,12 +155,9 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         request.addValue("http://tempuri.org/WF_Service_Interface/" + getRoomsByCampusAction, forHTTPHeaderField: "SOAPAction")
         
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            //TODO: Parse the XML once the buildingId parameter has been added to the returned file.
-            //TODO: Add the rooms to the database.
-            
             // Uses a specific parser in order to properly retrieve the data from the XML file.
-            let campusParser = CampusParser()
-            self.campuses = campusParser.parseXML(data!)
+            let roomParser = RoomParser()
+            self.rooms = roomParser.parseXML(data!)
             
             // If an error occurred, print the description for it.
             if error != nil
@@ -180,15 +177,14 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         let disability = sharedDefaults.accessibility
         
         // Sends a parameter for the method.
-        let middleSoapMessage = "<wf:" + getBuildingAction + "><wf:WaypointID>\(buildingId)</wf:WaypointID><wf:Disability>\(disability)</wf:disability></wf:" + getRoomsByCampusAction + ">"
-        let getRoomsMessage = baseStartSoapMessage + middleSoapMessage + baseEndSoapMessage
-        print(getRoomsMessage)
+        let middleSoapMessage = "<wf:" + getBuildingAction + "><wf:WaypointID>\(buildingId)</wf:WaypointID><wf:Disability>\(disability)</wf:Disability></wf:" + getBuildingAction + ">"
+        let getBuildingMessage = baseStartSoapMessage + middleSoapMessage + baseEndSoapMessage
         
         request.HTTPMethod = "POST"
-        request.HTTPBody = getRoomsMessage.dataUsingEncoding(NSUTF8StringEncoding)
+        request.HTTPBody = getBuildingMessage.dataUsingEncoding(NSUTF8StringEncoding)
         request.addValue("student.mydesign.central.wa.edu.au", forHTTPHeaderField: "Host")
         request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        request.addValue(String((getRoomsMessage).characters.count), forHTTPHeaderField: "Content-Length")
+        request.addValue(String((getBuildingMessage).characters.count), forHTTPHeaderField: "Content-Length")
         request.addValue("http://tempuri.org/WF_Service_Interface/" + getBuildingAction, forHTTPHeaderField: "SOAPAction")
         
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
@@ -201,10 +197,6 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             // Prints the actual data for testing purposes as well.
             let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
             print("Body: \(strData)")
-            
-            // Uses a specific parser in order to properly retrieve the data from the XML file.
-            let campusParser = CampusParser()
-            self.campuses = campusParser.parseXML(data!)
             
             // If an error occurred, print the description for it.
             if error != nil

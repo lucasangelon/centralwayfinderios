@@ -15,9 +15,10 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     
     private let webServicesHelper: WebServicesHelper = WebServicesHelper()
     private let util: Util = Util()
-    private let qualityOfServiceClass = QOS_CLASS_UTILITY
+    private let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
     private var campuses: [Campus] = [Campus]()
-    
+    private var success = false
+
     // Declaring the location manager.
     private var locationManager = CLLocationManager()
     
@@ -33,28 +34,43 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         sharedInstance.setupDatabase()
         sharedInstance.setupQueue()
         
-        // Runs a request to the Web Service in order to check if it is on or off.
-        // Done in the background thread with a forced delay.
-        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-        dispatch_async(backgroundQueue, {
+        let dispatchGroup: dispatch_group_t = dispatch_group_create()
+        
+        // Checks the service and the database connections.
+        dispatch_group_async(dispatchGroup, dispatchQueue, {
             self.webServicesHelper.checkServiceConnection()
-            self.webServicesHelper.checkDatabaseConnection()
-            self.webServicesHelper.downloadCampuses()
+            print("Testing service.")
             
-            // Forces a delay in order to show a spinner.
-            let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(8 * Double(NSEC_PER_SEC)))
-            dispatch_after(popTime, dispatch_get_main_queue(), { () -> Void in
-                print(self.webServicesHelper.serviceConnection)
-                print(self.webServicesHelper.databaseConnection)
-                
-                self.campuses = self.webServicesHelper.getCampuses()
-
-                // Inserts campuses from the web service into the database.
-                sharedInstance.insertCampuses(self.campuses)
-            })
+            self.webServicesHelper.checkDatabaseConnection()
+            print("Testing database.")
         })
-
-        sharedInstance.prepareTestData()
+        
+        // Tries downloading the campuses.
+        dispatch_group_notify(dispatchGroup, dispatchQueue, {
+            NSThread.sleepForTimeInterval(4.0)
+            if self.webServicesHelper.serviceConnection == "true" && self.webServicesHelper.databaseConnection == "true" {
+                
+                dispatch_group_async(dispatchGroup, self.dispatchQueue, {
+                    self.webServicesHelper.downloadCampuses()
+                    print("Downloading campuses.")
+                })
+            }
+        })
+        
+        // Loads the campuses into the database.
+        dispatch_group_notify(dispatchGroup, dispatchQueue, {
+            NSThread.sleepForTimeInterval(6.0)
+            self.campuses = self.webServicesHelper.getCampuses()
+            
+            // Inserts campuses from the web service into the database.
+            sharedInstance.insertCampuses(self.campuses)
+            
+            print("Campuses loaded.")
+        })
+        
+        NSThread.sleepForTimeInterval(10.0)
+        
+        //sharedInstance.prepareTestData()
     }
     
     // Handling the alert window in the right hierarchy.
@@ -62,14 +78,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         
         // If the location services status has not been set, prompt the user for it.
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
-            if #available(iOS 8.0, *) {
-                locationManager.requestWhenInUseAuthorization()
-            } else {
-                
-                // This line *Should* call the location request on iOS 7. Do not have a device to test it at the moment.
-                locationManager.startUpdatingLocation()
-                locationManager.stopUpdatingLocation()
-            }
+            locationManager.requestWhenInUseAuthorization()
         }
         
         // If the location services has been refused or restricted, show an alert to the user.
@@ -84,75 +93,41 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     // Handles the alerts related to the location service options and authorizations.
     private func alertLocation(title: String, message: String) {
         
-        // If iOS 8:
-        if #available(iOS 8.0, *) {
-            let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-            
-            // Adding the "Cancel" action.
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-            
-            // Adding the "Location Services Settings action.
-            let locationServicesAction = UIAlertAction(title: "Location Service Settings", style: .Default) {
-                (action) in
-                if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
-                    
-                    // Sending the user to the pre-defined url.
-                    UIApplication.sharedApplication().openURL(url)
-                }
+        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        // Adding the "Cancel" action.
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        
+        // Adding the "Location Services Settings action.
+        let locationServicesAction = UIAlertAction(title: "Location Service Settings", style: .Default) {
+            (action) in
+            if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
+                
+                // Sending the user to the pre-defined url.
+                UIApplication.sharedApplication().openURL(url)
             }
-            
-            // Adding the actions to the alert.
-            alert.addAction(cancelAction)
-            alert.addAction(locationServicesAction)
-            
-            // Present the alert to the user.
-            self.presentViewController(alert, animated: true, completion: nil)
         }
-            
-            // iOS 7 or lower:
-        else {
-            let alert: UIAlertView = UIAlertView()
-            
-            // Configuring the alert.
-            alert.delegate = self
-            alert.title = title
-            
-            // Adding the extra bit to the message.
-            alert.message = message + "To do so, open Settings > Privacy > Location Services > Central Wayfinder."
-            alert.addButtonWithTitle("Ok")
-            
-            alert.show()
-        }
+        
+        // Adding the actions to the alert.
+        alert.addAction(cancelAction)
+        alert.addAction(locationServicesAction)
+        
+        // Present the alert to the user.
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     // Alert regarding the internet connection status.
     private func alertInternet(title: String, message: String) {
         
-        if #available(iOS 8.0, *) {
-            let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-            
-            let okAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-            alert.addAction(okAction)
-            
-            self.presentViewController(alert, animated: true, completion: nil)
-        } else {
-            let alert: UIAlertView = UIAlertView()
-            
-            alert.delegate = self
-            alert.title = title
-            
-            alert.message = message
-            alert.addButtonWithTitle("Ok")
-            
-            alert.show()
-        }
+        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let okAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        alert.addAction(okAction)
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

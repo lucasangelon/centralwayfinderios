@@ -48,12 +48,15 @@ class CampusParser: NSObject, NSXMLParserDelegate {
                 currentCampus?.name = string
                 theIndex++
             case 2:
-                currentCampus?.lat = Double(string)!
+                currentCampus?.version = Int(string)!
                 theIndex++
             case 3:
-                currentCampus?.long = Double(string)!
+                currentCampus?.lat = Double(string)!
                 theIndex++
             case 4:
+                currentCampus?.long = Double(string)!
+                theIndex++
+            case 5:
                 currentCampus?.zoom = Double(string)!
                 
                 // Resets the currentCampus for the next instance and appends
@@ -97,15 +100,20 @@ class RoomParser: NSObject, NSXMLParserDelegate {
     }
     
     // If anything was found inside a key/value pair, this method is activated.
-    // TODO: Finish this method once the buildingId parameter has been added to the returned XML.
     func parser(parser: NSXMLParser, foundCharacters string: String) {
-        /*if element.isEqualToString("a:string") {
+        if element.isEqualToString("a:string") {
             switch theIndex {
             case 0:
-                currentRoom?.id = string
+                currentRoom?.id = Int(string)!
                 theIndex++
             case 1:
                 currentRoom?.name = string
+                theIndex++
+            case 2:
+                currentRoom?.buildingId = Int(string)!
+                theIndex++
+            case 3:
+                currentRoom?.image = string
                 
                 // Resets the currentCampus for the next instance and appends
                 // the result to the array.
@@ -116,10 +124,12 @@ class RoomParser: NSObject, NSXMLParserDelegate {
             default:
                 break
             }
-        }*/
+        }
     }
 }
 
+
+// TODO: finish this method once the webservice has been fixed.
 class BuildingParser: NSObject, NSXMLParserDelegate {
     
     private var building: Building?
