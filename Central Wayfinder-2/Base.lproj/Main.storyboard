@@ -516,11 +516,67 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <segue destination="4UW-fp-ry7" kind="show" identifier="ShowCampusSelectionViewController" id="9Pr-z6-JSA"/>
+                        <segue destination="ugB-8w-vhi" kind="show" identifier="ShowAboutViewController" id="UHp-qG-oan"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sbb-ZP-vxe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2152" y="1009"/>
+        </scene>
+        <!--About View Controller-->
+        <scene sceneID="ybX-97-gWz">
+            <objects>
+                <viewController id="ugB-8w-vhi" customClass="AboutViewController" customModule="Central_Wayfinder_2" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RwA-Ja-GMh"/>
+                        <viewControllerLayoutGuide type="bottom" id="PWY-t8-9h6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="I4o-OV-5iB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJK-Na-dYc">
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-m5-7zw">
+                                        <rect key="frame" x="40" y="164" width="240" height="128"/>
+                                        <animations/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstItem="ft8-m5-7zw" firstAttribute="height" secondItem="wJK-Na-dYc" secondAttribute="height" id="ZSS-t7-fiR"/>
+                                    <constraint firstItem="ft8-m5-7zw" firstAttribute="width" secondItem="wJK-Na-dYc" secondAttribute="width" id="bH7-6x-eg7"/>
+                                    <constraint firstItem="ft8-m5-7zw" firstAttribute="centerY" secondItem="wJK-Na-dYc" secondAttribute="centerY" id="cg8-GM-r4H"/>
+                                    <constraint firstItem="ft8-m5-7zw" firstAttribute="centerX" secondItem="wJK-Na-dYc" secondAttribute="centerX" id="kNt-f0-Fvo"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="ugB-8w-vhi" id="XRc-Jb-zxf"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wJK-Na-dYc" firstAttribute="width" secondItem="I4o-OV-5iB" secondAttribute="width" id="6GW-uP-HzA"/>
+                            <constraint firstItem="wJK-Na-dYc" firstAttribute="centerX" secondItem="I4o-OV-5iB" secondAttribute="centerX" id="buF-2k-QUw"/>
+                            <constraint firstItem="wJK-Na-dYc" firstAttribute="centerY" secondItem="I4o-OV-5iB" secondAttribute="centerY" id="tR8-Uz-cd0"/>
+                            <constraint firstItem="wJK-Na-dYc" firstAttribute="height" secondItem="I4o-OV-5iB" secondAttribute="height" id="u9f-zH-Y1L"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="scrollView" destination="wJK-Na-dYc" id="eQ4-IG-7dj"/>
+                        <outlet property="textView" destination="ft8-m5-7zw" id="vXx-4B-AXN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="v0e-O3-NlR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2621" y="1009"/>
         </scene>
         <!--Select Campus-->
         <scene sceneID="28X-5E-JuQ">
@@ -631,7 +687,7 @@
     </scenes>
     <resources>
         <image name="swiftIcon" width="256" height="256"/>
-        <image name="tree.jpg" width="256" height="256"/>
+        <image name="tree.jpg" width="2000" height="1500"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="HhX-M1-mvH"/>
