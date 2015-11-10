@@ -15,6 +15,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // List items for the menu.
     private let cellContent = [["Accessibility", "Select Campus"], ["About", "Terms of Service", "Privacy Policy"]]
+    private var aboutTitle = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,11 +97,13 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // handling the clicks on the table items.
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 0{
+        if indexPath.section == 0 {
+            
             switch indexPath.row {
                 
             case 0:
                 sharedDefaults.accessibility = true
+                
             // When the "Select Campus" item is clicked.
             case 1:
                 self.performSegueWithIdentifier("ShowCampusSelectionViewController", sender: self)
@@ -109,6 +112,19 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             default:
                 print("NoSegueAvailable")
             }
+        } else {
+            switch indexPath.row {
+            case 0:
+                aboutTitle = "About"
+            case 1:
+                aboutTitle = "Terms of Service"
+            case 2:
+                aboutTitle = "Privacy Policy"
+            default:
+                aboutTitle = "Error"
+            }
+            
+            self.performSegueWithIdentifier("ShowAboutViewController", sender: self)
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -122,6 +138,13 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         } else {
             sharedDefaults.accessibility = false
             print(sharedDefaults.accessibility)
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowAboutViewController" {
+            let destinationSegue = segue.destinationViewController as! AboutViewController
+            destinationSegue.title = aboutTitle
         }
     }
 }

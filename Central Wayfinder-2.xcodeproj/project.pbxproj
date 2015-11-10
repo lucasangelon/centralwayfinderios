@@ -39,6 +39,7 @@
 		A0C505821BD8D2E40084A9E8 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057C1BD8D2E40084A9E8 /* FMDatabaseAdditions.m */; };
 		A0C505831BD8D2E40084A9E8 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C5057E1BD8D2E40084A9E8 /* FMDatabasePool.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A0C554D21BEF9A610089345F /* XMLParsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C554D11BEF9A610089345F /* XMLParsers.swift */; };
+		A0CAFD4C1BF2447D00770657 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0CAFD4B1BF2447D00770657 /* AboutViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,7 @@
 		A0C5057D1BD8D2E40084A9E8 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
 		A0C5057E1BD8D2E40084A9E8 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
 		A0C554D11BEF9A610089345F /* XMLParsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLParsers.swift; sourceTree = "<group>"; };
+		A0CAFD4B1BF2447D00770657 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 				A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */,
 				A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */,
 				A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */,
+				A0CAFD4B1BF2447D00770657 /* AboutViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				A0A15B431BD9CAF400B27A22 /* CampusSelectionViewController.swift in Sources */,
 				A0C505831BD8D2E40084A9E8 /* FMDatabasePool.m in Sources */,
 				A0781F201BCF4212002A65AF /* SettingsViewController.swift in Sources */,
+				A0CAFD4C1BF2447D00770657 /* AboutViewController.swift in Sources */,
 				A0781F221BCF4AEC002A65AF /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
