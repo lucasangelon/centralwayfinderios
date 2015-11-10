@@ -18,6 +18,8 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     private var rooms: [Room] = [Room]()
     private var roomNames: [String] = [String]()
     private var selectedRoom: Room = Room()
+    private var building: Building = Building()
+    private let webServicesHelper = WebServicesHelper()
     
     // List items for the main menu.
     private let cellContent = ["Services", "Central Web", "Settings"]
@@ -124,29 +126,35 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if found {
             selectedRoom = rooms[positionFound]
+            
+            building =  sharedInstance.getBuilding(selectedRoom.buildingId, building: building)
+            
+            if building.id == 0 {
+                
+                let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+                let dispatchGroup: dispatch_group_t = dispatch_group_create()
+                
+                // Tries downloading the building and saving it into the database.
+                dispatch_group_async(dispatchGroup, dispatchQueue, {
+                    self.webServicesHelper.downloadBuilding(self.selectedRoom.buildingId)
+                    print("Downloading building.")
+                })
+                
+                dispatch_group_notify(dispatchGroup, dispatchQueue, {
+                    NSThread.sleepForTimeInterval(4.0)
+                    self.building = self.webServicesHelper.getBuilding()
+                    print("Loaded building.")
+                })
+            }
+            
             self.performSegueWithIdentifier("ShowMapsFromMenu", sender: self)
         } else {
             // Handling the alert to explain the room could not be found at this specific campus.
-            if #available(iOS 8.0, *) {
-                let alert: UIAlertController = UIAlertController(title: "Could not find location", message: "The location you searched for does not exist at the \(sharedDefaults.campusName) campus.", preferredStyle: .Alert)
-                
-                alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
-                
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-                
-                // iOS 7.* or lower:
-            else {
-                let alert: UIAlertView = UIAlertView()
-                
-                alert.delegate = self
-                alert.title = "Could not find location"
-                
-                alert.message = "The location you searched for does not exist at this campus."
-                alert.addButtonWithTitle("Ok")
-                
-                alert.show()
-            }
+            let alert: UIAlertController = UIAlertController(title: "Could not find location", message: "The location you searched for does not exist at the \(sharedDefaults.campusName) campus.", preferredStyle: .Alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         
         self.searchBar.endEditing(true)
@@ -156,8 +164,9 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowMapsFromMenu" {
             let destinationSegue = segue.destinationViewController as! MapsViewController
-            destinationSegue.destTitle = selectedRoom.name
-            destinationSegue.destBuildingId = selectedRoom.buildingId
+            
+            destinationSegue.building = building
+            destinationSegue.destSubtitle = selectedRoom.name
         }
         
         // Clears the search bar prior to changing screens.

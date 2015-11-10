@@ -12,9 +12,9 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     
     @IBOutlet var tableView: UITableView!
     
+    private let webServicesHelper: WebServicesHelper = WebServicesHelper()
     private var campuses: [Campus] = [Campus]()
     private var campus: Campus = Campus()
-    
     private var firstUse = false
     
     override func viewDidLoad() {
@@ -59,8 +59,12 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         sharedDefaults.campusDefaultLong = campuses[indexPath.row].long
         sharedDefaults.campusName = campuses[indexPath.row].name
         
+        // Downloads rooms for a given campus.
+        getRooms()
+        
         if firstUse {
             firstUse = false
+            sharedDefaults.accessibility = false
             self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
         } else {
             self.navigationController?.popViewControllerAnimated(true)
@@ -86,35 +90,24 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
                 sharedDefaults.campusDefaultLat = campus.lat
                 sharedDefaults.campusDefaultLong = campus.long
                 sharedDefaults.campusName = campus.name
+                sharedDefaults.accessibility = false
             }
+            
+            // Downloads rooms from the web service.
+            getRooms()
             
             firstUse = false
             
             // Handling the alert to explain the default Perth campus to the user.
-            if #available(iOS 8.0, *) {
-                let alert: UIAlertController = UIAlertController(title: "Perth Campus", message: "The default campus has been set to Perth.", preferredStyle: .Alert)
-                
-                let okAction = UIAlertAction(title: "Ok", style: .Default) {
-                    (action) in
-                    self.returnToMainMenu()
-                }
-                alert.addAction(okAction)
-                
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
+            let alert: UIAlertController = UIAlertController(title: "Perth Campus", message: "The default campus has been set to Perth.", preferredStyle: .Alert)
             
-            // iOS 7.* or lower:
-            else {
-                let alert: UIAlertView = UIAlertView()
-                
-                alert.delegate = self
-                alert.title = "Perth Campus"
-                
-                alert.message = "The default campus has been set to Perth."
-                alert.addButtonWithTitle("Ok")
-                
-                alert.show()
+            let okAction = UIAlertAction(title: "Ok", style: .Default) {
+                (action) in
+                self.returnToMainMenu()
             }
+            alert.addAction(okAction)
+            
+            self.presentViewController(alert, animated: true, completion: nil)
         } else {
             self.navigationController?.popViewControllerAnimated(true)
         }
@@ -133,5 +126,27 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     // Returns to the main menu after cancelling the default campus selection in iOS versions prior to 8.0.
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
+    }
+    
+    // Retrieves rooms from the web service based on the campus.
+    func getRooms() {
+            
+        let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+        let dispatchGroup: dispatch_group_t = dispatch_group_create()
+        
+        // Tries downloading the building and saving it into the database.
+        dispatch_group_async(dispatchGroup, dispatchQueue, {
+            self.webServicesHelper.downloadRooms(sharedDefaults.campusId)
+            print("Downloading rooms.")
+        })
+        
+        dispatch_group_notify(dispatchGroup, dispatchQueue, {
+            NSThread.sleepForTimeInterval(4.0)
+            
+            sharedInstance.insertRooms(self.webServicesHelper.getRooms())
+            print("Loaded rooms.")
+        })
+        
+        NSThread.sleepForTimeInterval(7.0)
     }
 }
