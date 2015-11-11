@@ -46,46 +46,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LpI-Hv-Q5I">
-                                <rect key="frame" x="92" y="342" width="137" height="30"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hm5-BI-qgy">
+                                <rect key="frame" x="-4" y="64" width="328" height="504"/>
                                 <animations/>
-                                <state key="normal" title="Click Here to Enter"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LpI-Hv-Q5I">
+                                <rect key="frame" x="92" y="419" width="137" height="30"/>
+                                <animations/>
+                                <color key="backgroundColor" red="1" green="0.78624397864574225" blue="0.38384946458822433" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Click Here to Enter">
+                                    <color key="titleColor" red="1" green="0.2063025849896305" blue="0.121923047158632" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="startButton:" destination="gsh-6o-Fns" eventType="touchUpInside" id="EfE-ub-781"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© 2015 Central Institute of Technology" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98g-Hp-zy3">
-                                <rect key="frame" x="8" y="528" width="304" height="20"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="UJR-fx-iea"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hm5-BI-qgy">
-                                <rect key="frame" x="-4" y="64" width="328" height="460"/>
-                                <animations/>
-                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="98g-Hp-zy3" firstAttribute="centerX" secondItem="es1-dE-O8X" secondAttribute="centerX" id="0Je-ks-yQ3"/>
-                            <constraint firstItem="98g-Hp-zy3" firstAttribute="leading" secondItem="es1-dE-O8X" secondAttribute="leadingMargin" constant="-8" id="9Yb-BI-Xos"/>
-                            <constraint firstItem="hm5-BI-qgy" firstAttribute="leading" secondItem="es1-dE-O8X" secondAttribute="leadingMargin" constant="-20" id="CXy-hJ-mu4"/>
-                            <constraint firstItem="LpI-Hv-Q5I" firstAttribute="top" secondItem="6WC-uI-lSz" secondAttribute="bottom" constant="278" id="E83-vk-Y75"/>
-                            <constraint firstItem="hm5-BI-qgy" firstAttribute="top" secondItem="6WC-uI-lSz" secondAttribute="bottom" id="Fy9-cb-TgO"/>
-                            <constraint firstItem="LpI-Hv-Q5I" firstAttribute="leading" secondItem="es1-dE-O8X" secondAttribute="leadingMargin" constant="76" id="PKb-cd-z7l"/>
-                            <constraint firstItem="LpI-Hv-Q5I" firstAttribute="centerX" secondItem="hm5-BI-qgy" secondAttribute="centerX" id="V6R-yM-f3R"/>
+                            <constraint firstItem="LpI-Hv-Q5I" firstAttribute="leading" secondItem="es1-dE-O8X" secondAttribute="leadingMargin" constant="76" id="1HW-XH-Xer"/>
+                            <constraint firstItem="iYC-4w-eIE" firstAttribute="top" secondItem="LpI-Hv-Q5I" secondAttribute="bottom" constant="119" id="3Va-gy-aGl"/>
+                            <constraint firstItem="hm5-BI-qgy" firstAttribute="centerX" secondItem="LpI-Hv-Q5I" secondAttribute="centerX" id="BfP-yI-hQZ"/>
+                            <constraint firstItem="hm5-BI-qgy" firstAttribute="centerX" secondItem="es1-dE-O8X" secondAttribute="centerX" id="FEL-yU-To3"/>
+                            <constraint firstItem="hm5-BI-qgy" firstAttribute="leading" secondItem="es1-dE-O8X" secondAttribute="leadingMargin" constant="-20" id="PrR-QD-R64"/>
                             <constraint firstItem="hm5-BI-qgy" firstAttribute="leading" secondItem="es1-dE-O8X" secondAttribute="leadingMargin" constant="24" id="VT6-by-EmC"/>
                             <constraint firstAttribute="trailingMargin" secondItem="hm5-BI-qgy" secondAttribute="trailing" constant="24" id="YoR-Rk-fhn"/>
                             <constraint firstItem="iYC-4w-eIE" firstAttribute="top" secondItem="hm5-BI-qgy" secondAttribute="bottom" id="cYo-dC-Z2E"/>
-                            <constraint firstAttribute="bottom" secondItem="98g-Hp-zy3" secondAttribute="bottom" constant="20" symbolic="YES" id="dM6-og-g60"/>
-                            <constraint firstItem="98g-Hp-zy3" firstAttribute="centerX" secondItem="LpI-Hv-Q5I" secondAttribute="centerX" id="fqq-jy-Gxg"/>
                             <constraint firstItem="hm5-BI-qgy" firstAttribute="top" secondItem="6WC-uI-lSz" secondAttribute="bottom" id="h3e-YX-Okk"/>
-                            <constraint firstItem="98g-Hp-zy3" firstAttribute="top" secondItem="hm5-BI-qgy" secondAttribute="bottom" constant="4" id="zb3-sm-cYf"/>
+                            <constraint firstItem="hm5-BI-qgy" firstAttribute="bottom" secondItem="iYC-4w-eIE" secondAttribute="top" id="jmz-zA-hKO"/>
+                            <constraint firstItem="hm5-BI-qgy" firstAttribute="top" secondItem="6WC-uI-lSz" secondAttribute="bottom" id="x0w-M8-lmR"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -101,6 +91,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="imageView" destination="hm5-BI-qgy" id="2vb-Ir-p9K"/>
                         <outlet property="startButton" destination="LpI-Hv-Q5I" id="0jt-kI-4gH"/>
                         <segue destination="4UW-fp-ry7" kind="show" identifier="FirstUseToCampusSelection" id="dj3-vt-ghr"/>
                         <segue destination="qsL-Yq-vMl" kind="show" identifier="ShowMainMenuViewController" id="7x9-P3-soN"/>
@@ -643,7 +634,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VII-vB-32d">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VII-vB-32d">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -743,10 +734,10 @@
         <image name="tree.jpg" width="2000" height="1500"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="7x9-P3-soN"/>
+        <segue reference="dj3-vt-ghr"/>
         <segue reference="HhX-M1-mvH"/>
-        <segue reference="zv2-Fd-USE"/>
         <segue reference="n2Y-8Q-uSB"/>
         <segue reference="oyr-x9-z7Z"/>
-        <segue reference="9Pr-z6-JSA"/>
     </inferredMetricsTieBreakers>
 </document>

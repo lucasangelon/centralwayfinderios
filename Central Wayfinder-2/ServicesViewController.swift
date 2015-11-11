@@ -43,6 +43,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         if services.count < 1 {
             return 1
         } else {
+            tableView.separatorColor = UIColor(red: (231/255), green: (81/255), blue: (15/255), alpha: 1)
             return services.count
         }
     }

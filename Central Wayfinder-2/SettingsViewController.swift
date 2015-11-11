@@ -25,6 +25,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        tableView.separatorColor = UIColor(red: (231/255), green: (81/255), blue: (15/255), alpha: 1)
+
         return cellContent.count
     }
     
@@ -56,6 +58,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath)
             
             cell.textLabel?.text = "Accessibility"
+            cell.imageView?.image = UIImage(named: "accessibility.png")
             
             let accessibilitySwitch = UISwitch(frame: CGRectZero) as UISwitch
             accessibilitySwitch.addTarget(self, action: "accessibilityTap:", forControlEvents: .ValueChanged)

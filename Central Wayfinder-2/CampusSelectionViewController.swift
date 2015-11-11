@@ -20,6 +20,8 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.hidden = false
+        
         // Hiding the usual back button and implementing a special one for the campus selection page.
         self.navigationItem.backBarButtonItem?.enabled = false
         let campusSelectionBackButton = UIBarButtonItem(title: "< Back", style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
@@ -38,16 +40,26 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     
     // Returns the item count from the list based on the cellContent variable.
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return campuses.count
+        
+        if campuses.count > 0 {
+            tableView.separatorColor = UIColor(red: (231/255), green: (81/255), blue: (15/255), alpha: 1)
+            
+            return campuses.count
+        } else {
+            return 1
+        }
     }
     
     // Returns the properly set up items for the list.
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCellWithIdentifier("TextCell", forIndexPath: indexPath)
         
-        cell.textLabel?.text = campuses[indexPath.row].name
-        
+        if campuses.count < 1 {
+            cell.textLabel?.text = "No campuses available."
+            tableView.allowsSelection = false
+        } else {
+            cell.textLabel?.text = campuses[indexPath.row].name
+        }
         return cell
     }
     

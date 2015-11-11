@@ -23,7 +23,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     private var postMapsInformation = [String]()
     
     // List items for the main menu.
-    private let cellContent = ["Services", "Central Web", "Settings"]
+    private let cellContent = [("Services", "services.png"), ("Central Web", "centralWeb.png"), ("Settings", "settings.png")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +67,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // Returns the item count from the list based on the "cellContent" variable.
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+        tableView.separatorColor = UIColor(red: (231/255), green: (81/255), blue: (15/255), alpha: 1)
         return cellContent.count
     }
     
@@ -76,8 +76,8 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let cell = tableView.dequeueReusableCellWithIdentifier("ImageTextArrowCell", forIndexPath: indexPath)
         
-        cell.textLabel?.text = cellContent[indexPath.row]
-        cell.imageView?.image = UIImage(named: "swiftIcon")
+        cell.textLabel?.text = cellContent[indexPath.row].0
+        cell.imageView?.image = UIImage(named: cellContent[indexPath.row].1)
         
         return cell
     }
@@ -118,7 +118,9 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             
             // Search for the room.
             for index in 0...(roomNames.count - 1) {
-                if roomNames[index] == searchBar.text {
+                
+                // Ensures both strings are in lowercase and avoids errors with capitalised letters.
+                if roomNames[index].lowercaseString == searchBar.text?.lowercaseString {
                     found = true
                     positionFound = index
                 }

@@ -12,6 +12,7 @@ import CoreLocation
 class SplashViewController: UIViewController, CLLocationManagerDelegate, UIApplicationDelegate, UITabBarDelegate {
     
     @IBOutlet var startButton: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
     
     private let webServicesHelper: WebServicesHelper = WebServicesHelper()
     private let util: Util = Util()
@@ -24,8 +25,10 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.barTintColor = UIColor.orangeColor()
+        self.navigationController?.navigationBar.hidden = true
         self.tabBarController?.tabBar.hidden = true
+        
+        self.imageView.image = UIImage(named: "welcome.png")
         
         // Configuring the location manager.
         locationManager.delegate = self
