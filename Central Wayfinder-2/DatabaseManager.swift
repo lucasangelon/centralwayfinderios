@@ -118,7 +118,7 @@ class DatabaseManager : NSObject {
     }
     
     // Inserts a building into the Database.
-    func insertBuilding(var building: Building) {
+    func insertBuilding(let building: Building) {
         queue?.inDatabase() {
             db in
             

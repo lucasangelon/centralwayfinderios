@@ -31,6 +31,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     var campuses: [Campus] = [Campus]()
     var rooms: [Room] = [Room]()
     var building: Building = Building()
+    var postMapsInformation = [String]()
     
     // Checks if the Service and Server are online.
     func checkServiceConnection() {
@@ -175,6 +176,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         let session = NSURLSession.sharedSession()
         let _: NSError?
         let disability = sharedDefaults.accessibility
+        var objectsArray = [NSObject]()
         
         // Sends a parameter for the method.
         let middleSoapMessage = "<wf:" + getBuildingAction + "><wf:WaypointID>\(buildingId)</wf:WaypointID><wf:Disability>\(disability)</wf:Disability></wf:" + getBuildingAction + ">"
@@ -189,7 +191,12 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             let buildingParser = BuildingParser()
-            self.building = buildingParser.parseXML(data!)
+            buildingParser.requestedBuildingId = buildingId
+            objectsArray = buildingParser.parseXML(data!)
+            
+            self.building = objectsArray[0] as! Building
+            self.postMapsInformation.append(objectsArray[1] as! String)
+            self.postMapsInformation.append(objectsArray[2] as! String)
             
             // Prints the response in order to test the service.
             print("Response: \(response)")
@@ -225,6 +232,10 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     // Returns the building.
     func getBuilding() -> Building {
         return self.building
+    }
+    
+    func getPostMapsInformation() -> [String] {
+        return self.postMapsInformation
     }
     
     // Checks if the campuses variable is not empty.

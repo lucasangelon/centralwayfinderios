@@ -43,7 +43,7 @@ class Room: NSObject {
         
         // If the image variable is not empty, insert the value into the property.
         if (image != "NoImage") {
-            self.image = image!
+            self.image = image!.lowercaseString
         } else {
             self.image = "NoImage"
         }

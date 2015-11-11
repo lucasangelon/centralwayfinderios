@@ -18,6 +18,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
     private var services: [Room] = [Room]()
     private var currentRow: Room = Room()
     private var building: Building = Building()
+    private var postMapsInformation = [String]()
     var activityIndicator = UIActivityIndicatorView()
     var queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
     var group = dispatch_group_create()
@@ -86,14 +87,17 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
                 print("Downloading building.")
             })
             
+            
+            // The ResolvePath takes quite a long time to run. NEED A SPINNER HERE D=
             dispatch_group_notify(dispatchGroup, dispatchQueue, {
-                NSThread.sleepForTimeInterval(4.0)
+                NSThread.sleepForTimeInterval(8.0)
                 self.building = self.webServicesHelper.getBuilding()
+                self.postMapsInformation = self.webServicesHelper.getPostMapsInformation()
                 print("Loaded building.")
             })
         }
         
-        NSThread.sleepForTimeInterval(7.0)
+        NSThread.sleepForTimeInterval(13.0)
         
         self.performSegueWithIdentifier("ShowMapsFromServices", sender: self)
         
@@ -115,6 +119,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
             
             destinationSegue.building = building
             destinationSegue.destSubtitle = currentRow.name
+            destinationSegue.postMapsInformation = self.postMapsInformation
         }
     }
 }

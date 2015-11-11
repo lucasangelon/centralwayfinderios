@@ -20,6 +20,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     private var selectedRoom: Room = Room()
     private var building: Building = Building()
     private let webServicesHelper = WebServicesHelper()
+    private var postMapsInformation = [String]()
     
     // List items for the main menu.
     private let cellContent = ["Services", "Central Web", "Settings"]
@@ -141,11 +142,14 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                 })
                 
                 dispatch_group_notify(dispatchGroup, dispatchQueue, {
-                    NSThread.sleepForTimeInterval(4.0)
+                    NSThread.sleepForTimeInterval(8.0)
                     self.building = self.webServicesHelper.getBuilding()
+                    self.postMapsInformation = self.webServicesHelper.getPostMapsInformation()
                     print("Loaded building.")
                 })
             }
+            
+            NSThread.sleepForTimeInterval(13.0)
             
             self.performSegueWithIdentifier("ShowMapsFromMenu", sender: self)
         } else {
@@ -167,6 +171,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             
             destinationSegue.building = building
             destinationSegue.destSubtitle = selectedRoom.name
+            destinationSegue.postMapsInformation = self.postMapsInformation
         }
         
         // Clears the search bar prior to changing screens.

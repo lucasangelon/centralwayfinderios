@@ -34,8 +34,9 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     private var destination: MapLocation!
     private var start: MapLocation!
-    var building: Building = Building()
     private let locationManager = CLLocationManager()
+    var postMapsInformation = [String]()
+    var building: Building?
     
     // User Information
     private var userTitle = ""
@@ -81,7 +82,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         if destinationExists() {
             
             // Generates the route.
-            generateRoute(building.id, directionsType: MKDirectionsTransportType.Walking)
+            generateRoute(building!.id, directionsType: MKDirectionsTransportType.Walking)
             
             if start != nil {
                 mapView.addAnnotation(start)
@@ -135,7 +136,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     // Checks if the application sent the user to this page with a destination from Services.
     private func destinationExists() -> Bool {
-        if building.id != 0 {
+        if building!.id != 0 {
             return true
         } else {
             return false
@@ -148,7 +149,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     private func generateRoute(buildingId: Int, directionsType: MKDirectionsTransportType) {
         
         // Creates the destination object.
-        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: building.lat, longitude: building.long), title: building.name, subtitle: destSubtitle, destination: true)
+        destination = MapLocation(coordinate: CLLocationCoordinate2D(latitude: building!.lat, longitude: building!.long), title: building!.name, subtitle: destSubtitle, destination: true)
         
         // Start a request for maps.
         let request = MKDirectionsRequest()
@@ -263,9 +264,9 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         
         switch sender.selectedSegmentIndex {
         case 0:
-            generateRoute(building.id, directionsType: MKDirectionsTransportType.Walking)
+            generateRoute(building!.id, directionsType: MKDirectionsTransportType.Walking)
         case 1:
-            generateRoute(building.id, directionsType: MKDirectionsTransportType.Automobile)
+            generateRoute(building!.id, directionsType: MKDirectionsTransportType.Automobile)
         default:
             break
         }
