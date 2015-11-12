@@ -11,8 +11,8 @@ import UIKit
 
 class AboutViewController: UIViewController, UIScrollViewDelegate {
     
-    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var textView: UITextView!
     
     private let screen = UIScreen()
     

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		A02DD7881BDB66CC00951F5C /* PostMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */; };
 		A02DD78A1BDB74E600951F5C /* IndoorMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */; };
+		A063D1531BF4E42900453892 /* CentralWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A063D1521BF4E42900453892 /* CentralWebViewController.swift */; };
+		A063D1551BF4F54F00453892 /* CentralTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A063D1541BF4F54F00453892 /* CentralTabBarController.swift */; };
 		A064B0311BDFE18E00A1D55B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B0301BDFE18E00A1D55B /* Util.swift */; };
 		A064B0341BE0640900A1D55B /* Campus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B0331BE0640900A1D55B /* Campus.swift */; };
 		A064B0361BE0657900A1D55B /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B0351BE0657900A1D55B /* Building.swift */; };
@@ -62,6 +64,8 @@
 /* Begin PBXFileReference section */
 		A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostMapsViewController.swift; sourceTree = "<group>"; };
 		A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndoorMapsViewController.swift; sourceTree = "<group>"; };
+		A063D1521BF4E42900453892 /* CentralWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CentralWebViewController.swift; sourceTree = "<group>"; };
+		A063D1541BF4F54F00453892 /* CentralTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CentralTabBarController.swift; sourceTree = "<group>"; };
 		A064B0301BDFE18E00A1D55B /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		A064B0331BE0640900A1D55B /* Campus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Campus.swift; sourceTree = "<group>"; };
 		A064B0351BE0657900A1D55B /* Building.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
@@ -202,6 +206,8 @@
 				A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */,
 				A0A15B401BD9C4FC00B27A22 /* UserDefaultsController.swift */,
 				A0CAFD4B1BF2447D00770657 /* AboutViewController.swift */,
+				A063D1521BF4E42900453892 /* CentralWebViewController.swift */,
+				A063D1541BF4F54F00453892 /* CentralTabBarController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -426,10 +432,12 @@
 				A0781EEB1BCF348D002A65AF /* AppDelegate.swift in Sources */,
 				A0C505821BD8D2E40084A9E8 /* FMDatabaseAdditions.m in Sources */,
 				A064B0361BE0657900A1D55B /* Building.swift in Sources */,
+				A063D1551BF4F54F00453892 /* CentralTabBarController.swift in Sources */,
 				A0781F2F1BCF8BA5002A65AF /* MapsViewHelper.swift in Sources */,
 				A0C505801BD8D2E40084A9E8 /* FMResultSet.m in Sources */,
 				A02DD78A1BDB74E600951F5C /* IndoorMapsViewController.swift in Sources */,
 				A064B0381BE0664400A1D55B /* Room.swift in Sources */,
+				A063D1531BF4E42900453892 /* CentralWebViewController.swift in Sources */,
 				A0A15B431BD9CAF400B27A22 /* CampusSelectionViewController.swift in Sources */,
 				A0C505831BD8D2E40084A9E8 /* FMDatabasePool.m in Sources */,
 				A0781F201BCF4212002A65AF /* SettingsViewController.swift in Sources */,
