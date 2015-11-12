@@ -152,6 +152,10 @@
                                     <outlet property="delegate" destination="Lku-Xs-6OZ" id="P8M-Kb-emO"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="dJc-zE-HsU">
+                                <rect key="frame" x="142" y="266" width="37" height="37"/>
+                                <animations/>
+                            </activityIndicatorView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -160,7 +164,9 @@
                             <constraint firstItem="XRo-0C-37R" firstAttribute="leading" secondItem="aYx-WB-MBQ" secondAttribute="leading" id="5mS-py-sFf"/>
                             <constraint firstItem="XRo-0C-37R" firstAttribute="centerY" secondItem="aYx-WB-MBQ" secondAttribute="centerY" id="L8e-2L-7IL"/>
                             <constraint firstItem="XRo-0C-37R" firstAttribute="bottom" secondItem="o1A-4x-Qk8" secondAttribute="top" id="MRd-DI-lkd"/>
+                            <constraint firstItem="dJc-zE-HsU" firstAttribute="centerY" secondItem="aYx-WB-MBQ" secondAttribute="centerY" id="NNE-Sq-yKo"/>
                             <constraint firstItem="XRo-0C-37R" firstAttribute="top" secondItem="Uil-cG-FrF" secondAttribute="bottom" id="apf-AJ-wWk"/>
+                            <constraint firstItem="dJc-zE-HsU" firstAttribute="centerX" secondItem="aYx-WB-MBQ" secondAttribute="centerX" id="dg0-od-AUB"/>
                             <constraint firstItem="XRo-0C-37R" firstAttribute="leading" secondItem="aYx-WB-MBQ" secondAttribute="leading" id="rSH-MV-gc2"/>
                             <constraint firstAttribute="trailing" secondItem="XRo-0C-37R" secondAttribute="trailing" id="zcU-JR-vmb"/>
                         </constraints>
@@ -177,6 +183,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="dJc-zE-HsU" id="xIg-fo-qPr"/>
                         <segue destination="Qz0-gV-owB" kind="show" identifier="ShowMapsFromServices" id="nrC-DR-EDC"/>
                     </connections>
                 </viewController>
@@ -734,10 +741,10 @@
         <image name="tree.jpg" width="2000" height="1500"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7x9-P3-soN"/>
+        <segue reference="xm0-zb-KWh"/>
+        <segue reference="3VL-jG-6rj"/>
+        <segue reference="SPj-Ww-hit"/>
+        <segue reference="nrC-DR-EDC"/>
         <segue reference="dj3-vt-ghr"/>
-        <segue reference="HhX-M1-mvH"/>
-        <segue reference="n2Y-8Q-uSB"/>
-        <segue reference="oyr-x9-z7Z"/>
     </inferredMetricsTieBreakers>
 </document>

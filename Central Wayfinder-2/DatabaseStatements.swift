@@ -14,7 +14,7 @@ class DatabaseStatements {
     
     let CREATE_TABLE_CAMPUS: String = "CREATE TABLE IF NOT EXISTS campus(id TEXT NOT NULL PRIMARY KEY, name TEXT NOT NULL, version INTEGER NOT NULL, lat REAL NOT NULL, long REAL NOT NULL, zoom REAL NOT NULL);"
     
-    let CREATE_TABLE_BUILDINGS: String = "CREATE TABLE IF NOT EXISTS building(id INTEGER NOT NULL PRIMARY KEY,  name TEXT NOT NULL, lat REAL NOT NULL, long REAL NOT NULL, campus_id TEXT NOT NULL);"
+    let CREATE_TABLE_BUILDINGS: String = "CREATE TABLE IF NOT EXISTS building(id INTEGER NOT NULL PRIMARY KEY,  name TEXT NOT NULL, lat REAL NOT NULL, long REAL NOT NULL, image TEXT NOT NULL, campus_id TEXT NOT NULL);"
     
     let CREATE_TABLE_ROOMS: String = "CREATE TABLE IF NOT EXISTS room(id INTEGER NOT NULL PRIMARY KEY, name TEXT NOT NULL, image TEXT, building_id INTEGER NOT NULL, campus_id TEXT NOT NULL);"
     
@@ -23,7 +23,7 @@ class DatabaseStatements {
     
     let INSERT_CAMPUS: String = "INSERT INTO campus (id, name, version, lat, long, zoom) VALUES (?, ?, ?, ?, ?, ?);"
     
-    let INSERT_BUILDING: String = "INSERT INTO building (id, name, lat, long, campus_id) VALUES (?, ?, ?, ?, ?);"
+    let INSERT_BUILDING: String = "INSERT INTO building (id, name, lat, long, image, campus_id) VALUES (?, ?, ?, ?, ?, ?);"
     
     // Inserting a normal room in the table.
     let INSERT_ROOM: String = "INSERT INTO room (id, name, image, building_id, campus_id) VALUES (?, ?, ?, ?, ?);"
@@ -83,11 +83,11 @@ class DatabaseStatements {
     func getTestBuildings() -> [Building] {
         var buildings: [Building] = [Building]()
         
-        buildings.append(Building(id: 1, name: "Building 1", lat: 22.2, long: 22.30003, campusId: "PE"))
-        buildings.append(Building(id: 2, name: "Building 2", lat: -31.947358, long: 115.861375, campusId: "PE"))
-        buildings.append(Building(id: 3, name: "Building 3", lat: -31.948004, long: 115.860957, campusId: "PE"))
-        buildings.append(Building(id: 4, name: "Building 1", lat: 11.1, long: 12.1, campusId: "LE"))
-        buildings.append(Building(id: 5, name: "Building 4", lat: -31.9474773406982, long: 115.863143920898, campusId: "PE"))
+        buildings.append(Building(id: 1, name: "Building 1", lat: 22.2, long: 22.30003, image: "NoImage", campusId: "PE"))
+        buildings.append(Building(id: 2, name: "Building 2", lat: -31.947358, long: 115.861375, image: "NoImage", campusId: "PE"))
+        buildings.append(Building(id: 3, name: "Building 3", lat: -31.948004, long: 115.860957, image: "NoImage", campusId: "PE"))
+        buildings.append(Building(id: 4, name: "Building 1", lat: 11.1, long: 12.1, image: "NoImage", campusId: "LE"))
+        buildings.append(Building(id: 5, name: "Building 4", lat: -31.9474773406982, long: 115.863143920898, image: "NoImage", campusId: "PE"))
         
         return buildings
     }

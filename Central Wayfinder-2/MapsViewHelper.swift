@@ -65,7 +65,7 @@ extension MapsViewController {
         if segue.identifier == "ShowPostMapsViewController" {
             let destinationSegue = segue.destinationViewController as! PostMapsViewController
             destinationSegue.locationTitle = destSubtitle
-            destinationSegue.postMapsInformation = self.postMapsInformation
+            destinationSegue.postMapsInformation = self.postMapsInformation!
         }
     }
     

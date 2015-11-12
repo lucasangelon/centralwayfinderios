@@ -124,7 +124,7 @@ class DatabaseManager : NSObject {
             
             var success: Bool = Bool()
             
-            success = db.executeUpdate(self.dbStatements.INSERT_BUILDING, withArgumentsInArray: [(building.id), (building.name), (building.lat), (building.long), (building.campusId)])
+            success = db.executeUpdate(self.dbStatements.INSERT_BUILDING, withArgumentsInArray: [(building.id), (building.name), (building.lat), (building.long), (building.image), (building.campusId)])
             
             if success {
                 print(building.name + " added to the database.")
@@ -234,14 +234,14 @@ class DatabaseManager : NSObject {
             let result: FMResultSet = db.executeQuery(self.dbStatements.SELECT_BUILDING_BASED_ON_ROOM, withArgumentsInArray: [Int(id)])
             
             if result.next() {
-                building = Building(id: Int(result.intForColumn("id")), name: result.stringForColumn("Name"), lat: result.doubleForColumn("lat"), long: result.doubleForColumn("long"), campusId: result.stringForColumn("campus_id"))
+                building = Building(id: Int(result.intForColumn("id")), name: result.stringForColumn("Name"), lat: result.doubleForColumn("lat"), long: result.doubleForColumn("long"), image: result.stringForColumn("image"), campusId: result.stringForColumn("campus_id"))
                 
                 result.close()
             }
             
             else {
                 print("An error has occured: \(db.lastErrorMessage())")
-                building = Building(id: 0, name: "Not Found", lat: 0.0, long: 0.0, campusId: "Not Found")
+                building = Building(id: 0, name: "Not Found", lat: 0.0, long: 0.0, image: "NoImage", campusId: "Not Found")
             }
         }
         

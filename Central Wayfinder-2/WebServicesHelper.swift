@@ -59,12 +59,12 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         // Defines the task.
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             
-            /*// Prints the response in order to test the service.
+            // Prints the response in order to test the service.
             print("Response: \(response)")
             
             // Prints the actual data for testing purposes as well.
             let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            print("Body: \(strData)")*/
+            print("Body: \(strData)")
             
             // Parses the XML retrieved through the request.
             self.parseXML(data!)
@@ -127,6 +127,13 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             let campusParser = CampusParser()
             self.campuses = campusParser.parseXML(data!)
             
+            // Prints the response in order to test the service.
+            print("Response: \(response)")
+            
+            // Prints the actual data for testing purposes as well.
+            let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print("Body: \(strData)")
+            
             // If an error occurred, print the description for it.
             if error != nil
             {
@@ -160,6 +167,13 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             let roomParser = RoomParser()
             self.rooms = roomParser.parseXML(data!)
             
+            // Prints the response in order to test the service.
+            print("Response: \(response)")
+            
+            // Prints the actual data for testing purposes as well.
+            let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print("Body: \(strData)")
+            
             // If an error occurred, print the description for it.
             if error != nil
             {
@@ -189,14 +203,12 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         request.addValue(String((getBuildingMessage).characters.count), forHTTPHeaderField: "Content-Length")
         request.addValue("http://tempuri.org/WF_Service_Interface/" + getBuildingAction, forHTTPHeaderField: "SOAPAction")
         
+        self
+        
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             let buildingParser = BuildingParser()
             buildingParser.requestedBuildingId = buildingId
             objectsArray = buildingParser.parseXML(data!)
-            
-            self.building = objectsArray[0] as! Building
-            self.postMapsInformation.append(objectsArray[1] as! String)
-            self.postMapsInformation.append(objectsArray[2] as! String)
             
             // Prints the response in order to test the service.
             print("Response: \(response)")
@@ -204,6 +216,11 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             // Prints the actual data for testing purposes as well.
             let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
             print("Body: \(strData)")
+            
+            self.building = objectsArray[0] as! Building
+            sharedInstance.insertBuilding(self.building)
+            self.postMapsInformation.append(objectsArray[1] as! String)
+            self.postMapsInformation.append(objectsArray[2] as! String)
             
             // If an error occurred, print the description for it.
             if error != nil

@@ -153,7 +153,7 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         })
         
         dispatch_group_notify(dispatchGroup, dispatchQueue, {
-            NSThread.sleepForTimeInterval(4.0)
+            NSThread.sleepForTimeInterval(3.0)
             
             if self.webServicesHelper.checkRooms() {
                 sharedInstance.insertRooms(self.webServicesHelper.getRooms())
@@ -163,6 +163,6 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
             }
         })
         
-        NSThread.sleepForTimeInterval(7.0)
+        NSThread.sleepForTimeInterval(5.0)
     }
 }

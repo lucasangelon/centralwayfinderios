@@ -144,14 +144,14 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                 })
                 
                 dispatch_group_notify(dispatchGroup, dispatchQueue, {
-                    NSThread.sleepForTimeInterval(8.0)
+                    NSThread.sleepForTimeInterval(3.0)
                     self.building = self.webServicesHelper.getBuilding()
                     self.postMapsInformation = self.webServicesHelper.getPostMapsInformation()
                     print("Loaded building.")
                 })
             }
             
-            NSThread.sleepForTimeInterval(13.0)
+            NSThread.sleepForTimeInterval(6.0)
             
             self.performSegueWithIdentifier("ShowMapsFromMenu", sender: self)
         } else {

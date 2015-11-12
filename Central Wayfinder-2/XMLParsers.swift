@@ -34,6 +34,7 @@ class CampusParser: NSObject, NSXMLParserDelegate {
         element = elementName
     }
     
+    
     func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
     }
     
@@ -158,17 +159,14 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
     
     // Detects the start of an element and assigns it to the variable.
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
-        print(elementName)
         element = elementName
     }
     
     func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        print(elementName)
     }
     
     // If anything was found inside a key/value pair, this method is activated.
     func parser(parser: NSXMLParser, foundCharacters string: String) {
-        print(string)
         if element.isEqualToString("b:string") {
             switch theIndex {
             case 0:
@@ -181,7 +179,7 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
                 building?.name = string
                 theIndex++
             case 3:
-                // Currently empty
+                building?.image = string
                 building?.id = requestedBuildingId
                 building?.campusId = sharedDefaults.campusId
                 theIndex++

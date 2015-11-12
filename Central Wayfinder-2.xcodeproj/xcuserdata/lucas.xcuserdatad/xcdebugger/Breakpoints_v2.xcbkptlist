@@ -2,4 +2,100 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Central Wayfinder-2/ServicesViewController.swift"
+            timestampString = "469025027.711722"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "tableView(_:didSelectRowAtIndexPath:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Central Wayfinder-2/MapsViewController.swift"
+            timestampString = "469003435.88983"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "MapsViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Central_Wayfinder_2.MapsViewController.postMapsInformation.getter : Swift.Optional&lt;Swift.Array&lt;Swift.String&gt;&gt;"
+                  moduleName = "Central Wayfinder-2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lucas/Documents/XCode%20Projects/Central%20Wayfinder-2/Central%20Wayfinder-2/MapsViewController.swift"
+                  timestampString = "469004547.075255"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "18">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Central_Wayfinder_2.MapsViewController.postMapsInformation.materializeForSet : Swift.Optional&lt;Swift.Array&lt;Swift.String&gt;&gt;"
+                  moduleName = "Central Wayfinder-2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lucas/Documents/XCode%20Projects/Central%20Wayfinder-2/Central%20Wayfinder-2/MapsViewController.swift"
+                  timestampString = "469004547.07588"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Central_Wayfinder_2.MapsViewController.init (Central_Wayfinder_2.MapsViewController.Type)(nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.NSBundle&gt;) -&gt; Central_Wayfinder_2.MapsViewController"
+                  moduleName = "Central Wayfinder-2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lucas/Documents/XCode%20Projects/Central%20Wayfinder-2/Central%20Wayfinder-2/MapsViewController.swift"
+                  timestampString = "469004547.076167"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "370">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Central_Wayfinder_2.MapsViewController.init (Central_Wayfinder_2.MapsViewController.Type)(coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;Central_Wayfinder_2.MapsViewController&gt;"
+                  moduleName = "Central Wayfinder-2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lucas/Documents/XCode%20Projects/Central%20Wayfinder-2/Central%20Wayfinder-2/MapsViewController.swift"
+                  timestampString = "469004547.076434"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "38"
+                  endingLineNumber = "38"
+                  offsetFromSymbolStart = "299">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

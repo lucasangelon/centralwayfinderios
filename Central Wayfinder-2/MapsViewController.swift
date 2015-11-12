@@ -35,7 +35,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     private var destination: MapLocation!
     private var start: MapLocation!
     private let locationManager = CLLocationManager()
-    var postMapsInformation = [String]()
+    var postMapsInformation: [String]?
     var building: Building?
     
     // User Information

@@ -11,6 +11,7 @@ import MapKit
 
 class ServicesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var tableView: UITableView!
     
     private let qualityOfServiceClass = QOS_CLASS_UTILITY
@@ -19,12 +20,9 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
     private var currentRow: Room = Room()
     private var building: Building = Building()
     private var postMapsInformation = [String]()
-    var activityIndicator = UIActivityIndicatorView()
     var queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)
     var group = dispatch_group_create()
     
-    var spinner: UIActivityIndicatorView = UIActivityIndicatorView()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,10 +31,6 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         self.tabBarController?.tabBar.hidden = false
         
         services = sharedInstance.getServices(sharedDefaults.campusId, rooms: services)
-        /*
-        spinner.center = CGPointMake(160, 240);
-        spinner.hidesWhenStopped = true*/
-        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,16 +63,18 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
     // Upon selection of an item.
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
+        
+        self.view.bringSubviewToFront(activityIndicator)
+        
         // Set the service coordinates and the title to a variable to be sent to Google Maps.
         currentRow = services[indexPath.row]
         
-        //self.view.addSubview(spinner)
-        //spinner.startAnimating()
-        
-        sharedInstance.getBuilding(currentRow.buildingId, building: building)
+        building = sharedInstance.getBuilding(currentRow.buildingId, building: building)
+        print(building.getContent())
         
         if building.id == 0 {
-            
             let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
             let dispatchGroup: dispatch_group_t = dispatch_group_create()
             
@@ -91,16 +87,24 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
             
             // The ResolvePath takes quite a long time to run. NEED A SPINNER HERE D=
             dispatch_group_notify(dispatchGroup, dispatchQueue, {
-                NSThread.sleepForTimeInterval(8.0)
+                NSThread.sleepForTimeInterval(7.0)
                 self.building = self.webServicesHelper.getBuilding()
+                sharedInstance.insertBuilding(self.building)
+
                 self.postMapsInformation = self.webServicesHelper.getPostMapsInformation()
                 print("Loaded building.")
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.activityIndicator.hidden = true
+                    
+                    self.performSegueWithIdentifier("ShowMapsFromServices", sender: self)
+                })
             })
+        } else {
+            self.activityIndicator.hidden = true
+
+            self.performSegueWithIdentifier("ShowMapsFromServices", sender: self)
         }
-        
-        NSThread.sleepForTimeInterval(13.0)
-        
-        self.performSegueWithIdentifier("ShowMapsFromServices", sender: self)
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }

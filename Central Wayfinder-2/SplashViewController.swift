@@ -50,7 +50,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         
         // Tries downloading the campuses.
         dispatch_group_notify(dispatchGroup, dispatchQueue, {
-            NSThread.sleepForTimeInterval(4.0)
+            NSThread.sleepForTimeInterval(2.0)
             if self.webServicesHelper.serviceConnection == "true" && self.webServicesHelper.databaseConnection == "true" {
                 
                 dispatch_group_async(dispatchGroup, self.dispatchQueue, {
@@ -62,7 +62,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         
         // Loads the campuses into the database.
         dispatch_group_notify(dispatchGroup, dispatchQueue, {
-            NSThread.sleepForTimeInterval(6.0)
+            NSThread.sleepForTimeInterval(4.0)
             self.campuses = self.webServicesHelper.getCampuses()
             
             // Checking it "campuses" is not empty.
@@ -74,15 +74,12 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
                 print("No campuses found.")
             }
         })
-        
-        NSThread.sleepForTimeInterval(10.0)
-        
-        //sharedInstance.prepareTestData()
     }
     
     // Handling the alert window in the right hierarchy.
     override func viewDidAppear(animated: Bool) {
         
+
         // If the location services status has not been set, prompt the user for it.
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
             locationManager.requestWhenInUseAuthorization()
@@ -98,6 +95,8 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         if !(util.isConnectedToNetwork()) {
             alertInternet("Internet Connection Alert", message: "Internet (Cellular or Wi-fi) is required to use this application. Turn on Wi-fi or Cellular data usage in order to use Central Wayfinder.")
         }
+        
+        NSThread.sleepForTimeInterval(6.0)
     }
     
     // Handles the alerts related to the location service options and authorizations.

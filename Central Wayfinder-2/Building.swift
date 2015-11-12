@@ -30,22 +30,32 @@ class Building: NSObject {
         self.long = long
     }
     
+    var image: String = String()
+    init(image: String) {
+        self.image = image
+    }
+    
     var campusId: String = String()
     init(campusId: String) {
         self.campusId = campusId
     }
     
-    init(id: Int, name: String, lat: Double, long: Double, campusId: String) {
+    init(id: Int, name: String, lat: Double, long: Double, image: String, campusId: String) {
         super.init()
         
         self.id = id
         self.name = name
         self.lat = lat
         self.long = long
+        self.image = image
         self.campusId = campusId
     }
     
     override init() {
         super.init()
+    }
+    
+    func getContent() -> String {
+        return ("Id: \(self.id), Name: \(self.name), Latitude: \(self.lat), Longitude: \(self.long), Image: \(self.image), Campus Id: \(self.campusId)")
     }
 }
