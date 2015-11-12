@@ -24,7 +24,7 @@ class PostMapsViewController : UIViewController {
         buildingNameLabel.text = locationTitle
         buildingNameLabel.sizeToFit()
         
-        roomLocationLabel.text = postMapsInformation[0]
+        roomLocationLabel.text = "PLEEease"//postMapsInformation[0]
         roomLocationLabel.sizeToFit()
         
         indoorMaps.addTarget(self, action: "indoorMapsTap:", forControlEvents: UIControlEvents.TouchUpInside)
