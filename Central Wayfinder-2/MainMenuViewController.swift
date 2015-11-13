@@ -11,7 +11,8 @@ import UIKit
 class MainMenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     // Declaring the base tableView.
-    @IBOutlet var tableView: UITableView!
+    
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var imageView: UIImageView!
     
@@ -56,6 +57,10 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         self.searchBar.placeholder = "Enter Room"
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = true
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -74,7 +79,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     // Returns the properly set up items for the list.
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("ImageTextArrowCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("TextImageArrowCell", forIndexPath: indexPath)
         
         cell.textLabel?.text = cellContent[indexPath.row].0
         cell.imageView?.image = UIImage(named: cellContent[indexPath.row].1)
@@ -107,6 +112,13 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    // Setting up the footer.
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 10))
+        
+        return footerView
     }
     
     // When the user clicks on the search button.

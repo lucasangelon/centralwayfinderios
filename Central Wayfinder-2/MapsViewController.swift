@@ -23,6 +23,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
      */
     
     @IBOutlet weak var directionsTypeControl: UISegmentedControl!
+    
     @IBOutlet weak var mapTypeControl: UISegmentedControl!
     
     /*
@@ -30,6 +31,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
      */
     
     @IBOutlet weak var mapView: MKMapView!
+
     private final let regionRadius: CLLocationDistance = 375
     
     private var destination: MapLocation!

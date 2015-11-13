@@ -150,6 +150,7 @@
 				A0781EE81BCF348D002A65AF /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		A0781EE81BCF348D002A65AF /* Products */ = {
 			isa = PBXGroup;

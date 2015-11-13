@@ -20,6 +20,7 @@ class PostMapsViewController : UIViewController {
     
     override func viewDidLoad() {
         self.navigationItem.title = locationTitle
+        self.tabBarController?.tabBar.hidden = false
         
         buildingNameLabel.text = locationTitle
         buildingNameLabel.sizeToFit()
