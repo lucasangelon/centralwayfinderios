@@ -27,9 +27,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         super.viewDidLoad()
         self.navigationController?.navigationBar.hidden = true
         self.tabBarController?.tabBar.hidden = true
-        
-        self.imageView.image = UIImage(named: "welcome.png")
-        
+                
         // Configuring the location manager.
         locationManager.delegate = self
         

@@ -11,8 +11,8 @@ import MapKit
 
 class ServicesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet var tableView: UITableView!
     
     private let qualityOfServiceClass = QOS_CLASS_UTILITY
     private let webServicesHelper = WebServicesHelper()
