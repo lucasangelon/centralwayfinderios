@@ -38,6 +38,11 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         return footerView
     }
     
+    // Setting up the header.
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0
+    }
+    
     // Returns the item count from the list based on the cellContent variable.
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
