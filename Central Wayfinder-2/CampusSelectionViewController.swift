@@ -11,16 +11,20 @@ import UIKit
 class CampusSelectionViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate {
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private let webServicesHelper: WebServicesHelper = WebServicesHelper()
+    private let application = UIApplication.sharedApplication()
     private var campuses: [Campus] = [Campus]()
     private var campus: Campus = Campus()
     private var firstUse = false
+    private var firstUseBackPress = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.hidden = false
+        activityIndicator.hidden = true
         
         // Hiding the usual back button and implementing a special one for the campus selection page.
         self.navigationItem.backBarButtonItem?.enabled = false
@@ -71,6 +75,13 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     // handling the clicks on the table items.
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
+        
+        self.view.bringSubviewToFront(activityIndicator)
+        
+        self.application.beginIgnoringInteractionEvents()
+        
         sharedDefaults.campusId = campuses[indexPath.row].id
         sharedDefaults.campusDefaultLat = campuses[indexPath.row].lat
         sharedDefaults.campusDefaultLong = campuses[indexPath.row].long
@@ -78,14 +89,6 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         
         // Downloads rooms for a given campus.
         getRooms()
-        
-        if firstUse {
-            firstUse = false
-            sharedDefaults.accessibility = false
-            self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
-        } else {
-            self.navigationController?.popViewControllerAnimated(true)
-        }
     }
     
     // Handling the special back button.
@@ -93,6 +96,8 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         
         // If using the application for the first time.
         if firstUse {
+            
+            firstUseBackPress = true
             
             campus = sharedInstance.getCampus("PE", campus: campus)
             
@@ -115,11 +120,15 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
             
             firstUse = false
             
+            self.activityIndicator.hidden = true
+            application.endIgnoringInteractionEvents()
+            
             // Handling the alert to explain the default Perth campus to the user.
             let alert: UIAlertController = UIAlertController(title: "Perth Campus", message: "The default campus has been set to Perth.", preferredStyle: .Alert)
             
             let okAction = UIAlertAction(title: "Ok", style: .Default) {
                 (action) in
+                
                 self.returnToMainMenu()
             }
             alert.addAction(okAction)
@@ -158,7 +167,7 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         })
         
         dispatch_group_notify(dispatchGroup, dispatchQueue, {
-            NSThread.sleepForTimeInterval(3.0)
+            NSThread.sleepForTimeInterval(6.0)
             
             if self.webServicesHelper.checkRooms() {
                 sharedInstance.insertRooms(self.webServicesHelper.getRooms())
@@ -166,8 +175,21 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
             } else {
                 print("No rooms available for the campus: " + sharedDefaults.campusName)
             }
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.activityIndicator.hidden = true
+                self.application.endIgnoringInteractionEvents()
+                
+                if self.firstUse {
+                    self.firstUse = false
+                    sharedDefaults.accessibility = false
+                    
+                    self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
+                } else if (self.firstUseBackPress == true) {
+                } else {
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+            })
         })
-        
-        NSThread.sleepForTimeInterval(5.0)
     }
 }

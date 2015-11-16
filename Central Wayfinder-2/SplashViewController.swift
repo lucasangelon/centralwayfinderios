@@ -48,19 +48,21 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         
         // Tries downloading the campuses.
         dispatch_group_notify(dispatchGroup, dispatchQueue, {
-            NSThread.sleepForTimeInterval(2.0)
+            NSThread.sleepForTimeInterval(10.0)
             if self.webServicesHelper.serviceConnection == "true" && self.webServicesHelper.databaseConnection == "true" {
                 
                 dispatch_group_async(dispatchGroup, self.dispatchQueue, {
                     self.webServicesHelper.downloadCampuses()
                     print("Downloading campuses.")
                 })
+            } else {
+                print("Unable to check connections.")
             }
         })
         
         // Loads the campuses into the database.
         dispatch_group_notify(dispatchGroup, dispatchQueue, {
-            NSThread.sleepForTimeInterval(4.0)
+            NSThread.sleepForTimeInterval(14.0)
             self.campuses = self.webServicesHelper.getCampuses()
             
             // Checking it "campuses" is not empty.
@@ -94,7 +96,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
             alertInternet("Internet Connection Alert", message: "Internet (Cellular or Wi-fi) is required to use this application. Turn on Wi-fi or Cellular data usage in order to use Central Wayfinder.")
         }
         
-        NSThread.sleepForTimeInterval(6.0)
+        NSThread.sleepForTimeInterval(15.0)
     }
     
     // Handles the alerts related to the location service options and authorizations.

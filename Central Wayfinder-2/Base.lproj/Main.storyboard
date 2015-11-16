@@ -103,6 +103,7 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="fCH-g8-ZOR">
                                 <rect key="frame" x="142" y="221" width="37" height="37"/>
                                 <animations/>
+                                <color key="color" red="0.90588235289999997" green="0.56895770850000005" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                         </subviews>
                         <animations/>
@@ -329,13 +330,23 @@
                                     <outlet property="delegate" destination="qTE-S7-9Ya" id="PcR-y8-43E"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="RRt-Q5-2Uo">
+                                <rect key="frame" x="142" y="221" width="37" height="37"/>
+                                <animations/>
+                                <color key="color" red="0.90588235289999997" green="0.56895770850000005" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RRt-Q5-2Uo" firstAttribute="centerX" secondItem="fWU-yT-fZA" secondAttribute="centerX" id="i6a-yD-EES"/>
+                            <constraint firstItem="RRt-Q5-2Uo" firstAttribute="centerY" secondItem="fWU-yT-fZA" secondAttribute="centerY" id="lUg-88-uty"/>
+                        </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="RRt-Q5-2Uo" id="U5q-iD-YBc"/>
                         <segue destination="rft-h0-bMG" kind="show" identifier="ReturnFromFirstUse" id="8a6-h9-NRM"/>
                     </connections>
                 </viewController>

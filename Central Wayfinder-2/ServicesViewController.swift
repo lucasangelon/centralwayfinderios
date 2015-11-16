@@ -30,6 +30,8 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationController?.navigationBarHidden = false
         self.tabBarController?.tabBar.hidden = false
         
+        activityIndicator.hidden = true
+        
         services = sharedInstance.getServices(sharedDefaults.campusId, rooms: services)
     }
     
@@ -68,6 +70,9 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.view.bringSubviewToFront(activityIndicator)
         
+        let application = UIApplication.sharedApplication()
+        application.beginIgnoringInteractionEvents()
+        
         // Set the service coordinates and the title to a variable to be sent to Google Maps.
         currentRow = services[indexPath.row]
         
@@ -96,17 +101,19 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     self.activityIndicator.hidden = true
-                    
+                    application.endIgnoringInteractionEvents()
+                    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                
                     self.performSegueWithIdentifier("ShowMapsFromServices", sender: self)
                 })
             })
         } else {
             self.activityIndicator.hidden = true
+            application.endIgnoringInteractionEvents()
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
 
             self.performSegueWithIdentifier("ShowMapsFromServices", sender: self)
         }
-        
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     // Setting up the header.
