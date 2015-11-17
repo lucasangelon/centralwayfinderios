@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TODO: Fix Kickass bug that renders the search useless and freezes the app in the activityIndicator section.
 class MainMenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     // Declaring the base tableView.
@@ -15,12 +16,14 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    private let webServicesHelper = WebServicesHelper()
+    private let application = UIApplication.sharedApplication()
     private var rooms: [Room] = [Room]()
     private var roomNames: [String] = [String]()
     private var selectedRoom: Room = Room()
     private var building: Building = Building()
-    private let webServicesHelper = WebServicesHelper()
     private var postMapsInformation = [String]()
     
     // List items for the main menu.
@@ -28,6 +31,8 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator.hidden = true
         
         // Adds a tap gesture to dismiss the keyboard anywhere in the screen.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
@@ -123,6 +128,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // When the user clicks on the search button.
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        
         var found = false
         var positionFound = 0
         
@@ -140,6 +146,14 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         if found {
+            self.searchBar.endEditing(true)
+            activityIndicator.hidden = false
+            activityIndicator.startAnimating()
+            
+            self.view.bringSubviewToFront(activityIndicator)
+            
+            self.application.beginIgnoringInteractionEvents()
+            
             selectedRoom = rooms[positionFound]
             
             building =  sharedInstance.getBuilding(selectedRoom.buildingId, building: building)
@@ -160,13 +174,16 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.building = self.webServicesHelper.getBuilding()
                     self.postMapsInformation = self.webServicesHelper.getPostMapsInformation()
                     print("Loaded building.")
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.activityIndicator.hidden = true
+                        self.application.endIgnoringInteractionEvents()
+                        self.performSegueWithIdentifier("ShowMapsFromMenu", sender: self)
+                    })
                 })
             }
-            
-            NSThread.sleepForTimeInterval(6.0)
-            
-            self.performSegueWithIdentifier("ShowMapsFromMenu", sender: self)
         } else {
+            self.searchBar.endEditing(true)
             // Handling the alert to explain the room could not be found at this specific campus.
             let alert: UIAlertController = UIAlertController(title: "Could not find location", message: "The location you searched for does not exist at the \(sharedDefaults.campusName) campus.", preferredStyle: .Alert)
             
@@ -174,9 +191,6 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             
             self.presentViewController(alert, animated: true, completion: nil)
         }
-        
-        self.searchBar.endEditing(true)
-
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

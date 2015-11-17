@@ -24,10 +24,6 @@ class CentralTabBarController : UITabBarController, UITabBarControllerDelegate {
         }
     }
     
-/*    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-
-    }*/
-    
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
 
         if viewController == tabBarController.viewControllers![2] {

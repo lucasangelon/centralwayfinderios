@@ -97,6 +97,13 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         // If using the application for the first time.
         if firstUse {
             
+            activityIndicator.hidden = false
+            activityIndicator.startAnimating()
+            
+            self.view.bringSubviewToFront(activityIndicator)
+            
+            self.application.beginIgnoringInteractionEvents()
+            
             firstUseBackPress = true
             
             campus = sharedInstance.getCampus("PE", campus: campus)
@@ -117,23 +124,6 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
             
             // Downloads rooms from the web service.
             getRooms()
-            
-            firstUse = false
-            
-            self.activityIndicator.hidden = true
-            application.endIgnoringInteractionEvents()
-            
-            // Handling the alert to explain the default Perth campus to the user.
-            let alert: UIAlertController = UIAlertController(title: "Perth Campus", message: "The default campus has been set to Perth.", preferredStyle: .Alert)
-            
-            let okAction = UIAlertAction(title: "Ok", style: .Default) {
-                (action) in
-                
-                self.returnToMainMenu()
-            }
-            alert.addAction(okAction)
-            
-            self.presentViewController(alert, animated: true, completion: nil)
         } else {
             self.navigationController?.popViewControllerAnimated(true)
         }
@@ -186,6 +176,20 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
                     
                     self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
                 } else if (self.firstUseBackPress == true) {
+                    self.firstUse = false
+                    sharedDefaults.accessibility = false
+                    
+                    // Handling the alert to explain the default Perth campus to the user.
+                    let alert: UIAlertController = UIAlertController(title: "Perth Campus", message: "The default campus has been set to Perth.", preferredStyle: .Alert)
+                    
+                    let okAction = UIAlertAction(title: "Ok", style: .Default) {
+                        (action) in
+                        
+                        self.returnToMainMenu()
+                    }
+                    alert.addAction(okAction)
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
                 } else {
                     self.navigationController?.popViewControllerAnimated(true)
                 }

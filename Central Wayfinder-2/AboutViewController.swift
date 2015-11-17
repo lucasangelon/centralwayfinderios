@@ -20,7 +20,6 @@ class AboutViewController: UIViewController, UIScrollViewDelegate {
         scrollView.delegate = self
         
         textView.editable = false
-        //let textView = UITextView(frame: CGRect(x: 0, y: 0, width: self.scrollView.frame.width, height: self.scrollView.frame.height))
         scrollView.addSubview(textView)
         
         

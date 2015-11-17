@@ -1,3 +1,5 @@
+
+
 //
 //  SplashViewController.swift
 //  Central Wayfinder-2
@@ -11,11 +13,13 @@ import CoreLocation
 
 class SplashViewController: UIViewController, CLLocationManagerDelegate, UIApplicationDelegate, UITabBarDelegate {
     
-    @IBOutlet var startButton: UIButton!
+    @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private let webServicesHelper: WebServicesHelper = WebServicesHelper()
     private let util: Util = Util()
+    private let application = UIApplication.sharedApplication()
     private let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
     private var campuses: [Campus] = [Campus]()
     private var success = false
@@ -25,11 +29,20 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationController?.navigationBar.hidden = true
         self.tabBarController?.tabBar.hidden = true
+        self.startButton.hidden = true
                 
         // Configuring the location manager.
         locationManager.delegate = self
+        
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
+        
+        self.view.bringSubviewToFront(activityIndicator)
+        
+        self.application.beginIgnoringInteractionEvents()
         
         // Setting up the database and the queue for general access.
         sharedInstance.setupDatabase()
@@ -65,14 +78,19 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
             NSThread.sleepForTimeInterval(14.0)
             self.campuses = self.webServicesHelper.getCampuses()
             
-            // Checking it "campuses" is not empty.
-            if self.webServicesHelper.checkCampuses() {
-                // Inserts campuses from the web service into the database.
-                sharedInstance.insertCampuses(self.campuses)
-                print("Campuses loaded.")
-            } else {
-                print("No campuses found.")
-            }
+            dispatch_async(dispatch_get_main_queue(), {
+                // Checking it "campuses" is not empty.
+                if self.webServicesHelper.checkCampuses() {
+                    // Inserts campuses from the web service into the database.
+                    sharedInstance.insertCampuses(self.campuses)
+                    print("Campuses loaded.")
+                } else {
+                    print("No campuses found.")
+                }
+                
+                self.activityIndicator.hidden = true
+                self.application.endIgnoringInteractionEvents()
+            })
         })
     }
     
@@ -97,6 +115,8 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         }
         
         NSThread.sleepForTimeInterval(15.0)
+        
+        self.startButton.hidden = false
     }
     
     // Handles the alerts related to the location service options and authorizations.
