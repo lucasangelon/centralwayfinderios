@@ -2,4 +2,86 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Central Wayfinder-2/MainMenuViewController.swift"
+            timestampString = "469504550.278092"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "searchBarSearchButtonClicked(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Central Wayfinder-2/MainMenuViewController.swift"
+            timestampString = "469504550.278092"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
+            landmarkName = "searchBarSearchButtonClicked(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Central Wayfinder-2/MainMenuViewController.swift"
+            timestampString = "469504550.278092"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
+            landmarkName = "searchBarSearchButtonClicked(_:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Central_Wayfinder_2.MainMenuViewController.searchBarSearchButtonClicked (Central_Wayfinder_2.MainMenuViewController)(__ObjC.UISearchBar) -&gt; ()"
+                  moduleName = "Central Wayfinder-2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lucas/Documents/XCode%20Projects/Central%20Wayfinder-2/Central%20Wayfinder-2/MainMenuViewController.swift"
+                  timestampString = "469504341.66614"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "172"
+                  endingLineNumber = "172"
+                  offsetFromSymbolStart = "3669">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Central_Wayfinder_2.MainMenuViewController.(searchBarSearchButtonClicked (Central_Wayfinder_2.MainMenuViewController) -&gt; (__ObjC.UISearchBar) -&gt; ()).(closure #2)"
+                  moduleName = "Central Wayfinder-2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lucas/Documents/XCode%20Projects/Central%20Wayfinder-2/Central%20Wayfinder-2/MainMenuViewController.swift"
+                  timestampString = "469504341.66635"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "173"
+                  endingLineNumber = "173"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

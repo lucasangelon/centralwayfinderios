@@ -8,7 +8,6 @@
 
 import UIKit
 
-// TODO: Fix Kickass bug that renders the search useless and freezes the app in the activityIndicator section.
 class MainMenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     // Declaring the base tableView.
@@ -129,6 +128,13 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     // When the user clicks on the search button.
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
+        
+        self.view.bringSubviewToFront(activityIndicator)
+        
+        self.application.beginIgnoringInteractionEvents()
+        
         var found = false
         var positionFound = 0
         
@@ -141,19 +147,12 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                 if roomNames[index].lowercaseString == searchBar.text?.lowercaseString {
                     found = true
                     positionFound = index
+                    break
                 }
             }
         }
         
         if found {
-            self.searchBar.endEditing(true)
-            activityIndicator.hidden = false
-            activityIndicator.startAnimating()
-            
-            self.view.bringSubviewToFront(activityIndicator)
-            
-            self.application.beginIgnoringInteractionEvents()
-            
             selectedRoom = rooms[positionFound]
             
             building =  sharedInstance.getBuilding(selectedRoom.buildingId, building: building)
@@ -178,12 +177,17 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                     dispatch_async(dispatch_get_main_queue(), {
                         self.activityIndicator.hidden = true
                         self.application.endIgnoringInteractionEvents()
-                        self.performSegueWithIdentifier("ShowMapsFromMenu", sender: self)
+                        
+                        self.goToMaps()
                     })
                 })
+            } else {
+                self.activityIndicator.hidden = true
+                self.application.endIgnoringInteractionEvents()
+                
+                goToMaps()
             }
         } else {
-            self.searchBar.endEditing(true)
             // Handling the alert to explain the room could not be found at this specific campus.
             let alert: UIAlertController = UIAlertController(title: "Could not find location", message: "The location you searched for does not exist at the \(sharedDefaults.campusName) campus.", preferredStyle: .Alert)
             
@@ -191,6 +195,8 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             
             self.presentViewController(alert, animated: true, completion: nil)
         }
+        
+        self.searchBar.endEditing(true)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -209,5 +215,9 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     // Dismisses the keyboard.
     func dismissKeyboard() {
         self.searchBar.endEditing(true)
+    }
+    
+    func goToMaps() {
+        self.performSegueWithIdentifier("ShowMapsFromMenu", sender: self)
     }
 }
