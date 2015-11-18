@@ -636,25 +636,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2DI-cw-LhB">
-                                <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2DI-cw-LhB">
+                                <rect key="frame" x="0.0" y="20" width="320" height="411"/>
                                 <animations/>
                                 <connections>
                                     <outlet property="delegate" destination="Sww-9p-Y5w" id="0h9-jD-5F3"/>
                                 </connections>
                             </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="fMB-z1-Fi4">
+                                <rect key="frame" x="0.0" y="394" width="320" height="37"/>
+                                <animations/>
+                                <color key="pageIndicatorTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="currentPageIndicatorTintColor" red="0.90588235289999997" green="0.56895770850000005" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </pageControl>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="2DI-cw-LhB" firstAttribute="top" secondItem="CVP-Mq-VTE" secondAttribute="top" constant="20" symbolic="YES" id="8Be-O0-hAn"/>
-                            <constraint firstAttribute="trailing" secondItem="2DI-cw-LhB" secondAttribute="trailing" id="Zwg-7v-0UJ"/>
-                            <constraint firstAttribute="bottom" secondItem="2DI-cw-LhB" secondAttribute="bottom" id="nch-8D-WhS"/>
-                            <constraint firstItem="2DI-cw-LhB" firstAttribute="leading" secondItem="CVP-Mq-VTE" secondAttribute="leading" id="tlM-IX-1Ec"/>
+                            <constraint firstAttribute="trailing" secondItem="fMB-z1-Fi4" secondAttribute="trailing" id="ALy-9D-FFQ"/>
+                            <constraint firstItem="2DI-cw-LhB" firstAttribute="leading" secondItem="fMB-z1-Fi4" secondAttribute="leading" id="Nan-aq-yDF"/>
+                            <constraint firstItem="2DI-cw-LhB" firstAttribute="trailing" secondItem="fMB-z1-Fi4" secondAttribute="trailing" id="XRP-UZ-hfv"/>
+                            <constraint firstItem="fMB-z1-Fi4" firstAttribute="bottom" secondItem="8Ms-US-TZ1" secondAttribute="top" id="kHq-aK-zJr"/>
+                            <constraint firstItem="2DI-cw-LhB" firstAttribute="top" secondItem="CVP-Mq-VTE" secondAttribute="top" constant="20" symbolic="YES" id="mtH-FY-ve7"/>
+                            <constraint firstItem="2DI-cw-LhB" firstAttribute="bottom" secondItem="8Ms-US-TZ1" secondAttribute="top" id="qug-h2-vYt"/>
+                            <constraint firstItem="fMB-z1-Fi4" firstAttribute="leading" secondItem="CVP-Mq-VTE" secondAttribute="leading" id="xl7-Nc-WP5"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="pageControl" destination="fMB-z1-Fi4" id="Kjo-lQ-M8k"/>
                         <outlet property="scrollView" destination="2DI-cw-LhB" id="47i-FI-4pX"/>
                     </connections>
                 </viewController>

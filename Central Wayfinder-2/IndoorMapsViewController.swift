@@ -12,19 +12,39 @@ import UIKit
 class IndoorMapsViewController : UIViewController, UIScrollViewDelegate {
     
     @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var pageControl: UIPageControl!
     
     private var imageView: UIImageView!
+    private var pageImages: [UIImage] = []
+    private var pageViews: [UIImageView?] = []
     
     // Based on: http://www.raywenderlich.com/76436/use-uiscrollview-scroll-zoom-content-swift
     override func viewDidLoad() {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
-        let image = UIImage(named: "TEST.png")!
+        pageImages = [UIImage(named: "TEST.png")!, UIImage(named: "mainMenu.png")!]
+        let pageCount = pageImages.count
+        
+        pageControl.currentPage = 0
+        pageControl.numberOfPages = pageCount
+        
+        for _ in 0..<pageCount {
+            pageViews.append(nil)
+        }
+        
+        var pagesScrollViewSize = scrollView.frame.size
+        scrollView.contentSize = CGSize(width: pagesScrollViewSize.width * CGFloat(pageImages.count), height: pagesScrollViewSize.height)
+        
+        
+        
+        
+        
+        /*let image = UIImage(named: "TEST.png")!
         imageView = UIImageView(image: image)
         imageView.frame = CGRect(origin: CGPoint(x: 0, y:0), size: image.size)
         scrollView.addSubview(imageView)
         
-        scrollView.contentSize = image.size
+        scrollView.contentSize = image.size*/
         
         let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "scrollViewDoubleTapped:")
         doubleTapRecognizer.numberOfTapsRequired = 2
@@ -40,7 +60,9 @@ class IndoorMapsViewController : UIViewController, UIScrollViewDelegate {
         scrollView.maximumZoomScale = 1.0
         scrollView.zoomScale = minScale
         
-        centerScrollViewContents()
+        loadVisiblePages()
+        
+        //centerScrollViewContents()
     }
     
     func centerScrollViewContents() {
@@ -86,5 +108,63 @@ class IndoorMapsViewController : UIViewController, UIScrollViewDelegate {
     
     func scrollViewDidZoom(scrollView: UIScrollView) {
         centerScrollViewContents()
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        loadVisiblePages()
+    }
+    
+    func loadPage(page: Int) {
+        if page < 0 || page >= pageImages.count {
+            return
+        }
+        
+        if let pageView = pageViews[page] {
+            
+        } else {
+            var frame = scrollView.bounds
+            frame.origin.x = frame.size.width * CGFloat(page)
+            frame.origin.y = 0.0
+            
+            let newPageView = UIImageView(image: pageImages[page])
+            newPageView.contentMode = .ScaleAspectFit
+            newPageView.frame = frame
+            scrollView.addSubview(newPageView)
+            
+            pageViews[page] = newPageView
+        }
+    }
+    
+    func purgePage(page: Int) {
+        if page < 0 || page >= pageImages.count {
+            return
+        }
+        
+        if let pageView = pageViews[page] {
+            pageView.removeFromSuperview()
+            pageViews[page] = nil
+        }
+    }
+    
+    func loadVisiblePages() {
+        let pageWidth = scrollView.frame.size.width
+        let page = Int(floor((scrollView.contentOffset.x * 2.0 + pageWidth) / (pageWidth * 2.0)))
+        
+        pageControl.currentPage = page
+        
+        let firstPage = page - 1
+        let lastPage = page + 1
+        
+        for var index = 0; index < firstPage; ++index {
+            purgePage(index)
+        }
+        
+        for index in firstPage...lastPage {
+            loadPage(index)
+        }
+        
+        for var index = lastPage + 1 ; index < pageImages.count; ++index {
+            purgePage(index)
+        }
     }
 }
