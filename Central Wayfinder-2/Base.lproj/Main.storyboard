@@ -246,16 +246,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lJg-Bm-jHe">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lJg-Bm-jHe">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8j2-rI-SQJ">
-                                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="460" id="H1b-b6-rl9"/>
-                                        </constraints>
                                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -263,11 +260,10 @@
                                 </subviews>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstItem="8j2-rI-SQJ" firstAttribute="leading" secondItem="lJg-Bm-jHe" secondAttribute="leading" id="0m3-u8-kwp"/>
-                                    <constraint firstAttribute="trailing" secondItem="8j2-rI-SQJ" secondAttribute="trailing" id="Awg-o7-btY"/>
-                                    <constraint firstAttribute="bottom" secondItem="8j2-rI-SQJ" secondAttribute="bottom" id="Fvx-2u-K8l"/>
-                                    <constraint firstItem="8j2-rI-SQJ" firstAttribute="centerX" secondItem="lJg-Bm-jHe" secondAttribute="centerX" id="gi8-5b-qor"/>
-                                    <constraint firstItem="8j2-rI-SQJ" firstAttribute="top" secondItem="lJg-Bm-jHe" secondAttribute="top" constant="20" id="tM5-Z0-3Jz"/>
+                                    <constraint firstItem="8j2-rI-SQJ" firstAttribute="centerY" secondItem="lJg-Bm-jHe" secondAttribute="centerY" id="7h7-ee-tEr"/>
+                                    <constraint firstItem="8j2-rI-SQJ" firstAttribute="width" secondItem="lJg-Bm-jHe" secondAttribute="width" id="EYr-D6-4dO"/>
+                                    <constraint firstItem="8j2-rI-SQJ" firstAttribute="height" secondItem="lJg-Bm-jHe" secondAttribute="height" id="U8z-5s-B7S"/>
+                                    <constraint firstItem="8j2-rI-SQJ" firstAttribute="centerX" secondItem="lJg-Bm-jHe" secondAttribute="centerX" id="vCj-zK-n6w"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="M5D-ic-n8P" id="uU3-bp-hd5"/>
@@ -277,10 +273,10 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="lJg-Bm-jHe" secondAttribute="trailing" id="W0D-NZ-5WA"/>
-                            <constraint firstItem="lJg-Bm-jHe" firstAttribute="leading" secondItem="DQ9-Vc-LYZ" secondAttribute="leading" id="W0u-wM-PtI"/>
-                            <constraint firstItem="lJg-Bm-jHe" firstAttribute="bottom" secondItem="U4h-8Q-Jrt" secondAttribute="top" id="eEH-Jw-H6n"/>
-                            <constraint firstItem="lJg-Bm-jHe" firstAttribute="top" secondItem="DQ9-Vc-LYZ" secondAttribute="top" id="wWq-Ga-706"/>
+                            <constraint firstItem="lJg-Bm-jHe" firstAttribute="height" secondItem="DQ9-Vc-LYZ" secondAttribute="height" id="WKe-H7-PHq"/>
+                            <constraint firstItem="lJg-Bm-jHe" firstAttribute="centerX" secondItem="DQ9-Vc-LYZ" secondAttribute="centerX" id="YFX-bO-r73"/>
+                            <constraint firstItem="lJg-Bm-jHe" firstAttribute="width" secondItem="DQ9-Vc-LYZ" secondAttribute="width" id="iZD-id-DM6"/>
+                            <constraint firstItem="lJg-Bm-jHe" firstAttribute="centerY" secondItem="DQ9-Vc-LYZ" secondAttribute="centerY" id="l4W-kY-Pm4"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
@@ -793,8 +789,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="oqq-04-9AF"/>
         <segue reference="aby-7k-g6a"/>
-        <segue reference="Fia-Bt-tIh"/>
-        <segue reference="lYq-J7-Pi1"/>
+        <segue reference="NxO-X7-7d7"/>
+        <segue reference="8bU-Z6-Ik3"/>
         <segue reference="RKA-Gl-GXp"/>
     </inferredMetricsTieBreakers>
 </document>

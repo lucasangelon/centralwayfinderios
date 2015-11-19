@@ -188,6 +188,9 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                 goToMaps()
             }
         } else {
+            self.activityIndicator.hidden = true
+            self.application.endIgnoringInteractionEvents()
+            
             // Handling the alert to explain the room could not be found at this specific campus.
             let alert: UIAlertController = UIAlertController(title: "Could not find location", message: "The location you searched for does not exist at the \(sharedDefaults.campusName) campus.", preferredStyle: .Alert)
             

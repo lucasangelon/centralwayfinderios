@@ -11,9 +11,55 @@ import UIKit
 
 class IndoorMapsViewController : UIViewController, UIScrollViewDelegate {
     
-    @IBOutlet var scrollView: UIScrollView!
+    /*@IBOutlet var scrollView: UIScrollView!
     @IBOutlet var pageControl: UIPageControl!
     
+    private var pageImages: [UIImage] = []
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        var mainScrollView = scrollView
+        mainScrollView.pagingEnabled = true
+        mainScrollView.showsHorizontalScrollIndicator = false
+        mainScrollView.showsVerticalScrollIndicator = false
+        
+        var innerScrollFrame = mainScrollView.bounds
+        
+        
+        pageImages = [UIImage(named: "TEST.png")!, UIImage(named: "mainMenu.png")!]
+        let pageCount = pageImages.count
+        
+        for index in 0..<pageCount {
+            var imageForZooming = UIImageView(image: pageImages[index])
+            
+            var pageScrollView = UIScrollView(frame: innerScrollFrame)
+            pageScrollView.minimumZoomScale = 1.0
+            pageScrollView.maximumZoomScale = 2.0
+            pageScrollView.zoomScale = 1.0
+            pageScrollView.contentSize = imageForZooming.bounds.size
+            pageScrollView.delegate = self
+            pageScrollView.showsHorizontalScrollIndicator = false
+            pageScrollView.showsVerticalScrollIndicator = false
+            pageScrollView.addSubview(imageForZooming)
+            
+            mainScrollView.addSubview(pageScrollView)
+            
+            if (index < 2) {
+                innerScrollFrame.origin.x += innerScrollFrame.size.width
+            }
+            
+        }
+        
+        mainScrollView.contentSize = CGSizeMake(innerScrollFrame.origin.x + innerScrollFrame.width, mainScrollView.bounds.size.height)
+        
+        self.view.addSubview(mainScrollView)
+    }
+    
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        return
+    }
+    /*
     private var imageView: UIImageView!
     private var pageImages: [UIImage] = []
     private var pageViews: [UIImageView?] = []
@@ -166,5 +212,5 @@ class IndoorMapsViewController : UIViewController, UIScrollViewDelegate {
         for var index = lastPage + 1 ; index < pageImages.count; ++index {
             purgePage(index)
         }
-    }
+    }*/*/
 }
