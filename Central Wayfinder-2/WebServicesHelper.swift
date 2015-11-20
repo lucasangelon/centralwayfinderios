@@ -185,7 +185,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     }
     
     // Retrieves a given building based on a room id from the service database.
-    func downloadBuilding(buildingId: Int) {
+    func downloadBuilding(roomId: Int) {
         let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
         let session = NSURLSession.sharedSession()
         let _: NSError?
@@ -193,21 +193,19 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         var objectsArray = [NSObject]()
         
         // Sends a parameter for the method.
-        let middleSoapMessage = "<wf:" + getBuildingAction + "><wf:WaypointID>\(buildingId)</wf:WaypointID><wf:Disability>\(disability)</wf:Disability></wf:" + getBuildingAction + ">"
+        let middleSoapMessage = "<wf:" + getBuildingAction + "><wf:WaypointID>\(roomId)</wf:WaypointID><wf:Disability>\(disability)</wf:Disability></wf:" + getBuildingAction + ">"
         let getBuildingMessage = baseStartSoapMessage + middleSoapMessage + baseEndSoapMessage
-        
+        print(getBuildingMessage)
         request.HTTPMethod = "POST"
         request.HTTPBody = getBuildingMessage.dataUsingEncoding(NSUTF8StringEncoding)
         request.addValue("student.mydesign.central.wa.edu.au", forHTTPHeaderField: "Host")
         request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.addValue(String((getBuildingMessage).characters.count), forHTTPHeaderField: "Content-Length")
         request.addValue("http://tempuri.org/WF_Service_Interface/" + getBuildingAction, forHTTPHeaderField: "SOAPAction")
-        
-        self
-        
+        print(request.HTTPBody)
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             let buildingParser = BuildingParser()
-            buildingParser.requestedBuildingId = buildingId
+            buildingParser.requestedBuildingId = roomId
             objectsArray = buildingParser.parseXML(data!)
             
             // Prints the response in order to test the service.

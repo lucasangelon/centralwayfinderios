@@ -26,7 +26,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     private var postMapsInformation = [String]()
     
     // List items for the main menu.
-    private let cellContent = [("Services", "services.png"), ("Central Web", "centralWeb.png"), ("Settings", "settings.png")]
+    private let cellContent = [("Services", "services.png"), ("Central Web", "centralWeb.png"), ("Settings", "settings.png"), ("Test Indoor", "search.png")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,6 +110,8 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         case 2:
             self.performSegueWithIdentifier("ShowSettingsViewController", sender: self)
             
+        case 3:
+            self.performSegueWithIdentifier("ShowIndoorMaps", sender: self)
             // Default action.
         default:
             print("NoSegueAvailable")
@@ -164,12 +166,12 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 // Tries downloading the building and saving it into the database.
                 dispatch_group_async(dispatchGroup, dispatchQueue, {
-                    self.webServicesHelper.downloadBuilding(self.selectedRoom.buildingId)
+                    self.webServicesHelper.downloadBuilding(self.selectedRoom.id)
                     print("Downloading building.")
                 })
                 
                 dispatch_group_notify(dispatchGroup, dispatchQueue, {
-                    NSThread.sleepForTimeInterval(3.0)
+                    NSThread.sleepForTimeInterval(7.0)
                     self.building = self.webServicesHelper.getBuilding()
                     self.postMapsInformation = self.webServicesHelper.getPostMapsInformation()
                     print("Loaded building.")
@@ -188,6 +190,9 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                 goToMaps()
             }
         } else {
+            self.activityIndicator.hidden = true
+            self.application.endIgnoringInteractionEvents()
+            
             // Handling the alert to explain the room could not be found at this specific campus.
             let alert: UIAlertController = UIAlertController(title: "Could not find location", message: "The location you searched for does not exist at the \(sharedDefaults.campusName) campus.", preferredStyle: .Alert)
             
