@@ -443,6 +443,7 @@
                         <segue destination="ZPa-OJ-5vM" kind="show" identifier="ShowServicesViewController" id="Fia-Bt-tIh"/>
                         <segue destination="lD4-35-Vf9" kind="show" identifier="ShowSettingsViewController" id="lYq-J7-Pi1"/>
                         <segue destination="fUE-CK-d13" kind="show" identifier="ShowMapsFromMenu" id="RKA-Gl-GXp"/>
+                        <segue destination="Sww-9p-Y5w" kind="show" identifier="ShowIndoorMaps" id="ILX-sx-IDE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sxP-Ql-6qv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -661,7 +662,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="pageControl" destination="fMB-z1-Fi4" id="Kjo-lQ-M8k"/>
-                        <outlet property="scrollView" destination="2DI-cw-LhB" id="47i-FI-4pX"/>
+                        <outlet property="scrollView" destination="2DI-cw-LhB" id="UJb-eb-9YP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sbF-ow-Saj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -791,6 +792,7 @@
         <segue reference="aby-7k-g6a"/>
         <segue reference="NxO-X7-7d7"/>
         <segue reference="8bU-Z6-Ik3"/>
+        <segue reference="ILX-sx-IDE"/>
         <segue reference="RKA-Gl-GXp"/>
     </inferredMetricsTieBreakers>
 </document>
