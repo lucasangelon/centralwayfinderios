@@ -21,9 +21,20 @@ class IndoorMap: NSObject {
         self.title = title
     }
     
+    var imagePath: String = String()
+    init(imagePath: String) {
+        self.imagePath = imagePath
+    }
+    
     init(image: UIImage, title: String) {
         self.image = image
         self.title = title
+    }
+    
+    init(image: UIImage, title: String, imagePath: String) {
+        self.image = image
+        self.title = title
+        self.imagePath = imagePath
     }
     
     override init() {

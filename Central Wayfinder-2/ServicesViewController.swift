@@ -85,7 +85,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
             
             // Tries downloading the building and saving it into the database.
             dispatch_group_async(dispatchGroup, dispatchQueue, {
-                self.webServicesHelper.downloadBuilding(self.currentRow.id)
+                self.webServicesHelper.downloadBuilding(self.currentRow.id, buildingId: self.currentRow.buildingId)
                 print("Downloading building.")
             })
             

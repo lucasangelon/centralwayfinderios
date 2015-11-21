@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A005884F1C00121D0038A384 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A005884E1C00121D0038A384 /* ImageLoader.swift */; };
 		A02DD7881BDB66CC00951F5C /* PostMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */; };
 		A02DD78A1BDB74E600951F5C /* IndoorMapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */; };
 		A04FAC111BFEBD320099E9B2 /* IndoorMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04FAC101BFEBD320099E9B2 /* IndoorMap.swift */; };
+		A04FAC131BFF6AC10099E9B2 /* IndoorMapsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04FAC121BFF6AC10099E9B2 /* IndoorMapsHelper.swift */; };
 		A063D1551BF4F54F00453892 /* CentralTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A063D1541BF4F54F00453892 /* CentralTabBarController.swift */; };
 		A064B0311BDFE18E00A1D55B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B0301BDFE18E00A1D55B /* Util.swift */; };
 		A064B0341BE0640900A1D55B /* Campus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A064B0331BE0640900A1D55B /* Campus.swift */; };
@@ -62,9 +64,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A005884E1C00121D0038A384 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		A02DD7871BDB66CC00951F5C /* PostMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostMapsViewController.swift; sourceTree = "<group>"; };
 		A02DD7891BDB74E600951F5C /* IndoorMapsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndoorMapsViewController.swift; sourceTree = "<group>"; };
 		A04FAC101BFEBD320099E9B2 /* IndoorMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndoorMap.swift; sourceTree = "<group>"; };
+		A04FAC121BFF6AC10099E9B2 /* IndoorMapsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndoorMapsHelper.swift; sourceTree = "<group>"; };
 		A063D1541BF4F54F00453892 /* CentralTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CentralTabBarController.swift; sourceTree = "<group>"; };
 		A064B0301BDFE18E00A1D55B /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		A064B0331BE0640900A1D55B /* Campus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Campus.swift; sourceTree = "<group>"; };
@@ -230,6 +234,8 @@
 				A064B0301BDFE18E00A1D55B /* Util.swift */,
 				A0A1105D1BE9DA8600DC40AA /* WebServicesHelper.swift */,
 				A0C554D11BEF9A610089345F /* XMLParsers.swift */,
+				A04FAC121BFF6AC10099E9B2 /* IndoorMapsHelper.swift */,
+				A005884E1C00121D0038A384 /* ImageLoader.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -418,11 +424,13 @@
 			files = (
 				A064B0311BDFE18E00A1D55B /* Util.swift in Sources */,
 				A0781F241BCF4B38002A65AF /* MainMenuViewController.swift in Sources */,
+				A005884F1C00121D0038A384 /* ImageLoader.swift in Sources */,
 				A0781F1E1BCF368D002A65AF /* ServicesViewController.swift in Sources */,
 				A04FAC111BFEBD320099E9B2 /* IndoorMap.swift in Sources */,
 				A06DEAC61BE1BDB2003BE704 /* DatabaseStatements.swift in Sources */,
 				A0A15B411BD9C4FC00B27A22 /* UserDefaultsController.swift in Sources */,
 				A064B0341BE0640900A1D55B /* Campus.swift in Sources */,
+				A04FAC131BFF6AC10099E9B2 /* IndoorMapsHelper.swift in Sources */,
 				A0A15B3F1BD9C1B800B27A22 /* DatabaseManager.swift in Sources */,
 				A0781F261BCF4BB4002A65AF /* MapsViewController.swift in Sources */,
 				A0C5057F1BD8D2E40084A9E8 /* FMDatabase.m in Sources */,

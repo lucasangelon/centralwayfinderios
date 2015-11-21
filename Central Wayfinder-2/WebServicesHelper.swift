@@ -185,7 +185,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     }
     
     // Retrieves a given building based on a room id from the service database.
-    func downloadBuilding(roomId: Int) {
+    func downloadBuilding(roomId: Int, buildingId: Int) {
         let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
         let session = NSURLSession.sharedSession()
         let _: NSError?
@@ -205,7 +205,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         print(request.HTTPBody)
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             let buildingParser = BuildingParser()
-            buildingParser.requestedBuildingId = roomId
+            buildingParser.requestedBuildingId = buildingId
             objectsArray = buildingParser.parseXML(data!)
             
             // Prints the response in order to test the service.
@@ -216,9 +216,17 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             print("Body: \(strData)")
             
             self.building = objectsArray[0] as! Building
+            
+            // Downloads the building image.
+            sharedIndoorMaps.downloadBuildingImage(self.building.image)
+            
+            
             sharedInstance.insertBuilding(self.building)
             self.postMapsInformation.append(objectsArray[1] as! String)
             self.postMapsInformation.append(objectsArray[2] as! String)
+            
+            // Downloads the indoor map, transform this into a loop if multiple indoor maps required.
+            sharedIndoorMaps.downloadIndoorMap(self.postMapsInformation[1], title: self.postMapsInformation[0])
             
             // If an error occurred, print the description for it.
             if error != nil

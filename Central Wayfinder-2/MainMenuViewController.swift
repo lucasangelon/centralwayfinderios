@@ -157,16 +157,16 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         if found {
             selectedRoom = rooms[positionFound]
             
-            building =  sharedInstance.getBuilding(selectedRoom.buildingId, building: building)
+            //building =  sharedInstance.getBuilding(selectedRoom.buildingId, building: building)
             
-            if building.id == 0 {
+            //if building.id == 0 {
                 
                 let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
                 let dispatchGroup: dispatch_group_t = dispatch_group_create()
                 
                 // Tries downloading the building and saving it into the database.
                 dispatch_group_async(dispatchGroup, dispatchQueue, {
-                    self.webServicesHelper.downloadBuilding(self.selectedRoom.id)
+                    self.webServicesHelper.downloadBuilding(self.selectedRoom.id, buildingId: self.selectedRoom.buildingId)
                     print("Downloading building.")
                 })
                 
@@ -183,12 +183,12 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                         self.goToMaps()
                     })
                 })
-            } else {
+            /*} else {
                 self.activityIndicator.hidden = true
                 self.application.endIgnoringInteractionEvents()
                 
                 goToMaps()
-            }
+            }*/
         } else {
             self.activityIndicator.hidden = true
             self.application.endIgnoringInteractionEvents()

@@ -612,6 +612,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="buildingNameLabel" destination="EnE-eh-uR4" id="pdC-Ft-pXw"/>
+                        <outlet property="imageView" destination="H4C-eT-3Ul" id="bfZ-bN-Xad"/>
                         <outlet property="indoorMaps" destination="BDA-Kk-rCs" id="YZR-j7-cKc"/>
                         <outlet property="roomLocationLabel" destination="68E-F4-oBC" id="spB-wy-LEZ"/>
                         <segue destination="Sww-9p-Y5w" kind="show" identifier="ShowIndoorMapsViewController" id="dGW-qX-EnQ"/>

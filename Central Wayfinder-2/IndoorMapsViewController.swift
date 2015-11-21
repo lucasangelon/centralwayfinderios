@@ -112,12 +112,14 @@ class IndoorMapsViewController : UIViewController, UIScrollViewDelegate {
         indoorMaps.append(IndoorMap(image: UIImage(named: "TEST.png")!, title: "Indoor Map"))
         indoorMaps.append(IndoorMap(image: UIImage(named: "mainMenu.png")!, title: "Main Menu"))
         indoorMaps.append(IndoorMap(image: UIImage(named: "swiftIcon.png")!, title: "Swift Icon"))
+        indoorMaps.append(sharedIndoorMaps.getIndoorMaps()[0])
         
         segmentedControl.removeAllSegments()
         
         segmentedControl.insertSegmentWithTitle("Indoor Map", atIndex: 0, animated: true)
         segmentedControl.insertSegmentWithTitle("Main Menu", atIndex: 1, animated: true)
         segmentedControl.insertSegmentWithTitle("Swift Icon", atIndex: 2, animated: true)
+        segmentedControl.insertSegmentWithTitle(indoorMaps[3].title, atIndex: 3, animated: true)
     }
     
     // Subview to be used for the zooming action.
