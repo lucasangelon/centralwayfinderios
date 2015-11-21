@@ -79,7 +79,7 @@ class RoomParser: NSObject, NSXMLParserDelegate {
     private var element = NSString()
     
     // Counter for the strings inside an array. Due to the fact they all have
-    // the same name, the switch iteration handles each campus detail properly.
+    // the same name, the switch iteration handles each room detail properly.
     var theIndex = 0
     
     // Parses the XML.
@@ -140,7 +140,8 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
     private var postMapsUrl = ""
     
     // Counter for the strings inside an array. Due to the fact they all have
-    // the same name, the switch iteration handles each campus detail properly.
+    // the same name, the switch iteration handles each building/indoor map
+    // detail properly.
     var theIndex = 0
     
     // Parses the XML.
@@ -160,13 +161,21 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
     // Detects the start of an element and assigns it to the variable.
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         element = elementName
+        print(elementName + "opening")
     }
     
     func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        print(elementName + "closing")
+        if elementName.containsString("b:string/") {
+            building?.image = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
+        }
     }
-    
+
     // If anything was found inside a key/value pair, this method is activated.
     func parser(parser: NSXMLParser, foundCharacters string: String) {
+        print(element)
+        print(string)
+        print(theIndex)
         if element.isEqualToString("b:string") {
             switch theIndex {
             case 0:
@@ -178,15 +187,20 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
             case 2:
                 building?.name = string
                 theIndex++
-            case 3:
-                building?.image = string
+            //case 3:
+                //if element == "" {
+                //    building?.image = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
+                //} else {
+                    building?.image = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
+                //}
+                
                 building?.id = requestedBuildingId
                 building?.campusId = sharedDefaults.campusId
-                theIndex++
-            case 4:
+                //theIndex++
+            case 3:
                 postMapsInformation = string
                 theIndex++
-            case 5:
+            case 4:
                 postMapsUrl = string
                 theIndex++
             default:

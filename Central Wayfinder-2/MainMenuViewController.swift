@@ -26,7 +26,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     private var postMapsInformation = [String]()
     
     // List items for the main menu.
-    private let cellContent = [("Services", "services.png"), ("Central Web", "centralWeb.png"), ("Settings", "settings.png"), ("Test Indoor", "search.png")]
+    private let cellContent = [("Services", "services.png"), ("Central Web", "centralWeb.png"), ("Settings", "settings.png")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,9 +109,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             // When the "Settings" item is clicked.
         case 2:
             self.performSegueWithIdentifier("ShowSettingsViewController", sender: self)
-            
-        case 3:
-            self.performSegueWithIdentifier("ShowIndoorMaps", sender: self)
+
             // Default action.
         default:
             print("NoSegueAvailable")
@@ -157,38 +155,28 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         if found {
             selectedRoom = rooms[positionFound]
             
-            building =  sharedInstance.getBuilding(selectedRoom.buildingId, building: building)
+            let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+            let dispatchGroup: dispatch_group_t = dispatch_group_create()
             
-            if building.id == 0 {
+            // Tries downloading the building and saving it into the database.
+            dispatch_group_async(dispatchGroup, dispatchQueue, {
+                self.webServicesHelper.downloadBuilding(self.selectedRoom.id, buildingId: self.selectedRoom.buildingId)
+                print("Downloading building.")
+            })
+            
+            dispatch_group_notify(dispatchGroup, dispatchQueue, {
+                NSThread.sleepForTimeInterval(7.0)
+                self.building = self.webServicesHelper.getBuilding()
+                self.postMapsInformation = self.webServicesHelper.getPostMapsInformation()
+                print("Loaded building.")
                 
-                let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-                let dispatchGroup: dispatch_group_t = dispatch_group_create()
-                
-                // Tries downloading the building and saving it into the database.
-                dispatch_group_async(dispatchGroup, dispatchQueue, {
-                    self.webServicesHelper.downloadBuilding(self.selectedRoom.id)
-                    print("Downloading building.")
-                })
-                
-                dispatch_group_notify(dispatchGroup, dispatchQueue, {
-                    NSThread.sleepForTimeInterval(7.0)
-                    self.building = self.webServicesHelper.getBuilding()
-                    self.postMapsInformation = self.webServicesHelper.getPostMapsInformation()
-                    print("Loaded building.")
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.activityIndicator.hidden = true
+                    self.application.endIgnoringInteractionEvents()
                     
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.activityIndicator.hidden = true
-                        self.application.endIgnoringInteractionEvents()
-                        
-                        self.goToMaps()
-                    })
+                    self.goToMaps()
                 })
-            } else {
-                self.activityIndicator.hidden = true
-                self.application.endIgnoringInteractionEvents()
-                
-                goToMaps()
-            }
+            })
         } else {
             self.activityIndicator.hidden = true
             self.application.endIgnoringInteractionEvents()

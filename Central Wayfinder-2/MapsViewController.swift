@@ -22,6 +22,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
      *  Table, Segmented Controls and Activity Indicator declarations.
      */
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var directionsTypeControl: UISegmentedControl!
     
     @IBOutlet weak var mapTypeControl: UISegmentedControl!
@@ -37,6 +38,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     private var destination: MapLocation!
     private var start: MapLocation!
     private let locationManager = CLLocationManager()
+    private let application = UIApplication.sharedApplication()
     var postMapsInformation: [String]?
     var building: Building?
     
@@ -54,6 +56,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         
         self.navigationController?.navigationBarHidden = false
         self.title = ""
+        self.activityIndicator.hidden = true
         
         //Set Map Type Control Action
         self.mapTypeControl.addTarget(self, action: "mapTypeToggle:", forControlEvents: UIControlEvents.ValueChanged)
@@ -79,6 +82,14 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     
     // Sets up the page / refreshes it.
     private func setUpMaps() {
+        
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
+        
+        self.view.bringSubviewToFront(activityIndicator)
+        
+        let application = UIApplication.sharedApplication()
+        application.beginIgnoringInteractionEvents()
         
         // If the user was sent here from another page with data.
         if destinationExists() {
@@ -202,6 +213,9 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
                 self.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
             }
         }
+        
+        self.activityIndicator.hidden = true
+        application.endIgnoringInteractionEvents()
     }
     
     /*

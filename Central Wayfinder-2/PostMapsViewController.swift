@@ -14,6 +14,7 @@ class PostMapsViewController : UIViewController {
     var locationTitle: String = ""
     var postMapsInformation = [String]()
     
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var indoorMaps: UIButton!
     @IBOutlet weak var buildingNameLabel: UILabel!
     @IBOutlet weak var roomLocationLabel: UILabel!
@@ -21,6 +22,8 @@ class PostMapsViewController : UIViewController {
     override func viewDidLoad() {
         self.navigationItem.title = locationTitle
         self.tabBarController?.tabBar.hidden = false
+        
+        imageView.image = sharedIndoorMaps.getBuildingImage()
         
         buildingNameLabel.text = locationTitle
         buildingNameLabel.sizeToFit()

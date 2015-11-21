@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="I9C-8M-Qkm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="I9C-8M-Qkm">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -379,7 +379,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <animations/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                     <connections>
                                         <outlet property="delegate" destination="eov-iZ-8BF" id="h1F-dc-4qi"/>
                                     </connections>
@@ -443,7 +443,6 @@
                         <segue destination="ZPa-OJ-5vM" kind="show" identifier="ShowServicesViewController" id="Fia-Bt-tIh"/>
                         <segue destination="lD4-35-Vf9" kind="show" identifier="ShowSettingsViewController" id="lYq-J7-Pi1"/>
                         <segue destination="fUE-CK-d13" kind="show" identifier="ShowMapsFromMenu" id="RKA-Gl-GXp"/>
-                        <segue destination="Sww-9p-Y5w" kind="show" identifier="ShowIndoorMaps" id="ILX-sx-IDE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sxP-Ql-6qv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -493,11 +492,17 @@
                                 </segments>
                                 <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </segmentedControl>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Dil-S9-tAJ">
+                                <rect key="frame" x="142" y="207" width="37" height="37"/>
+                                <animations/>
+                                <color key="color" red="0.90588235289999997" green="0.56895770850000005" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="dGW-gU-fcA" secondAttribute="trailing" constant="4" id="0qe-KC-UMZ"/>
+                            <constraint firstItem="Dil-S9-tAJ" firstAttribute="centerY" secondItem="tfB-eH-p4Q" secondAttribute="centerY" id="7NL-d4-wsS"/>
                             <constraint firstItem="PIr-zQ-eKQ" firstAttribute="trailing" secondItem="dGW-gU-fcA" secondAttribute="trailing" id="Bi7-8c-Sp0"/>
                             <constraint firstItem="2rW-xs-9o2" firstAttribute="top" secondItem="SaR-M2-cvU" secondAttribute="bottom" id="LeI-7q-Bdi"/>
                             <constraint firstItem="PIr-zQ-eKQ" firstAttribute="top" secondItem="dGW-gU-fcA" secondAttribute="bottom" constant="8" symbolic="YES" id="QnI-bK-GVX"/>
@@ -506,11 +511,13 @@
                             <constraint firstItem="2rW-xs-9o2" firstAttribute="bottom" secondItem="D0L-Je-nUk" secondAttribute="top" id="WvL-Pr-BMn"/>
                             <constraint firstItem="D0L-Je-nUk" firstAttribute="top" secondItem="PIr-zQ-eKQ" secondAttribute="bottom" constant="8" symbolic="YES" id="eWA-d8-K3j"/>
                             <constraint firstItem="PIr-zQ-eKQ" firstAttribute="leading" secondItem="tfB-eH-p4Q" secondAttribute="leadingMargin" constant="92" id="g1v-ci-VW4"/>
+                            <constraint firstItem="Dil-S9-tAJ" firstAttribute="centerX" secondItem="tfB-eH-p4Q" secondAttribute="centerX" id="ssB-iC-rKg"/>
                         </constraints>
                     </view>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="Dil-S9-tAJ" id="Gzc-5x-SBe"/>
                         <outlet property="directionsTypeControl" destination="dGW-gU-fcA" id="hro-jk-qmK"/>
                         <outlet property="mapTypeControl" destination="PIr-zQ-eKQ" id="tdh-Fi-M5L"/>
                         <outlet property="mapView" destination="2rW-xs-9o2" id="Q1b-2j-NLU"/>
@@ -612,6 +619,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="buildingNameLabel" destination="EnE-eh-uR4" id="pdC-Ft-pXw"/>
+                        <outlet property="imageView" destination="H4C-eT-3Ul" id="bfZ-bN-Xad"/>
                         <outlet property="indoorMaps" destination="BDA-Kk-rCs" id="YZR-j7-cKc"/>
                         <outlet property="roomLocationLabel" destination="68E-F4-oBC" id="spB-wy-LEZ"/>
                         <segue destination="Sww-9p-Y5w" kind="show" identifier="ShowIndoorMapsViewController" id="dGW-qX-EnQ"/>
@@ -633,36 +641,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2DI-cw-LhB">
-                                <rect key="frame" x="0.0" y="20" width="320" height="411"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3rM-QM-ljA">
+                                <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                                 <animations/>
                                 <connections>
-                                    <outlet property="delegate" destination="Sww-9p-Y5w" id="0h9-jD-5F3"/>
+                                    <outlet property="delegate" destination="Sww-9p-Y5w" id="mXq-pA-Ttz"/>
                                 </connections>
                             </scrollView>
-                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="fMB-z1-Fi4">
-                                <rect key="frame" x="0.0" y="394" width="320" height="37"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Lfg-V6-LLT">
+                                <rect key="frame" x="16" y="388" width="287" height="29"/>
                                 <animations/>
-                                <color key="pageIndicatorTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="currentPageIndicatorTintColor" red="0.90588235289999997" green="0.56895770850000005" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
-                            </pageControl>
+                                <color key="backgroundColor" red="0.9552359533" green="0.89533457319999998" blue="0.82309428070000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                                <color key="tintColor" red="0.90588235289999997" green="0.56895770850000005" blue="0.058823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </segmentedControl>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="fMB-z1-Fi4" secondAttribute="trailing" id="ALy-9D-FFQ"/>
-                            <constraint firstItem="2DI-cw-LhB" firstAttribute="leading" secondItem="fMB-z1-Fi4" secondAttribute="leading" id="Nan-aq-yDF"/>
-                            <constraint firstItem="2DI-cw-LhB" firstAttribute="trailing" secondItem="fMB-z1-Fi4" secondAttribute="trailing" id="XRP-UZ-hfv"/>
-                            <constraint firstItem="fMB-z1-Fi4" firstAttribute="bottom" secondItem="8Ms-US-TZ1" secondAttribute="top" id="kHq-aK-zJr"/>
-                            <constraint firstItem="2DI-cw-LhB" firstAttribute="top" secondItem="CVP-Mq-VTE" secondAttribute="top" constant="20" symbolic="YES" id="mtH-FY-ve7"/>
-                            <constraint firstItem="2DI-cw-LhB" firstAttribute="bottom" secondItem="8Ms-US-TZ1" secondAttribute="top" id="qug-h2-vYt"/>
-                            <constraint firstItem="fMB-z1-Fi4" firstAttribute="leading" secondItem="CVP-Mq-VTE" secondAttribute="leading" id="xl7-Nc-WP5"/>
+                            <constraint firstItem="8Ms-US-TZ1" firstAttribute="top" secondItem="Lfg-V6-LLT" secondAttribute="bottom" constant="15" id="0hX-Jp-2Hg"/>
+                            <constraint firstItem="3rM-QM-ljA" firstAttribute="height" secondItem="CVP-Mq-VTE" secondAttribute="height" id="KGh-2k-Jg9"/>
+                            <constraint firstItem="Lfg-V6-LLT" firstAttribute="leading" secondItem="CVP-Mq-VTE" secondAttribute="leadingMargin" id="LUn-00-Igk"/>
+                            <constraint firstItem="Lfg-V6-LLT" firstAttribute="centerX" secondItem="3rM-QM-ljA" secondAttribute="centerX" id="R7O-CK-xQB"/>
+                            <constraint firstItem="3rM-QM-ljA" firstAttribute="width" secondItem="CVP-Mq-VTE" secondAttribute="width" id="RgR-pd-sFF"/>
+                            <constraint firstItem="3rM-QM-ljA" firstAttribute="centerX" secondItem="CVP-Mq-VTE" secondAttribute="centerX" id="mfi-Xh-QNu"/>
+                            <constraint firstItem="3rM-QM-ljA" firstAttribute="centerY" secondItem="CVP-Mq-VTE" secondAttribute="centerY" id="ojC-3Y-Qcz"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="pageControl" destination="fMB-z1-Fi4" id="Kjo-lQ-M8k"/>
-                        <outlet property="scrollView" destination="2DI-cw-LhB" id="UJb-eb-9YP"/>
+                        <outlet property="scrollView" destination="3rM-QM-ljA" id="5jw-IX-uUG"/>
+                        <outlet property="segmentedControl" destination="Lfg-V6-LLT" id="CA4-jl-tp4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sbF-ow-Saj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -790,9 +802,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="oqq-04-9AF"/>
         <segue reference="aby-7k-g6a"/>
-        <segue reference="NxO-X7-7d7"/>
-        <segue reference="8bU-Z6-Ik3"/>
-        <segue reference="ILX-sx-IDE"/>
+        <segue reference="Fia-Bt-tIh"/>
+        <segue reference="lYq-J7-Pi1"/>
         <segue reference="RKA-Gl-GXp"/>
     </inferredMetricsTieBreakers>
 </document>
