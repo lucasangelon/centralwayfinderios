@@ -76,44 +76,33 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         // Set the service coordinates and the title to a variable to be sent to Google Maps.
         currentRow = services[indexPath.row]
         
-        building = sharedInstance.getBuilding(currentRow.buildingId, building: building)
-        print(building.getContent())
+        let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+        let dispatchGroup: dispatch_group_t = dispatch_group_create()
         
-        if building.id == 0 {
-            let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-            let dispatchGroup: dispatch_group_t = dispatch_group_create()
+        // Tries downloading the building and saving it into the database.
+        dispatch_group_async(dispatchGroup, dispatchQueue, {
+            self.webServicesHelper.downloadBuilding(self.currentRow.id, buildingId: self.currentRow.buildingId)
+            print("Downloading building.")
+        })
+        
+        
+        // The ResolvePath takes quite a long time to run. NEED A SPINNER HERE D=
+        dispatch_group_notify(dispatchGroup, dispatchQueue, {
+            NSThread.sleepForTimeInterval(7.0)
+            self.building = self.webServicesHelper.getBuilding()
+            sharedInstance.insertBuilding(self.building)
             
-            // Tries downloading the building and saving it into the database.
-            dispatch_group_async(dispatchGroup, dispatchQueue, {
-                self.webServicesHelper.downloadBuilding(self.currentRow.id, buildingId: self.currentRow.buildingId)
-                print("Downloading building.")
-            })
+            self.postMapsInformation = self.webServicesHelper.getPostMapsInformation()
+            print("Loaded building.")
             
-            
-            // The ResolvePath takes quite a long time to run. NEED A SPINNER HERE D=
-            dispatch_group_notify(dispatchGroup, dispatchQueue, {
-                NSThread.sleepForTimeInterval(7.0)
-                self.building = self.webServicesHelper.getBuilding()
-                sharedInstance.insertBuilding(self.building)
-
-                self.postMapsInformation = self.webServicesHelper.getPostMapsInformation()
-                print("Loaded building.")
+            dispatch_async(dispatch_get_main_queue(), {
+                self.activityIndicator.hidden = true
+                application.endIgnoringInteractionEvents()
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
                 
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.activityIndicator.hidden = true
-                    application.endIgnoringInteractionEvents()
-                    tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                
-                    self.performSegueWithIdentifier("ShowMapsFromServices", sender: self)
-                })
+                self.performSegueWithIdentifier("ShowMapsFromServices", sender: self)
             })
-        } else {
-            self.activityIndicator.hidden = true
-            application.endIgnoringInteractionEvents()
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-
-            self.performSegueWithIdentifier("ShowMapsFromServices", sender: self)
-        }
+        })
     }
     
     // Setting up the header.

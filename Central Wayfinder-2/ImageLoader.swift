@@ -51,6 +51,7 @@ class ImageLoader {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {()in
             let data: NSData? = self.cache.objectForKey(urlString) as? NSData
             
+            
             if urlString == "" || urlString == "NoImage" {
                 urlString = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
             }
@@ -62,6 +63,7 @@ class ImageLoader {
                 })
                 return
             }
+            
             // BUG HERE, image is always nil for unknown reason D=
             let downloadTask: NSURLSessionDataTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif")!, completionHandler: {(data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
                 if (error != nil) {
