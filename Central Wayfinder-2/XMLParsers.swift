@@ -14,6 +14,7 @@ class CampusParser: NSObject, NSXMLParserDelegate {
     private var currentCampus: Campus?
     private var campuses: [Campus] = [Campus]()
     private var element = NSString()
+    private let webServiceImagePath = "http://student.mydesign.central.wa.edu.au/cf_Wayfinding_WebService/Img/"
     
     // Counter for the strings inside an array. Due to the fact they all have
     // the same name, the switch iteration handles each campus detail properly.
@@ -187,20 +188,31 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
             case 2:
                 building?.name = string
                 theIndex++
-            //case 3:
-                //if element == "" {
-                //    building?.image = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
-                //} else {
-                    building?.image = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
-                //}
+            case 3:
+                if string == "NoImage" {
+                    
+                } else if string == "" {
+                    
+                } else {
+                    print(string.characters)
+                }
+                building?.image = string
                 
                 building?.id = requestedBuildingId
                 building?.campusId = sharedDefaults.campusId
-                //theIndex++
+                theIndex++
             case 3:
                 postMapsInformation = string
                 theIndex++
             case 4:
+                if string == "NoImage" {
+                    
+                } else if string == "" {
+                    
+                } else {
+                    print("THIS URL + \(string.characters)")
+                }
+                
                 postMapsUrl = string
                 theIndex++
             default:

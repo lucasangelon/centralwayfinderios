@@ -67,7 +67,9 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             print("Body: \(strData)")
             
             // Parses the XML retrieved through the request.
-            self.parseXML(data!)
+            if data != nil {
+                self.parseXML(data!)
+            }
             
             // If an error occurred, print the description for it.
             if error != nil
@@ -95,7 +97,9 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         request.addValue("http://tempuri.org/WF_Service_Interface/" + checkDatabaseConnectionAction, forHTTPHeaderField: "SOAPAction")
         
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            self.parseXML(data!)
+            if data != nil {
+                self.parseXML(data!)
+            }
             
             // If an error occurred, print the description for it.
             if error != nil
@@ -125,7 +129,10 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             
             // Uses a specific parser in order to properly retrieve the data from the XML file.
             let campusParser = CampusParser()
-            self.campuses = campusParser.parseXML(data!)
+            
+            if data != nil {
+                self.campuses = campusParser.parseXML(data!)
+            
             
             // Prints the response in order to test the service.
             print("Response: \(response)")
@@ -133,6 +140,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             // Prints the actual data for testing purposes as well.
             let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
             print("Body: \(strData)")
+            }
             
             // If an error occurred, print the description for it.
             if error != nil
@@ -165,7 +173,10 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             // Uses a specific parser in order to properly retrieve the data from the XML file.
             let roomParser = RoomParser()
-            self.rooms = roomParser.parseXML(data!)
+            
+            if data != nil {
+                self.rooms = roomParser.parseXML(data!)
+            
             
             // Prints the response in order to test the service.
             print("Response: \(response)")
@@ -173,6 +184,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             // Prints the actual data for testing purposes as well.
             let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
             print("Body: \(strData)")
+            }
             
             // If an error occurred, print the description for it.
             if error != nil
@@ -206,7 +218,10 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             let buildingParser = BuildingParser()
             buildingParser.requestedBuildingId = buildingId
-            objectsArray = buildingParser.parseXML(data!)
+            
+            if data != nil {
+                objectsArray = buildingParser.parseXML(data!)
+            
             
             // Prints the response in order to test the service.
             print("Response: \(response)")
@@ -227,6 +242,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             
             // Downloads the indoor map, transform this into a loop if multiple indoor maps required.
             sharedIndoorMaps.downloadIndoorMap(self.postMapsInformation[1], title: self.postMapsInformation[0])
+            }
             
             // If an error occurred, print the description for it.
             if error != nil
