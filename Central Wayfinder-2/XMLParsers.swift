@@ -8,13 +8,18 @@
 
 import Foundation
 
+private let webServiceImagePath = "http://student.mydesign.central.wa.edu.au/cf_Wayfinding_WebService/Img/"
+private let webServiceBuildingImagePath = "http://student.mydesign.central.wa.edu.au/cf_Wayfinding_WebService/Img/Ignore/"
+private let indoorBreaker = "/Img/"
+private let buildingBreaker = "/Ignore/"
+
 // Specific Campus Parser.
 class CampusParser: NSObject, NSXMLParserDelegate {
     
     private var currentCampus: Campus?
     private var campuses: [Campus] = [Campus]()
     private var element = NSString()
-    private let webServiceImagePath = "http://student.mydesign.central.wa.edu.au/cf_Wayfinding_WebService/Img/"
+
     
     // Counter for the strings inside an array. Due to the fact they all have
     // the same name, the switch iteration handles each campus detail properly.
@@ -156,17 +161,16 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
         objectsArray.append(building!)
         objectsArray.append(postMapsInformation)
         objectsArray.append(postMapsUrl)
+        sharedIndoorMaps.reset()
         return objectsArray
     }
     
     // Detects the start of an element and assigns it to the variable.
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         element = elementName
-        print(elementName + "opening")
     }
     
     func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        print(elementName + "closing")
         if elementName.containsString("b:string/") {
             building?.image = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
         }
@@ -174,9 +178,6 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
 
     // If anything was found inside a key/value pair, this method is activated.
     func parser(parser: NSXMLParser, foundCharacters string: String) {
-        print(element)
-        print(string)
-        print(theIndex)
         if element.isEqualToString("b:string") {
             switch theIndex {
             case 0:
@@ -190,30 +191,30 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
                 theIndex++
             case 3:
                 if string == "NoImage" {
-                    
+                    building?.image = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
                 } else if string == "" {
-                    
+                    building?.image = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
                 } else {
-                    print(string.characters)
+                    print("THIS URL HEREeeeeeee \(string.componentsSeparatedByString("/Ignore/")[1])")
+                    building?.image = "\(webServiceBuildingImagePath)\(string.componentsSeparatedByString(buildingBreaker)[1])"
                 }
-                building?.image = string
                 
                 building?.id = requestedBuildingId
                 building?.campusId = sharedDefaults.campusId
                 theIndex++
-            case 3:
+            case 4:
                 postMapsInformation = string
                 theIndex++
-            case 4:
+            case 5:
                 if string == "NoImage" {
-                    
+                    postMapsUrl = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
                 } else if string == "" {
-                    
+                    postMapsUrl = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
                 } else {
-                    print("THIS URL + \(string.characters)")
+                    print("THIS URL HEREeeeeeee \(string.componentsSeparatedByString(indoorBreaker)[1])")
+                    postMapsUrl = "\(webServiceImagePath)\(string.componentsSeparatedByString(indoorBreaker)[1])"
                 }
                 
-                postMapsUrl = string
                 theIndex++
             default:
                 break

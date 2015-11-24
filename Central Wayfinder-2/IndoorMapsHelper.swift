@@ -1,4 +1,3 @@
-//
 //  IndoorMapsHelper.swift
 //  Central Wayfinder-2
 //

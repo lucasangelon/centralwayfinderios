@@ -64,8 +64,7 @@ class ImageLoader {
                 return
             }
             
-            // BUG HERE, image is always nil for unknown reason D=
-            let downloadTask: NSURLSessionDataTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif")!, completionHandler: {(data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            let downloadTask: NSURLSessionDataTask = NSURLSession.sharedSession().dataTaskWithURL(NSURL(string: urlString)!, completionHandler: {(data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
                 if (error != nil) {
                     completionHandler(image: nil, url: urlString)
                     return
