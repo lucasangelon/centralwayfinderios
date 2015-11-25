@@ -129,12 +129,13 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
                 self.campuses = campusParser.parseXML(data!)
             
             
-            // Prints the response in order to test the service.
-            print("Response: \(response)")
-            
-            // Prints the actual data for testing purposes as well.
-            let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            print("Body: \(strData)")
+                // Prints the response in order to test the service.
+                //print("Response: \(response)")
+                
+                // Prints the actual data for testing purposes as well.
+                //let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                //print("Body: \(strData)")
+                
             }
             
             // If an error occurred, print the description for it.
@@ -188,11 +189,10 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
         let session = NSURLSession.sharedSession()
         let _: NSError?
-        let disability = sharedDefaults.accessibility
-        var objectsArray = [NSObject]()
+        let accessibility = sharedDefaults.accessibility
         
         // Sends a parameter for the method.
-        let middleSoapMessage = "<wf:" + getBuildingAction + "><wf:WaypointID>\(roomId)</wf:WaypointID><wf:Disability>\(disability)</wf:Disability></wf:" + getBuildingAction + ">"
+        let middleSoapMessage = "<wf:" + getBuildingAction + "><wf:WaypointID>\(roomId)</wf:WaypointID><wf:Disability>\(accessibility)</wf:Disability></wf:" + getBuildingAction + ">"
         let getBuildingMessage = baseStartSoapMessage + middleSoapMessage + baseEndSoapMessage
         print(getBuildingMessage)
         request.HTTPMethod = "POST"
@@ -207,20 +207,12 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             buildingParser.requestedBuildingId = buildingId
             
             if data != nil {
-                objectsArray = buildingParser.parseXML(data!)
-            
-                self.building = objectsArray[0] as! Building
+                 buildingParser.parseXML(data!)
                 
-                // Downloads the building image.
-                sharedIndoorMaps.downloadBuildingImage(self.building.image)
-                
-                sharedInstance.insertBuilding(self.building)
-                self.postMapsInformation.append(objectsArray[1] as! String)
-                self.postMapsInformation.append(objectsArray[2] as! String)
-                self.indoorMapsUrls.append(self.postMapsInformation[1])
-                
-                // Downloads the indoor map, transform this into a loop if multiple indoor maps required.
-                sharedIndoorMaps.downloadIndoorMap(self.postMapsInformation[1], title: self.postMapsInformation[0])
+                // As we always download the building image and indoor maps together
+                // through the resolvePath web service action, there is little
+                // point in storing the building in the database.
+                //sharedInstance.insertBuilding(self.building)
             }
             
             // If an error occurred, print the description for it.

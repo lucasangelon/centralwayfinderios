@@ -39,7 +39,6 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     private var start: MapLocation!
     private let locationManager = CLLocationManager()
     private let application = UIApplication.sharedApplication()
-    var postMapsInformation: [String]?
     var building: Building?
     
     // User Information
@@ -56,6 +55,11 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         
         self.navigationController?.navigationBarHidden = false
         self.title = ""
+        
+        
+        
+        
+        
         self.activityIndicator.hidden = true
         
         //Set Map Type Control Action

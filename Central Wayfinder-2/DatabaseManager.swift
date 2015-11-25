@@ -141,7 +141,7 @@ class DatabaseManager : NSObject {
         queue?.inDatabase() {
             db in
             
-            let resultSet: FMResultSet! = db.executeQuery(self.dbStatements.GET_ALL_CAMPUSES, withArgumentsInArray: nil)
+            let resultSet: FMResultSet! = db.executeQuery(self.dbStatements.SELECT_ALL_CAMPUSES, withArgumentsInArray: nil)
             
             if (resultSet != nil) {
                 while resultSet.next() {
@@ -248,75 +248,27 @@ class DatabaseManager : NSObject {
         return building
     }
     
-    /* Test Functions */
-    
-    /*// Inserts test data.
-    func prepareTestData() {
+    // Checks if there are campuses in the campus table.
+    func checkCampuses() -> Bool {
+        var found = false
+        
         queue?.inDatabase() {
             db in
             
-            var success: Bool = Bool()
+            let result: FMResultSet = db.executeQuery(self.dbStatements.CHECK_CAMPUSES, withArgumentsInArray: nil)
             
-            // Define a temporary Campus object and retrieve the test data.
-            var tempCampus: Campus!
-            let campuses = self.dbStatements.getTestCampuses()
-            
-            // Add the test campuses to the table.
-            for index in 0...(campuses.count - 1) {
-                tempCampus = campuses[index]
-                
-                success = db.executeUpdate(self.dbStatements.INSERT_CAMPUS, withArgumentsInArray: [(tempCampus.id), (tempCampus.name), (tempCampus.lat), (tempCampus.long), (tempCampus.zoom)])
-                
-                if !success {
-                    print("An error has occurred: \(db.lastErrorMessage())")
+            if result.next() {
+                print(result.intForColumnIndex(0))
+                if result.intForColumnIndex(0) > 1 {
+                    found = true
                 }
-            }
-            
-            var tempBuilding: Building!
-            let buildings = self.dbStatements.getTestBuildings()
-            
-            // Add the test buildings to the table.
-            for index in 0...(buildings.count - 1) {
-                tempBuilding = buildings[index]
-                
-                success = db.executeUpdate(self.dbStatements.INSERT_BUILDING, withArgumentsInArray: [Int(tempBuilding.id as Int), (tempBuilding.name), (tempBuilding.lat), (tempBuilding.long), (tempBuilding.campusId)])
-                
-                if !success {
-                    //print("An error has occurred: \(db.lastErrorMessage())")
-                }
-            }
-            
-            var tempRoom: Room!
-            let rooms = self.dbStatements.getTestRooms()
-            
-            // Add the rooms to the table.
-            for index in 0...(rooms.count - 1) {
-                tempRoom = rooms[index]
-                
-                if tempRoom.image != "NoImage" {
-                    success = db.executeUpdate(self.dbStatements.INSERT_ROOM, withArgumentsInArray: [Int(tempRoom.id as Int), (tempRoom.name), (tempRoom.image), Int(tempRoom.buildingId as Int), (tempRoom.campusId)])
-                } else {
-                    success = db.executeUpdate(self.dbStatements.INSERT_ROOM, withArgumentsInArray: [Int(tempRoom.id as Int), (tempRoom.name), ("NoImage"), Int(tempRoom.buildingId as Int), (tempRoom.campusId)])
-                }
-                
-                if !success {
-                    //print("An error has occurred: \(db.lastErrorMessage())")
-                }
-            }
-        }
-    }*/
-    
-    func clearTest() {
-        queue?.inDatabase() {
-            db in
-            
-            let success = db.executeStatements(self.dbStatements.clearTest())
-            
-            if success {
-                print("Test Data Cleared.")
             } else {
                 print("An error has occured: \(db.lastErrorMessage())")
             }
+            
+            result.close()
         }
+        
+        return found
     }
 }

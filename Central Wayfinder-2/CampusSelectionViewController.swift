@@ -10,7 +10,7 @@ import UIKit
 
 class CampusSelectionViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate {
     
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private let webServicesHelper: WebServicesHelper = WebServicesHelper()
@@ -19,17 +19,34 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     private var campus: Campus = Campus()
     private var firstUse = false
     private var firstUseBackPress = false
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.hidden = false
-        activityIndicator.hidden = true
+        if firstUse {
+            // Generating the navigation bar programatically
+            let navigationBar = UINavigationBar(frame: CGRectMake(0,0, self.view.frame.size.width, 60))
+            
+            navigationBar.backgroundColor = UIColor.whiteColor()
+            
+            let navigationItem = UINavigationItem()
+            navigationItem.title = "Select Campus"
+            
+            // Hiding the usual back button and implementing a special one for the campus selection page.
+            let campusSelectionBackButton = UIBarButtonItem(title: "< Back", style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
+            navigationItem.leftBarButtonItem = campusSelectionBackButton
+            
+            navigationBar.items = [navigationItem]
+            
+            self.view.addSubview(navigationBar)
+            self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0)
+        } else {
+            self.navigationController?.navigationBar.hidden = false
+            self.navigationController?.navigationBar.backgroundColor = UIColor.whiteColor()
+        }
         
-        // Hiding the usual back button and implementing a special one for the campus selection page.
-        self.navigationItem.backBarButtonItem?.enabled = false
-        let campusSelectionBackButton = UIBarButtonItem(title: "< Back", style: UIBarButtonItemStyle.Plain, target: self, action: "back:")
-        self.navigationItem.leftBarButtonItem = campusSelectionBackButton
+        activityIndicator.hidden = true
         
         // Database Interaction
         campuses = sharedInstance.getCampuses(campuses)

@@ -19,7 +19,6 @@ class CampusParser: NSObject, NSXMLParserDelegate {
     private var currentCampus: Campus?
     private var campuses: [Campus] = [Campus]()
     private var element = NSString()
-
     
     // Counter for the strings inside an array. Due to the fact they all have
     // the same name, the switch iteration handles each campus detail properly.
@@ -139,7 +138,7 @@ class RoomParser: NSObject, NSXMLParserDelegate {
 // TODO: finish this method once the webservice has been fixed.
 class BuildingParser: NSObject, NSXMLParserDelegate {
     
-    private var building: Building?
+    private var building = Building()
     private var element = NSString()
     var requestedBuildingId = 0
     private var postMapsInformation = ""
@@ -148,21 +147,18 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
     // Counter for the strings inside an array. Due to the fact they all have
     // the same name, the switch iteration handles each building/indoor map
     // detail properly.
+    var arrayIndex = 0
     var theIndex = 0
     
     // Parses the XML.
-    func parseXML(data: NSData) -> [NSObject] {
-        building = Building()
+    func parseXML(data: NSData) {
+        
+        // Resets the indoor maps with each new request made.
+        sharedIndoorMaps.reset()
+
         let parser = NSXMLParser(data: data)
         parser.delegate = self
         parser.parse()
-        
-        var objectsArray = [NSObject]()
-        objectsArray.append(building!)
-        objectsArray.append(postMapsInformation)
-        objectsArray.append(postMapsUrl)
-        sharedIndoorMaps.reset()
-        return objectsArray
     }
     
     // Detects the start of an element and assigns it to the variable.
@@ -171,53 +167,72 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
     }
     
     func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        if elementName.containsString("b:string/") {
-            building?.image = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
-        }
     }
 
     // If anything was found inside a key/value pair, this method is activated.
     func parser(parser: NSXMLParser, foundCharacters string: String) {
         if element.isEqualToString("b:string") {
-            switch theIndex {
-            case 0:
-                building?.lat = Double(string)!
-                theIndex++
-            case 1:
-                building?.long = Double(string)!
-                theIndex++
-            case 2:
-                building?.name = string
-                theIndex++
-            case 3:
-                if string == "NoImage" {
-                    building?.image = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
-                } else if string == "" {
-                    building?.image = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
-                } else {
-                    print("THIS URL HEREeeeeeee \(string.componentsSeparatedByString("/Ignore/")[1])")
-                    building?.image = "\(webServiceBuildingImagePath)\(string.componentsSeparatedByString(buildingBreaker)[1])"
+            print(string)
+            // Building Switch
+            if arrayIndex == 0 {
+                switch theIndex {
+                case 0:
+                    building.lat = Double(string)!
+                    print(building.lat)
+                    theIndex++
+                case 1:
+                    building.long = Double(string)!
+                    theIndex++
+                case 2:
+                    building.name = string
+                    theIndex++
+                case 3:
+                    if string == "NoImage" {
+                        building.image = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
+                    } else if string == "" {
+                        building.image = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
+                    } else {
+                        building.image = "\(webServiceBuildingImagePath)\(string.componentsSeparatedByString(buildingBreaker)[1])"
+                    }
+                    
+                    building.id = requestedBuildingId
+                    building.campusId = sharedDefaults.campusId
+                    
+                    // Sets the building in the shared object.
+                    sharedIndoorMaps.setBuilding(building)
+                    sharedIndoorMaps.downloadBuildingImage(building.image)
+                    
+                    // Sets the flag for the indoor maps array.
+                    arrayIndex++
+                    theIndex = 0
+                default:
+                    break
                 }
                 
-                building?.id = requestedBuildingId
-                building?.campusId = sharedDefaults.campusId
-                theIndex++
-            case 4:
-                postMapsInformation = string
-                theIndex++
-            case 5:
-                if string == "NoImage" {
-                    postMapsUrl = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
-                } else if string == "" {
-                    postMapsUrl = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
-                } else {
-                    print("THIS URL HEREeeeeeee \(string.componentsSeparatedByString(indoorBreaker)[1])")
-                    postMapsUrl = "\(webServiceImagePath)\(string.componentsSeparatedByString(indoorBreaker)[1])"
+            }
+            
+            // Indoor Maps Switch
+            else {
+                switch theIndex {
+                case 0:
+                    postMapsInformation = string
+                    theIndex++
+                case 1:
+                    if string == "NoImage" {
+                        postMapsUrl = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
+                    } else if string == "" {
+                        postMapsUrl = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
+                    } else {
+                        postMapsUrl = "\(webServiceImagePath)\(string.componentsSeparatedByString(indoorBreaker)[1])"
+                    }
+                    
+                    // Loads an indoor map into the shared object.
+                    sharedIndoorMaps.downloadIndoorMap(postMapsUrl, title: postMapsInformation)
+                    
+                    theIndex = 0
+                default:
+                    break
                 }
-                
-                theIndex++
-            default:
-                break
             }
         }
     }

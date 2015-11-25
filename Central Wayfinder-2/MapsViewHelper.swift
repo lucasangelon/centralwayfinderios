@@ -80,8 +80,7 @@ extension MapsViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowPostMapsViewController" {
             let destinationSegue = segue.destinationViewController as! PostMapsViewController
-            destinationSegue.locationTitle = destSubtitle
-            destinationSegue.postMapsInformation = self.postMapsInformation!
+            destinationSegue.setRoomName(destSubtitle)
         }
     }
     

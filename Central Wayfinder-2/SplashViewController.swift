@@ -23,7 +23,8 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     private let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
     private var campuses: [Campus] = [Campus]()
     private var success = false
-
+    private var campusesFound = Bool()
+    
     // Declaring the location manager.
     private var locationManager = CLLocationManager()
     
@@ -33,65 +34,71 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         self.navigationController?.navigationBar.hidden = true
         self.tabBarController?.tabBar.hidden = true
         self.startButton.hidden = true
+        self.activityIndicator.hidden = true
                 
         // Configuring the location manager.
         locationManager.delegate = self
+        
+        // Setting up the database and the queue for general access.
+        sharedInstance.setupDatabase()
+        sharedInstance.setupQueue()
         
         activityIndicator.hidden = false
         activityIndicator.startAnimating()
         
         self.view.bringSubviewToFront(activityIndicator)
         
-        self.application.beginIgnoringInteractionEvents()
+        application.beginIgnoringInteractionEvents()
         
-        // Setting up the database and the queue for general access.
-        sharedInstance.setupDatabase()
-        sharedInstance.setupQueue()
-        
-        let dispatchGroup: dispatch_group_t = dispatch_group_create()
-        
-        // Checks the service and the database connections.
-        dispatch_group_async(dispatchGroup, dispatchQueue, {
-            self.webServicesHelper.checkServiceConnection()
-            print("Testing service.")
+        if sharedInstance.checkCampuses() {
+            // Campuses are there, no need to re-download.
+            activityIndicator.hidden = true
+            application.endIgnoringInteractionEvents()
+            campusesFound = true
             
-            self.webServicesHelper.checkDatabaseConnection()
-            print("Testing database.")
-        })
-        
-        // Tries downloading the campuses.
-        dispatch_group_notify(dispatchGroup, dispatchQueue, {
-            NSThread.sleepForTimeInterval(10.0)
-            if self.webServicesHelper.serviceConnection == "true" && self.webServicesHelper.databaseConnection == "true" {
-                
-                dispatch_group_async(dispatchGroup, self.dispatchQueue, {
-                    self.webServicesHelper.downloadCampuses()
-                    print("Downloading campuses.")
-                })
-            } else {
-                print("Unable to check connections.")
-            }
-        })
-        
-        // Loads the campuses into the database.
-        dispatch_group_notify(dispatchGroup, dispatchQueue, {
-            NSThread.sleepForTimeInterval(14.0)
-            self.campuses = self.webServicesHelper.getCampuses()
+        } else {
+            campusesFound = false
+            let dispatchGroup: dispatch_group_t = dispatch_group_create()
             
-            dispatch_async(dispatch_get_main_queue(), {
-                // Checking it "campuses" is not empty.
-                if self.webServicesHelper.checkCampuses() {
-                    // Inserts campuses from the web service into the database.
-                    sharedInstance.insertCampuses(self.campuses)
-                    print("Campuses loaded.")
-                } else {
-                    print("No campuses found.")
-                }
-                
-                self.activityIndicator.hidden = true
-                self.application.endIgnoringInteractionEvents()
+            // Checks the service and the database connections.
+            dispatch_group_async(dispatchGroup, dispatchQueue, {
+                self.webServicesHelper.checkServiceConnection()
+                self.webServicesHelper.checkDatabaseConnection()
             })
-        })
+            
+            // Tries downloading the campuses.
+            dispatch_group_notify(dispatchGroup, dispatchQueue, {
+                NSThread.sleepForTimeInterval(5.0)
+                if self.webServicesHelper.serviceConnection == "true" && self.webServicesHelper.databaseConnection == "true" {
+                    
+                    dispatch_group_async(dispatchGroup, self.dispatchQueue, {
+                        self.webServicesHelper.downloadCampuses()
+                    })
+                } else {
+                    print("Unable to check connections.")
+                }
+            })
+            
+            // Loads the campuses into the database.
+            dispatch_group_notify(dispatchGroup, dispatchQueue, {
+                NSThread.sleepForTimeInterval(10.0)
+                self.campuses = self.webServicesHelper.getCampuses()
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    // Checking it "campuses" is not empty.
+                    if self.webServicesHelper.checkCampuses() {
+                        // Inserts campuses from the web service into the database.
+                        sharedInstance.insertCampuses(self.campuses)
+                        print("Campuses loaded.")
+                    } else {
+                        print("No campuses found.")
+                    }
+                    
+                    self.activityIndicator.hidden = true
+                    self.application.endIgnoringInteractionEvents()
+                })
+            })
+        }
     }
     
     // Handling the alert window in the right hierarchy.
@@ -114,7 +121,9 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
             alertInternet("Internet Connection Alert", message: "Internet (Cellular or Wi-fi) is required to use this application. Turn on Wi-fi or Cellular data usage in order to use Central Wayfinder.")
         }
         
-        NSThread.sleepForTimeInterval(15.0)
+        if !campusesFound {
+            NSThread.sleepForTimeInterval(11.5)
+        }
         
         self.startButton.hidden = false
     }
