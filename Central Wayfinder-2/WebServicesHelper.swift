@@ -20,6 +20,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     final private let getCampusesAction = "SearchCampus"
     final private let getRoomsByCampusAction = "SearchRooms"
     final private let getBuildingAction = "ResolvePath"
+    final private let getImageAction = "getImage"
     
     // Base and End sections of the SOAP Message to be used.
     final private let baseStartSoapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:wf=\"http://tempuri.org/\"><soapenv:Header/><soapenv:Body>"
@@ -32,6 +33,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     var rooms: [Room] = [Room]()
     var building: Building = Building()
     var postMapsInformation = [String]()
+    var indoorMapsUrls = [String]()
     
     // Checks if the Service and Server are online.
     func checkServiceConnection() {
@@ -58,13 +60,6 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         
         // Defines the task.
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            
-            // Prints the response in order to test the service.
-            print("Response: \(response)")
-            
-            // Prints the actual data for testing purposes as well.
-            let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            print("Body: \(strData)")
             
             // Parses the XML retrieved through the request.
             if data != nil {
@@ -176,14 +171,6 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             
             if data != nil {
                 self.rooms = roomParser.parseXML(data!)
-            
-            
-            // Prints the response in order to test the service.
-            print("Response: \(response)")
-            
-            // Prints the actual data for testing purposes as well.
-            let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            print("Body: \(strData)")
             }
             
             // If an error occurred, print the description for it.
@@ -222,26 +209,18 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             if data != nil {
                 objectsArray = buildingParser.parseXML(data!)
             
-            
-            // Prints the response in order to test the service.
-            print("Response: \(response)")
-            
-            // Prints the actual data for testing purposes as well.
-            let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            print("Body: \(strData)")
-            
-            self.building = objectsArray[0] as! Building
-            
-            // Downloads the building image.
-            sharedIndoorMaps.downloadBuildingImage(self.building.image)
-            
-            
-            sharedInstance.insertBuilding(self.building)
-            self.postMapsInformation.append(objectsArray[1] as! String)
-            self.postMapsInformation.append(objectsArray[2] as! String)
-            
-            // Downloads the indoor map, transform this into a loop if multiple indoor maps required.
-            sharedIndoorMaps.downloadIndoorMap(self.postMapsInformation[1], title: self.postMapsInformation[0])
+                self.building = objectsArray[0] as! Building
+                
+                // Downloads the building image.
+                sharedIndoorMaps.downloadBuildingImage(self.building.image)
+                
+                sharedInstance.insertBuilding(self.building)
+                self.postMapsInformation.append(objectsArray[1] as! String)
+                self.postMapsInformation.append(objectsArray[2] as! String)
+                self.indoorMapsUrls.append(self.postMapsInformation[1])
+                
+                // Downloads the indoor map, transform this into a loop if multiple indoor maps required.
+                sharedIndoorMaps.downloadIndoorMap(self.postMapsInformation[1], title: self.postMapsInformation[0])
             }
             
             // If an error occurred, print the description for it.
@@ -252,6 +231,38 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         })
         
         task.resume()
+    }
+    
+    // Deletes the indoor image from the web service after use.
+    func purgeIndoorMap(var indoorPaths: [String]) {
+        let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
+        let session = NSURLSession.sharedSession()
+        let _: NSError?
+        
+        for index in 0..<indoorPaths.count {
+        
+            // Sends a parameter for the method.
+            let middleSoapMessage = "<wf:" + getImageAction + "><wf:path>\(indoorPaths[index])</wf:path></wf:" + getImageAction + ">"
+            let getBuildingMessage = baseStartSoapMessage + middleSoapMessage + baseEndSoapMessage
+            print(getBuildingMessage)
+            request.HTTPMethod = "POST"
+            request.HTTPBody = getBuildingMessage.dataUsingEncoding(NSUTF8StringEncoding)
+            request.addValue("student.mydesign.central.wa.edu.au", forHTTPHeaderField: "Host")
+            request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            request.addValue(String((getBuildingMessage).characters.count), forHTTPHeaderField: "Content-Length")
+            request.addValue("http://tempuri.org/WF_Service_Interface/" + getImageAction, forHTTPHeaderField: "SOAPAction")
+            print(request.HTTPBody)
+            let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+                
+                // If an error occurred, print the description for it.
+                if error != nil
+                {
+                    print("Error: " + error!.description)
+                }
+            })
+            
+            task.resume()
+        }
     }
     
     /*
@@ -273,6 +284,12 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         return self.building
     }
     
+    // Returns the indoor map urls.
+    func getIndoorMapsUrls() -> [String] {
+        return self.indoorMapsUrls
+    }
+    
+    // Returns information from the indoor maps.
     func getPostMapsInformation() -> [String] {
         return self.postMapsInformation
     }

@@ -95,6 +95,8 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
             self.postMapsInformation = self.webServicesHelper.getPostMapsInformation()
             print("Loaded building.")
             
+            self.webServicesHelper.purgeIndoorMap(self.webServicesHelper.getIndoorMapsUrls())
+            
             dispatch_async(dispatch_get_main_queue(), {
                 self.activityIndicator.hidden = true
                 application.endIgnoringInteractionEvents()

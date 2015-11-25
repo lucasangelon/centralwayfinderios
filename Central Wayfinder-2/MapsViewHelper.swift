@@ -40,8 +40,19 @@ extension MapsViewController {
                 if (annotation.destination == true) {
                     setPinColor(view, color: UIColor.redColor(), annotationColor: MKPinAnnotationColor.Red)
                     
+                    let button = UIButton(type: .DetailDisclosure)
+                    
+                    // Sets the building image to the button on the right side, rather small and
+                    // not intuitive enough.
+                    
+                    //let image: UIImage = sharedIndoorMaps.getBuildingImage()
+                    //button.setImage(image, forState: UIControlState.Normal)
+                    //button.contentMode = .ScaleAspectFit
+                    //button.frame = CGRectMake(0,0,40,40)
+                    
                     // Adds the information button to the annotation.
-                    view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
+                    view.rightCalloutAccessoryView = button
+                    
                 } else {
                     setPinColor(view, color: UIColor.greenColor(), annotationColor: MKPinAnnotationColor.Green)
                 }
@@ -52,6 +63,11 @@ extension MapsViewController {
             return view
         }
         return nil
+    }
+    
+    func goToMaps(sender: MKPinAnnotationView) {
+        performSegueWithIdentifier("ShowPostMapsViewController", sender: self)
+
     }
     
     // Handles the click on the destination information.
