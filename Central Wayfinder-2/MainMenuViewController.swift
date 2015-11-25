@@ -22,8 +22,8 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     private var rooms: [Room] = [Room]()
     private var roomNames: [String] = [String]()
     private var selectedRoom: Room = Room()
-    private var building: Building = Building()
     private var postMapsInformation = [String]()
+    private var building: Building = Building()
     
     // List items for the main menu.
     private let cellContent = [("Services", "services.png"), ("Central Web", "centralWeb.png"), ("Settings", "settings.png")]
@@ -42,6 +42,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // Paint the navigation bar in white after the Splash Screen.
         self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+        self.navigationController?.interactivePopGestureRecognizer?.enabled = false
         
         // Ensures the tab bar is hidden on the main menu in order to avoid duplicate options on the page.
         self.tabBarController?.tabBar.hidden = true
@@ -53,10 +54,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             for index in 0...(rooms.count - 1) {
                 roomNames.append(rooms[index].name)
             }
-        } else {
-            print("No Rooms found for this campus.")
         }
-        
         
         self.searchBar.placeholder = "Enter Room"
     }
@@ -87,6 +85,8 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell.textLabel?.text = cellContent[indexPath.row].0
         cell.imageView?.image = UIImage(named: cellContent[indexPath.row].1)
+        cell.accessoryView = UIImageView(image: UIImage(named: "disclosureIndicator.png"))
+        cell.accessoryView?.frame = CGRectMake(0,0,40,40)
         
         return cell
     }
@@ -161,14 +161,12 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             // Tries downloading the building and saving it into the database.
             dispatch_group_async(dispatchGroup, dispatchQueue, {
                 self.webServicesHelper.downloadBuilding(self.selectedRoom.id, buildingId: self.selectedRoom.buildingId)
-                print("Downloading building.")
             })
             
             dispatch_group_notify(dispatchGroup, dispatchQueue, {
-                NSThread.sleepForTimeInterval(7.0)
-                self.building = self.webServicesHelper.getBuilding()
-                self.postMapsInformation = self.webServicesHelper.getPostMapsInformation()
-                print("Loaded building.")
+                NSThread.sleepForTimeInterval(12.0)
+                
+                self.building = sharedIndoorMaps.getBuilding()
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     self.activityIndicator.hidden = true
@@ -196,9 +194,8 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         if segue.identifier == "ShowMapsFromMenu" {
             let destinationSegue = segue.destinationViewController as! MapsViewController
             
-            destinationSegue.building = building
+            destinationSegue.building = self.building
             destinationSegue.destSubtitle = selectedRoom.name
-            destinationSegue.postMapsInformation = self.postMapsInformation
         }
         
         // Clears the search bar prior to changing screens.

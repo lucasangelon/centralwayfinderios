@@ -11,30 +11,31 @@ import UIKit
 
 class PostMapsViewController : UIViewController {
     
-    var locationTitle: String = ""
-    var postMapsInformation = [String]()
+    private var roomName = String()
+    
+    private var building = Building()
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var indoorMaps: UIButton!
     @IBOutlet weak var buildingNameLabel: UILabel!
-    @IBOutlet weak var roomLocationLabel: UILabel!
     
     override func viewDidLoad() {
-        self.navigationItem.title = locationTitle
+        self.navigationItem.title = roomName
         self.tabBarController?.tabBar.hidden = false
         
         imageView.image = sharedIndoorMaps.getBuildingImage()
         
-        buildingNameLabel.text = locationTitle
+        buildingNameLabel.text = sharedIndoorMaps.getBuildingName()
         buildingNameLabel.sizeToFit()
-        
-        roomLocationLabel.text = "PLEEease"//postMapsInformation[0]
-        roomLocationLabel.sizeToFit()
         
         indoorMaps.addTarget(self, action: "indoorMapsTap:", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     func indoorMapsTap(sender: UIButton) {
         performSegueWithIdentifier("ShowIndoorMapsViewController", sender: nil)
+    }
+    
+    func setRoomName(roomName: String) {
+        self.roomName = roomName
     }
 }

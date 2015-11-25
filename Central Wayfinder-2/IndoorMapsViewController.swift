@@ -38,7 +38,7 @@ class IndoorMapsViewController : UIViewController, UIScrollViewDelegate {
         scrollView.contentSize = imageView.image!.size
         
         // Generating the zoom action (pinch or double-click).
-        var doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "scrollViewDoubleTapped:")
+        let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "scrollViewDoubleTapped:")
         doubleTapRecognizer.numberOfTapsRequired = 2
         doubleTapRecognizer.numberOfTouchesRequired = 1
         scrollView.addGestureRecognizer(doubleTapRecognizer)
@@ -110,10 +110,16 @@ class IndoorMapsViewController : UIViewController, UIScrollViewDelegate {
     // Sets up the images.
     func setMaps() {
         indoorMaps = [IndoorMap]()
-        indoorMaps.append(sharedIndoorMaps.getIndoorMaps()[0])
+        indoorMaps = sharedIndoorMaps.getIndoorMaps()
         
         segmentedControl.removeAllSegments()
-        segmentedControl.insertSegmentWithTitle(indoorMaps[0].title.componentsSeparatedByString(",")[1], atIndex: 3, animated: true)
+        
+        for index in 0..<indoorMaps.count {
+            
+            // Adds a segment with the map name (split from the base string)
+            // and the image to be added to the scrollView.
+            segmentedControl.insertSegmentWithTitle(indoorMaps[index].title.componentsSeparatedByString(",")[1], atIndex: index, animated: true)
+        }
     }
     
     // Subview to be used for the zooming action.

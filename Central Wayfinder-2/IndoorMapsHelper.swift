@@ -14,6 +14,7 @@ class IndoorMapsHelper : NSObject {
     private var indoorMaps = [IndoorMap]()
     private var buildingImage = UIImage()
     private let imageLoader = ImageLoader()
+    private var building = Building()
     
     func downloadBuildingImage(url: String) {
         imageLoader.imageForUrl(url, completionHandler: {
@@ -27,6 +28,18 @@ class IndoorMapsHelper : NSObject {
             (image: UIImage?, url: String) in
             self.indoorMaps.append(IndoorMap(image: image!, title: title, imagePath: url))
         })
+    }
+    
+    func getBuildingName() -> String {
+        return self.building.name
+    }
+    
+    func setBuilding(building: Building) {
+        self.building = building
+    }
+    
+    func getBuilding() -> Building {
+        return self.building
     }
     
     func setBuildingImage(buildingImage: UIImage) {

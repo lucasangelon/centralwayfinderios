@@ -57,6 +57,8 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         } else {
             cell.textLabel?.text = services[indexPath.row].name
             cell.imageView?.image = UIImage(named: services[indexPath.row].image)
+            cell.accessoryView = UIImageView(image: UIImage(named: "disclosureIndicator.png"))
+            cell.accessoryView?.frame = CGRectMake(0,0,40,40)
         }
 
         return cell
@@ -88,12 +90,8 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // The ResolvePath takes quite a long time to run. NEED A SPINNER HERE D=
         dispatch_group_notify(dispatchGroup, dispatchQueue, {
-            NSThread.sleepForTimeInterval(7.0)
-            self.building = self.webServicesHelper.getBuilding()
-            sharedInstance.insertBuilding(self.building)
-            
-            self.postMapsInformation = self.webServicesHelper.getPostMapsInformation()
-            print("Loaded building.")
+            NSThread.sleepForTimeInterval(8.0)
+            self.building = sharedIndoorMaps.getBuilding()
             
             self.webServicesHelper.purgeIndoorMap(self.webServicesHelper.getIndoorMapsUrls())
             
@@ -125,9 +123,8 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         if segue.identifier == "ShowMapsFromServices" {
             let destinationSegue = segue.destinationViewController as! MapsViewController
             
-            destinationSegue.building = building
+            destinationSegue.building = self.building
             destinationSegue.destSubtitle = currentRow.name
-            destinationSegue.postMapsInformation = self.postMapsInformation
         }
     }
 }

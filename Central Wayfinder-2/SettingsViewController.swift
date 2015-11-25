@@ -86,6 +86,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             
         } else {
             cell = tableView.dequeueReusableCellWithIdentifier("TextCell", forIndexPath: indexPath)
+            
+            cell.accessoryView = UIImageView(image: UIImage(named: "disclosureIndicator.png"))
+            cell.accessoryView?.frame = CGRectMake(0,0,40,40)
         }
         
         cell.textLabel?.text = cellContent[indexPath.section][indexPath.row]
