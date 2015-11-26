@@ -28,6 +28,12 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // Show the navigation bar.
         self.navigationController?.navigationBarHidden = false
+        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+
+
         self.tabBarController?.tabBar.hidden = false
         
         activityIndicator.hidden = true
@@ -39,7 +45,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         if services.count < 1 {
             return 1
         } else {
-            tableView.separatorColor = UIColor(red: (231/255), green: (81/255), blue: (15/255), alpha: 1)
+            tableView.separatorColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
             return services.count
         }
     }
@@ -84,24 +90,40 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         // Tries downloading the building and saving it into the database.
         dispatch_group_async(dispatchGroup, dispatchQueue, {
             self.webServicesHelper.downloadBuilding(self.currentRow.id, buildingId: self.currentRow.buildingId)
+            
             print("Downloading building.")
         })
         
         
         // The ResolvePath takes quite a long time to run. NEED A SPINNER HERE D=
         dispatch_group_notify(dispatchGroup, dispatchQueue, {
-            NSThread.sleepForTimeInterval(8.0)
+            NSThread.sleepForTimeInterval(26.0)
             self.building = sharedIndoorMaps.getBuilding()
             
             self.webServicesHelper.purgeIndoorMap(self.webServicesHelper.getIndoorMapsUrls())
             
-            dispatch_async(dispatch_get_main_queue(), {
-                self.activityIndicator.hidden = true
-                application.endIgnoringInteractionEvents()
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-                
-                self.performSegueWithIdentifier("ShowMapsFromServices", sender: self)
-            })
+            if self.building.id != 0 {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.activityIndicator.hidden = true
+                    application.endIgnoringInteractionEvents()
+                    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                    
+                    self.performSegueWithIdentifier("ShowMapsFromServices", sender: self)
+                })
+            } else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.activityIndicator.hidden = true
+                    application.endIgnoringInteractionEvents()
+                    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                    
+                    // Handling the alert to explain the web service did not run as expected.
+                    let alert: UIAlertController = UIAlertController(title: "Connection Error", message: "The system was unable to retrieve the required maps.", preferredStyle: .Alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                })
+            }
         })
     }
     

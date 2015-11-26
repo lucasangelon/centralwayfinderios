@@ -223,7 +223,12 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
                     } else if string == "" {
                         postMapsUrl = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
                     } else {
-                        postMapsUrl = "\(webServiceImagePath)\(string.componentsSeparatedByString(indoorBreaker)[1])"
+                        if postMapsUrl.containsString(indoorBreaker) {
+                            postMapsUrl = "\(webServiceImagePath)\(string.componentsSeparatedByString(indoorBreaker)[1])"
+                        } else {
+                            self.building.id = 0
+                            //postMapsUrl = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
+                        }
                     }
                     
                     // Loads an indoor map into the shared object.

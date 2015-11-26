@@ -56,11 +56,10 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         self.navigationController?.navigationBarHidden = false
         self.title = ""
         
-        
-        
-        
-        
-        self.activityIndicator.hidden = true
+        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
         //Set Map Type Control Action
         self.mapTypeControl.addTarget(self, action: "mapTypeToggle:", forControlEvents: UIControlEvents.ValueChanged)

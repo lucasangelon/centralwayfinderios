@@ -28,7 +28,12 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
             // Generating the navigation bar programatically
             let navigationBar = UINavigationBar(frame: CGRectMake(0,0, self.view.frame.size.width, 60))
             
-            navigationBar.backgroundColor = UIColor.whiteColor()
+            navigationBar.translucent = false
+            navigationBar.backgroundColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
+            navigationBar.barTintColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
+            navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+            navigationBar.tintColor = UIColor.whiteColor()
+
             
             let navigationItem = UINavigationItem()
             navigationItem.title = "Select Campus"
@@ -43,7 +48,11 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
             self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0)
         } else {
             self.navigationController?.navigationBar.hidden = false
-            self.navigationController?.navigationBar.backgroundColor = UIColor.whiteColor()
+
+            self.navigationController?.navigationBar.translucent = false
+            self.navigationController?.navigationBar.barTintColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
+            self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+            self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         }
         
         activityIndicator.hidden = true
@@ -68,7 +77,7 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if campuses.count > 0 {
-            tableView.separatorColor = UIColor(red: (231/255), green: (81/255), blue: (15/255), alpha: 1)
+            tableView.separatorColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
             
             return campuses.count
         } else {

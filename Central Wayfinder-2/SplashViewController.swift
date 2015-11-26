@@ -32,6 +32,12 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.hidden = true
+        
+        self.navigationController?.navigationBar.translucent = false
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
         self.tabBarController?.tabBar.hidden = true
         self.startButton.hidden = true
         self.activityIndicator.hidden = true
@@ -104,6 +110,9 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     // Handling the alert window in the right hierarchy.
     override func viewDidAppear(animated: Bool) {
         
+        if !campusesFound {
+            NSThread.sleepForTimeInterval(11.5)
+        }
 
         // If the location services status has not been set, prompt the user for it.
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
@@ -119,10 +128,6 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         // If there is no internet connection:
         if !(util.isConnectedToNetwork()) {
             alertInternet("Internet Connection Alert", message: "Internet (Cellular or Wi-fi) is required to use this application. Turn on Wi-fi or Cellular data usage in order to use Central Wayfinder.")
-        }
-        
-        if !campusesFound {
-            NSThread.sleepForTimeInterval(11.5)
         }
         
         self.startButton.hidden = false

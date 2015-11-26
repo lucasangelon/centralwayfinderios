@@ -31,6 +31,19 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Generating the navigation Bar
+        let navigationBar = UINavigationBar(frame: CGRectMake(0,0, self.view.frame.size.width, 60))
+        navigationBar.translucent = false
+        navigationBar.barTintColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
+        navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        navigationBar.tintColor = UIColor.whiteColor()
+        
+        let navigationItem = UINavigationItem()
+        navigationItem.title = "Home"
+        navigationBar.items = [navigationItem]
+        
+        self.view.addSubview(navigationBar)
+        
         activityIndicator.hidden = true
         
         // Adds a tap gesture to dismiss the keyboard anywhere in the screen.
@@ -40,8 +53,6 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         
-        // Paint the navigation bar in white after the Splash Screen.
-        self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
         self.navigationController?.interactivePopGestureRecognizer?.enabled = false
         
         // Ensures the tab bar is hidden on the main menu in order to avoid duplicate options on the page.
@@ -74,7 +85,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // Returns the item count from the list based on the "cellContent" variable.
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        tableView.separatorColor = UIColor(red: (231/255), green: (81/255), blue: (15/255), alpha: 1)
+        tableView.separatorColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
         return cellContent.count
     }
     
@@ -164,16 +175,31 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             })
             
             dispatch_group_notify(dispatchGroup, dispatchQueue, {
-                NSThread.sleepForTimeInterval(12.0)
+                NSThread.sleepForTimeInterval(22.0)
                 
                 self.building = sharedIndoorMaps.getBuilding()
                 
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.activityIndicator.hidden = true
-                    self.application.endIgnoringInteractionEvents()
-                    
-                    self.goToMaps()
-                })
+                if self.building.id != 0 {
+                
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.activityIndicator.hidden = true
+                        self.application.endIgnoringInteractionEvents()
+                        
+                        self.goToMaps()
+                    })
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.activityIndicator.hidden = true
+                        self.application.endIgnoringInteractionEvents()
+                        
+                        // Handling the alert to explain the web service did not run as expected.
+                        let alert: UIAlertController = UIAlertController(title: "Connection Error", message: "The system was unable to retrieve the required maps.", preferredStyle: .Alert)
+                        
+                        alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+                        
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    })
+                }
             })
         } else {
             self.activityIndicator.hidden = true
