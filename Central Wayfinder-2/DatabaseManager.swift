@@ -248,6 +248,15 @@ class DatabaseManager : NSObject {
         return building
     }
     
+    // Removes all rooms from the database table in order to add new ones.
+    func removeRooms() {
+        queue?.inDatabase() {
+            db in
+            
+            db.executeStatements(self.dbStatements.DELETE_ALL_ROOMS)
+        }
+    }
+    
     // Checks if there are campuses in the campus table.
     func checkCampuses() -> Bool {
         var found = false

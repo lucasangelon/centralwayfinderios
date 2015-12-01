@@ -185,6 +185,8 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         dispatch_group_notify(dispatchGroup, dispatchQueue, {
             NSThread.sleepForTimeInterval(9.0)
             
+            sharedInstance.removeRooms()
+            
             if self.webServicesHelper.checkRooms() {
                 sharedInstance.insertRooms(self.webServicesHelper.getRooms())
                 print("Loaded rooms.")
