@@ -175,7 +175,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
             })
             
             dispatch_group_notify(dispatchGroup, dispatchQueue, {
-                NSThread.sleepForTimeInterval(22.0)
+                NSThread.sleepForTimeInterval(29.0)
                 
                 self.building = sharedIndoorMaps.getBuilding()
                 

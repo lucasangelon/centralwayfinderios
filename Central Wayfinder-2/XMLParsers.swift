@@ -159,6 +159,8 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
         let parser = NSXMLParser(data: data)
         parser.delegate = self
         parser.parse()
+        
+        
     }
     
     // Detects the start of an element and assigns it to the variable.
@@ -178,7 +180,6 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
                 switch theIndex {
                 case 0:
                     building.lat = Double(string)!
-                    print(building.lat)
                     theIndex++
                 case 1:
                     building.long = Double(string)!
@@ -223,7 +224,7 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
                     } else if string == "" {
                         postMapsUrl = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
                     } else {
-                        if postMapsUrl.containsString(indoorBreaker) {
+                        if string.containsString(indoorBreaker) {
                             postMapsUrl = "\(webServiceImagePath)\(string.componentsSeparatedByString(indoorBreaker)[1])"
                         } else {
                             self.building.id = 0
