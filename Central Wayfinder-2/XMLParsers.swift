@@ -159,8 +159,6 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
         let parser = NSXMLParser(data: data)
         parser.delegate = self
         parser.parse()
-        
-        
     }
     
     // Detects the start of an element and assigns it to the variable.
@@ -174,7 +172,7 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
     // If anything was found inside a key/value pair, this method is activated.
     func parser(parser: NSXMLParser, foundCharacters string: String) {
         if element.isEqualToString("b:string") {
-            print(string)
+
             // Building Switch
             if arrayIndex == 0 {
                 switch theIndex {
@@ -232,6 +230,7 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
                         }
                     }
                     
+                    sharedIndoorMaps.appendIndoorMapUrl(postMapsUrl)
                     // Loads an indoor map into the shared object.
                     sharedIndoorMaps.downloadIndoorMap(postMapsUrl, title: postMapsInformation)
                     
@@ -241,5 +240,39 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
                 }
             }
         }
+    }
+}
+
+class PurgerParser: NSObject, NSXMLParserDelegate {
+    private var element = NSString()
+    
+    var response = String()
+    
+    // Parses the XML.
+    func parseXML(data: NSData) {
+        let parser = NSXMLParser(data: data)
+        parser.delegate = self
+        parser.parse()
+        
+        print(response)
+    }
+    
+    // Detects the start of an element and assigns it to the variable.
+    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+        
+        element = elementName
+        print(elementName)
+    }
+    
+    
+    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        print(elementName+"end")
+    }
+    
+    // If anything was found inside a key/value pair, this method is activated.
+    func parser(parser: NSXMLParser, foundCharacters string: String) {
+
+        print(string)
+        response = string
     }
 }

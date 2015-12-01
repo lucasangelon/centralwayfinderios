@@ -108,9 +108,7 @@ class DatabaseManager : NSObject {
                 
                 success = db.executeUpdate(self.dbStatements.INSERT_ROOM, withArgumentsInArray: [(tempRoom.id), (tempRoom.name), (tempRoom.image), (tempRoom.buildingId), (currentCampusId)])
                 
-                if success {
-                    print(tempRoom.name + " added to the database.")
-                } else {
+                if !success {
                     print("An error has occurred: \(db.lastErrorMessage())")
                 }
             }
@@ -267,7 +265,6 @@ class DatabaseManager : NSObject {
             let result: FMResultSet = db.executeQuery(self.dbStatements.CHECK_CAMPUSES, withArgumentsInArray: nil)
             
             if result.next() {
-                print(result.intForColumnIndex(0))
                 if result.intForColumnIndex(0) > 1 {
                     found = true
                 }

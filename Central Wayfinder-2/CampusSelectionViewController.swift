@@ -172,8 +172,71 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     
     // Retrieves rooms from the web service based on the campus.
     func getRooms() {
+        
+        let downloadGroup = dispatch_group_create()
+        let globalUserInitiatedQueue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)
+        
+        dispatch_async(globalUserInitiatedQueue) {
+            dispatch_group_enter(downloadGroup)
             
-        let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+            self.webServicesHelper.downloadRooms(sharedDefaults.campusId) {
+                void in
+                dispatch_group_leave(downloadGroup)
+            }
+            
+            dispatch_group_wait(downloadGroup, DISPATCH_TIME_FOREVER)
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                sharedInstance.removeRooms()
+                
+                if self.webServicesHelper.checkRooms() {
+                    sharedInstance.insertRooms(self.webServicesHelper.getRooms())
+                } else {
+                    // Handling the alert to explain that there are no rooms available for this campus.
+                    let alert: UIAlertController = UIAlertController(title: "\(sharedDefaults.campusName)", message: "There are no rooms available for this campus at the moment.", preferredStyle: .Alert)
+                    
+                    let okAction = UIAlertAction(title: "Ok", style: .Default) {
+                        (action) in
+                        
+                        self.returnToMainMenu()
+                    }
+                    alert.addAction(okAction)
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    print("No rooms found for the \(sharedDefaults.campusName) campus")
+                }
+                
+                self.activityIndicator.hidden = true
+                self.application.endIgnoringInteractionEvents()
+                
+                if self.firstUse {
+                    self.firstUse = false
+                    sharedDefaults.accessibility = false
+                    
+                    self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
+                } else if (self.firstUseBackPress == true) {
+                    self.firstUse = false
+                    sharedDefaults.accessibility = false
+                    
+                    // Handling the alert to explain the default Perth campus to the user.
+                    let alert: UIAlertController = UIAlertController(title: "Perth Campus", message: "The default campus has been set to Perth.", preferredStyle: .Alert)
+                    
+                    let okAction = UIAlertAction(title: "Ok", style: .Default) {
+                        (action) in
+                        
+                        self.returnToMainMenu()
+                    }
+                    alert.addAction(okAction)
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                } else {
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+            })
+        }
+        
+        // Old Way
+        /*let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         let dispatchGroup: dispatch_group_t = dispatch_group_create()
         
         // Tries downloading the building and saving it into the database.
@@ -222,6 +285,6 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
                     self.navigationController?.popViewControllerAnimated(true)
                 }
             })
-        })
+        })*/
     }
 }

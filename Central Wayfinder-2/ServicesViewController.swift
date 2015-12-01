@@ -109,7 +109,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
             dispatch_async(dispatch_get_main_queue(), {
                 self.building = sharedIndoorMaps.getBuilding()
                 
-                self.webServicesHelper.purgeIndoorMap(self.webServicesHelper.getIndoorMapsUrls())
+                self.webServicesHelper.purgeIndoorMap(sharedIndoorMaps.getIndoorMapsURLs())
                 
                 if self.building.id != 0 {
                     self.activityIndicator.hidden = true

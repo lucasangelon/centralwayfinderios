@@ -22,7 +22,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     final private let getCampusesAction = "SearchCampus"
     final private let getRoomsByCampusAction = "SearchRooms"
     final private let getBuildingAction = "ResolvePath"
-    final private let getImageAction = "getImage"
+    final private let deleteImagesAction = "deleteImagesIOS"
     
     // Base and End sections of the SOAP Message to be used.
     final private let baseStartSoapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:wf=\"http://tempuri.org/\"><soapenv:Header/><soapenv:Body>"
@@ -151,7 +151,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     }
     
     // Retrieves the rooms from a given campus from the service database.
-    func downloadRooms(campusId: String) {
+    func downloadRooms(campusId: String, completion: ThreadCompletion?) {
         let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
         let session = NSURLSession.sharedSession()
         let _: NSError?
@@ -159,8 +159,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         // Sends a parameter for the method.
         let middleSoapMessage = "<wf:" + getRoomsByCampusAction + "><wf:CampusID>\(campusId)</wf:CampusID></wf:" + getRoomsByCampusAction + ">"
         let getRoomsMessage = baseStartSoapMessage + middleSoapMessage + baseEndSoapMessage
-        print(getRoomsMessage)
-        
+
         request.HTTPMethod = "POST"
         request.HTTPBody = getRoomsMessage.dataUsingEncoding(NSUTF8StringEncoding)
         request.addValue("student.mydesign.central.wa.edu.au", forHTTPHeaderField: "Host")
@@ -181,6 +180,12 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             {
                 print("Error: " + error!.description)
             }
+            
+            // Runs the block of code sent by the view controller in order to
+            // confirm the service call has finished.
+            if let completion = completion {
+                completion()
+            }
         })
         
         task.resume()
@@ -196,14 +201,14 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         // Sends a parameter for the method.
         let middleSoapMessage = "<wf:" + getBuildingAction + "><wf:WaypointID>\(roomId)</wf:WaypointID><wf:Disability>\(accessibility)</wf:Disability></wf:" + getBuildingAction + ">"
         let getBuildingMessage = baseStartSoapMessage + middleSoapMessage + baseEndSoapMessage
-        print(getBuildingMessage)
+
         request.HTTPMethod = "POST"
         request.HTTPBody = getBuildingMessage.dataUsingEncoding(NSUTF8StringEncoding)
         request.addValue("student.mydesign.central.wa.edu.au", forHTTPHeaderField: "Host")
         request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.addValue(String((getBuildingMessage).characters.count), forHTTPHeaderField: "Content-Length")
         request.addValue("http://tempuri.org/WF_Service_Interface/" + getBuildingAction, forHTTPHeaderField: "SOAPAction")
-        print(request.HTTPBody)
+
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             let buildingParser = BuildingParser()
             buildingParser.requestedBuildingId = buildingId
@@ -229,35 +234,58 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     }
     
     // Deletes the indoor image from the web service after use.
-    func purgeIndoorMap(var indoorPaths: [String]) {
+    func purgeIndoorMap(indoorPaths: [String]) {
         let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
         let session = NSURLSession.sharedSession()
         let _: NSError?
         
-        for index in 0..<indoorPaths.count {
+        var urls = String()
         
-            // Sends a parameter for the method.
-            let middleSoapMessage = "<wf:" + getImageAction + "><wf:path>\(indoorPaths[index])</wf:path></wf:" + getImageAction + ">"
-            let getBuildingMessage = baseStartSoapMessage + middleSoapMessage + baseEndSoapMessage
-            print(getBuildingMessage)
-            request.HTTPMethod = "POST"
-            request.HTTPBody = getBuildingMessage.dataUsingEncoding(NSUTF8StringEncoding)
-            request.addValue("student.mydesign.central.wa.edu.au", forHTTPHeaderField: "Host")
-            request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
-            request.addValue(String((getBuildingMessage).characters.count), forHTTPHeaderField: "Content-Length")
-            request.addValue("http://tempuri.org/WF_Service_Interface/" + getImageAction, forHTTPHeaderField: "SOAPAction")
-            print(request.HTTPBody)
-            let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-                
-                // If an error occurred, print the description for it.
-                if error != nil
-                {
-                    print("Error: " + error!.description)
+        if indoorPaths.count > 1 {
+            for index in 0..<indoorPaths.count {
+                if index != indoorPaths.count - 1 {
+                    urls += indoorPaths[index] + "#YOLOSWAG"
+                } else {
+                    urls += indoorPaths[index]
                 }
-            })
-            
-            task.resume()
+            }
+        } else {
+            urls += indoorPaths[0]
         }
+
+        // Sends a parameter for the method.
+        let middleSoapMessage = "<wf:" + deleteImagesAction + "><wf:urls>\(urls)</wf:urls></wf:" + deleteImagesAction + ">"
+        let deleteImagesMessage = baseStartSoapMessage + middleSoapMessage + baseEndSoapMessage
+        print(deleteImagesMessage)
+        
+        request.HTTPMethod = "POST"
+        request.HTTPBody = deleteImagesMessage.dataUsingEncoding(NSUTF8StringEncoding)
+        request.addValue("student.mydesign.central.wa.edu.au", forHTTPHeaderField: "Host")
+        request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.addValue(String((deleteImagesMessage).characters.count), forHTTPHeaderField: "Content-Length")
+        request.addValue("http://tempuri.org/WF_Service_Interface/" + deleteImagesAction, forHTTPHeaderField: "SOAPAction")
+
+        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            print(data)
+            print(response)
+            print(error)
+            
+            for index in 0..<indoorPaths.count {
+                print(indoorPaths[index])
+            }
+            
+            let purgerParser = PurgerParser()
+            if data != nil {
+                purgerParser.parseXML(data!)
+            }
+            // If an error occurred, print the description for it.
+            if error != nil
+            {
+                print("Error: " + error!.description)
+            }
+        })
+        
+        task.resume()
     }
     
     /*

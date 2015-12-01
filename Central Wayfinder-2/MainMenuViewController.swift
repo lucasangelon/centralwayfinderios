@@ -21,9 +21,10 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     private let application = UIApplication.sharedApplication()
     private var rooms: [Room] = [Room]()
     private var roomNames: [String] = [String]()
-    private var selectedRoom: Room = Room()
+    private var selectedRoom = Room()
     private var postMapsInformation = [String]()
-    private var building: Building = Building()
+    private var building = Building()
+    private var indoorMapsUrls = [String]()
     
     // List items for the main menu.
     private let cellContent = [("Services", "services.png"), ("Central Web", "centralWeb.png"), ("Settings", "settings.png")]
@@ -181,6 +182,15 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     self.building = sharedIndoorMaps.getBuilding()
+                    self.indoorMapsUrls = sharedIndoorMaps.getIndoorMapsURLs()
+                    
+                    print("\n\n\n\nH11111")
+                    dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
+                                            print("\n\n\n\nH22222")
+                        self.webServicesHelper.purgeIndoorMap(self.indoorMapsUrls)
+                                            print("\n\n\n\nH33333")
+                    }
+                                        print("\n\n\n\nH44444")
                     
                     if self.building.id != 0 {
                         self.activityIndicator.hidden = true
