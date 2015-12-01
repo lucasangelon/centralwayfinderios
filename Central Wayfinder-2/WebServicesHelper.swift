@@ -11,6 +11,8 @@ import Foundation
 // Based on: http://stackoverflow.com/questions/30606146/ios-swift-call-web-service-using-soap
 // Mostly based on: http://stackoverflow.com/questions/30652822/ios-swift-soap-message-with-ampersand-in-value
 
+typealias ThreadCompletion = () -> Void
+
 class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate {
     
     // Constants (URL and Actions).
@@ -185,7 +187,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     }
     
     // Retrieves a given building based on a room id from the service database.
-    func downloadBuilding(roomId: Int, buildingId: Int) {
+    func downloadBuilding(roomId: Int, buildingId: Int, completion: ThreadCompletion?) {
         let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
         let session = NSURLSession.sharedSession()
         let _: NSError?
@@ -208,17 +210,18 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             
             if data != nil {
                  buildingParser.parseXML(data!)
-                
-                // As we always download the building image and indoor maps together
-                // through the resolvePath web service action, there is little
-                // point in storing the building in the database.
-                //sharedInstance.insertBuilding(self.building)
             }
             
             // If an error occurred, print the description for it.
             if error != nil
             {
                 print("Error: " + error!.description)
+            }
+            
+            // Runs the block of code sent from the view controller in order 
+            //to wait for the web service to complete before continuing.
+            if let completion = completion {
+                completion()
             }
         })
         

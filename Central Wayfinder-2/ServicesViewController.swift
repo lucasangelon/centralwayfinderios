@@ -84,34 +84,40 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         // Set the service coordinates and the title to a variable to be sent to Google Maps.
         currentRow = services[indexPath.row]
         
-        let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-        let dispatchGroup: dispatch_group_t = dispatch_group_create()
+        // Starts a dispatch_group, utilized for the web services.
+        let downloadGroup = dispatch_group_create()
         
-        // Tries downloading the building and saving it into the database.
-        dispatch_group_async(dispatchGroup, dispatchQueue, {
-            self.webServicesHelper.downloadBuilding(self.currentRow.id, buildingId: self.currentRow.buildingId)
-            
-            print("Downloading building.")
-        })
+        // Ensures its priority by settings the Quality of Service type.
+        let globalUserInitiatedQueue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)
         
-        
-        // The ResolvePath takes quite a long time to run. NEED A SPINNER HERE D=
-        dispatch_group_notify(dispatchGroup, dispatchQueue, {
-            NSThread.sleepForTimeInterval(26.0)
-            self.building = sharedIndoorMaps.getBuilding()
+        // Sends it to a separate thread.
+        dispatch_async(globalUserInitiatedQueue) {
             
-            self.webServicesHelper.purgeIndoorMap(self.webServicesHelper.getIndoorMapsUrls())
+            // Enters the group.
+            dispatch_group_enter(downloadGroup)
             
-            if self.building.id != 0 {
-                dispatch_async(dispatch_get_main_queue(), {
+            // Executes the service call, sends a "leave group" block in order to confirm when it is concluded.
+            self.webServicesHelper.downloadBuilding(self.currentRow.id, buildingId: self.currentRow.buildingId) {
+                void in
+                dispatch_group_leave(downloadGroup)
+            }
+            
+            // Waits until the thread has nothing more running (until the "leave" block is executed).
+            dispatch_group_wait(downloadGroup, DISPATCH_TIME_FOREVER)
+            
+            // Returns to the main thread and execute necessary processing.
+            dispatch_async(dispatch_get_main_queue(), {
+                self.building = sharedIndoorMaps.getBuilding()
+                
+                self.webServicesHelper.purgeIndoorMap(self.webServicesHelper.getIndoorMapsUrls())
+                
+                if self.building.id != 0 {
                     self.activityIndicator.hidden = true
                     application.endIgnoringInteractionEvents()
                     tableView.deselectRowAtIndexPath(indexPath, animated: true)
                     
                     self.performSegueWithIdentifier("ShowMapsFromServices", sender: self)
-                })
-            } else {
-                dispatch_async(dispatch_get_main_queue(), {
+                } else {
                     self.activityIndicator.hidden = true
                     application.endIgnoringInteractionEvents()
                     tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -122,9 +128,9 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
                     alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
                     
                     self.presentViewController(alert, animated: true, completion: nil)
-                })
-            }
-        })
+                }
+            })
+        }
     }
     
     // Setting up the header.

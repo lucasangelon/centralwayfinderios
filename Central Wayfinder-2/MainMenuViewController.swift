@@ -166,29 +166,28 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         if found {
             selectedRoom = rooms[positionFound]
             
-            let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-            let dispatchGroup: dispatch_group_t = dispatch_group_create()
-            
-            // Tries downloading the building and saving it into the database.
-            dispatch_group_async(dispatchGroup, dispatchQueue, {
-                self.webServicesHelper.downloadBuilding(self.selectedRoom.id, buildingId: self.selectedRoom.buildingId)
-            })
-            
-            dispatch_group_notify(dispatchGroup, dispatchQueue, {
-                NSThread.sleepForTimeInterval(29.0)
+            let downloadGroup = dispatch_group_create()
+            let globalUserInitiatedQueue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)
+
+            dispatch_async(globalUserInitiatedQueue) {
+                dispatch_group_enter(downloadGroup)
                 
-                self.building = sharedIndoorMaps.getBuilding()
+                self.webServicesHelper.downloadBuilding(self.selectedRoom.id, buildingId: self.selectedRoom.buildingId) {
+                    void in
+                    dispatch_group_leave(downloadGroup)
+                }
                 
-                if self.building.id != 0 {
+                dispatch_group_wait(downloadGroup, DISPATCH_TIME_FOREVER)
                 
-                    dispatch_async(dispatch_get_main_queue(), {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.building = sharedIndoorMaps.getBuilding()
+                    
+                    if self.building.id != 0 {
                         self.activityIndicator.hidden = true
                         self.application.endIgnoringInteractionEvents()
                         
                         self.goToMaps()
-                    })
-                } else {
-                    dispatch_async(dispatch_get_main_queue(), {
+                    } else {
                         self.activityIndicator.hidden = true
                         self.application.endIgnoringInteractionEvents()
                         
@@ -198,9 +197,9 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                         alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
                         
                         self.presentViewController(alert, animated: true, completion: nil)
-                    })
-                }
-            })
+                    }
+                })
+            }
         } else {
             self.activityIndicator.hidden = true
             self.application.endIgnoringInteractionEvents()
