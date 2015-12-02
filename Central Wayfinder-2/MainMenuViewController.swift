@@ -184,14 +184,6 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.building = sharedIndoorMaps.getBuilding()
                     self.indoorMapsUrls = sharedIndoorMaps.getIndoorMapsURLs()
                     
-                    print("\n\n\n\nH11111")
-                    dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
-                                            print("\n\n\n\nH22222")
-                        self.webServicesHelper.purgeIndoorMap(self.indoorMapsUrls)
-                                            print("\n\n\n\nH33333")
-                    }
-                                        print("\n\n\n\nH44444")
-                    
                     if self.building.id != 0 {
                         self.activityIndicator.hidden = true
                         self.application.endIgnoringInteractionEvents()

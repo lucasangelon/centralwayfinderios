@@ -105,8 +105,8 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         activityIndicator.startAnimating()
         
         self.view.bringSubviewToFront(activityIndicator)
-        
         self.application.beginIgnoringInteractionEvents()
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         sharedDefaults.campusId = campuses[indexPath.row].id
         sharedDefaults.campusDefaultLat = campuses[indexPath.row].lat
@@ -189,48 +189,44 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
             dispatch_async(dispatch_get_main_queue(), {
                 sharedInstance.removeRooms()
                 
+                self.activityIndicator.hidden = true
+                self.application.endIgnoringInteractionEvents()
+                
                 if self.webServicesHelper.checkRooms() {
                     sharedInstance.insertRooms(self.webServicesHelper.getRooms())
+                    
+                    if self.firstUseBackPress == true {
+                        self.firstUse = false
+                        sharedDefaults.accessibility = false
+                        
+                        // Handling the alert to explain the default Perth campus to the user.
+                        let alert: UIAlertController = UIAlertController(title: "Perth Campus", message: "The default campus has been set to Perth.", preferredStyle: .Alert)
+                        
+                        let okAction = UIAlertAction(title: "Ok", style: .Default) {
+                            (action) in
+                            
+                            self.returnToMainMenu()
+                        }
+                        alert.addAction(okAction)
+                        
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    } else if (self.firstUse == true) {
+                        self.firstUse = false
+                        sharedDefaults.accessibility = false
+                        
+                        self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
+                    } else {
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
                 } else {
                     // Handling the alert to explain that there are no rooms available for this campus.
                     let alert: UIAlertController = UIAlertController(title: "\(sharedDefaults.campusName)", message: "There are no rooms available for this campus at the moment.", preferredStyle: .Alert)
                     
-                    let okAction = UIAlertAction(title: "Ok", style: .Default) {
-                        (action) in
-                        
-                        self.returnToMainMenu()
-                    }
+                    let okAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
                     alert.addAction(okAction)
                     
                     self.presentViewController(alert, animated: true, completion: nil)
                     print("No rooms found for the \(sharedDefaults.campusName) campus")
-                }
-                
-                self.activityIndicator.hidden = true
-                self.application.endIgnoringInteractionEvents()
-                
-                if self.firstUse {
-                    self.firstUse = false
-                    sharedDefaults.accessibility = false
-                    
-                    self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
-                } else if (self.firstUseBackPress == true) {
-                    self.firstUse = false
-                    sharedDefaults.accessibility = false
-                    
-                    // Handling the alert to explain the default Perth campus to the user.
-                    let alert: UIAlertController = UIAlertController(title: "Perth Campus", message: "The default campus has been set to Perth.", preferredStyle: .Alert)
-                    
-                    let okAction = UIAlertAction(title: "Ok", style: .Default) {
-                        (action) in
-                        
-                        self.returnToMainMenu()
-                    }
-                    alert.addAction(okAction)
-                    
-                    self.presentViewController(alert, animated: true, completion: nil)
-                } else {
-                    self.navigationController?.popViewControllerAnimated(true)
                 }
             })
         }

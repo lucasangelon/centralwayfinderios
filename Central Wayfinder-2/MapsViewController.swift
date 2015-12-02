@@ -97,6 +97,9 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         // If the user was sent here from another page with data.
         if destinationExists() {
             
+            // Deletes images in the web service.
+            deleteImages()
+            
             // Generates the route.
             generateRoute(building!.id, directionsType: MKDirectionsTransportType.Walking)
             
@@ -137,15 +140,10 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     private func checkLocationServices() -> Bool {
         switch CLLocationManager.authorizationStatus() {
         case CLAuthorizationStatus.Restricted, CLAuthorizationStatus.Denied:
-            print("Restricted or Denided")
-            // TODO: Alert about authorization.
             return false
         case CLAuthorizationStatus.NotDetermined:
-            print("Indetermined")
-            // TODO: Prompt acceptance.
             return false
         case CLAuthorizationStatus.Authorized, CLAuthorizationStatus.AuthorizedWhenInUse:
-            print("Authorized or AuthorizedWhenInUse")
             return true
         }
     }
@@ -297,7 +295,12 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         mapView.removeOverlays(overlays)
     }
     
-    private func getBuilding() {
-        
+    private func deleteImages() {
+        let dispatchQueue = dispatch_get_main_queue()
+        dispatch_async(dispatchQueue) {
+            let webServicesHelper = WebServicesHelper()
+            let indoorMaps = sharedIndoorMaps.getIndoorMapsURLs()
+            webServicesHelper.purgeIndoorMap(indoorMaps)
+        }
     }
 }

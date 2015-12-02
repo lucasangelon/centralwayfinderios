@@ -256,7 +256,6 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         // Sends a parameter for the method.
         let middleSoapMessage = "<wf:" + deleteImagesAction + "><wf:urls>\(urls)</wf:urls></wf:" + deleteImagesAction + ">"
         let deleteImagesMessage = baseStartSoapMessage + middleSoapMessage + baseEndSoapMessage
-        print(deleteImagesMessage)
         
         request.HTTPMethod = "POST"
         request.HTTPBody = deleteImagesMessage.dataUsingEncoding(NSUTF8StringEncoding)
@@ -266,18 +265,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         request.addValue("http://tempuri.org/WF_Service_Interface/" + deleteImagesAction, forHTTPHeaderField: "SOAPAction")
 
         let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            print(data)
-            print(response)
-            print(error)
-            
-            for index in 0..<indoorPaths.count {
-                print(indoorPaths[index])
-            }
-            
-            let purgerParser = PurgerParser()
-            if data != nil {
-                purgerParser.parseXML(data!)
-            }
+
             // If an error occurred, print the description for it.
             if error != nil
             {
