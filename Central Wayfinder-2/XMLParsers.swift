@@ -242,3 +242,41 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
         }
     }
 }
+
+class CampusVersionParser: NSObject, NSXMLParserDelegate {
+    
+    var applicationCampusVersion = Int()
+    private var serverCampusVersion = Int()
+    private var element = NSString()
+    
+    // Parses the XML.
+    func parseXML(data: NSData) -> Bool {
+
+        let parser = NSXMLParser(data: data)
+        parser.delegate = self
+        parser.parse()
+        
+        if applicationCampusVersion != serverCampusVersion {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    // Detects the start of an element and assigns it to the variable.
+    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+        element = elementName
+    }
+    
+    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+    }
+    
+    // If anything was found inside a key/value pair, this method is activated.
+    func parser(parser: NSXMLParser, foundCharacters string: String) {
+        if (Int(string) != nil) {
+            serverCampusVersion = Int(string)!
+        } else {
+            serverCampusVersion = -1
+        }
+    }
+}

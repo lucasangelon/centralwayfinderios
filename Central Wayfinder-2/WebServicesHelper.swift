@@ -23,6 +23,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     final private let getRoomsByCampusAction = "SearchRooms"
     final private let getBuildingAction = "ResolvePath"
     final private let deleteImagesAction = "deleteImagesIOS"
+    final private let checkCampusVersionAction = "CampusVersion"
     
     // Base and End sections of the SOAP Message to be used.
     final private let baseStartSoapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:wf=\"http://tempuri.org/\"><soapenv:Header/><soapenv:Body>"
@@ -36,9 +37,10 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     var building: Building = Building()
     var postMapsInformation = [String]()
     var indoorMapsUrls = [String]()
+    var sameVersion = Bool()
     
     // Checks if the Service and Server are online.
-    func checkServiceConnection() {
+    func checkServiceConnection(completion: ThreadCompletion?) {
         
         // Defines the request.
         let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
@@ -73,6 +75,12 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             {
                 print("Error: " + error!.description)
             }
+            
+            // Runs the block of code sent by the view controller in order to
+            // confirm the service call has finished.
+            if let completion = completion {
+                completion()
+            }
         })
         
         // Resumes the task.
@@ -80,7 +88,7 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     }
     
     // Checks if the Service Database is online.
-    func checkDatabaseConnection() {
+    func checkDatabaseConnection(completion: ThreadCompletion?) {
         let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
         let session = NSURLSession.sharedSession()
         let _: NSError?
@@ -103,13 +111,19 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             {
                 print("Error: " + error!.description)
             }
+            
+            // Runs the block of code sent by the view controller in order to
+            // confirm the service call has finished.
+            if let completion = completion {
+                completion()
+            }
         })
         
         task.resume()
     }
     
     // Retrieves the campuses from the Service Database.
-    func downloadCampuses() {
+    func downloadCampuses(completion: ThreadCompletion?) {
         let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
         let session = NSURLSession.sharedSession()
         let _: NSError?
@@ -129,21 +143,18 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
             
             if data != nil {
                 self.campuses = campusParser.parseXML(data!)
-            
-            
-                // Prints the response in order to test the service.
-                //print("Response: \(response)")
-                
-                // Prints the actual data for testing purposes as well.
-                //let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
-                //print("Body: \(strData)")
-                
             }
             
             // If an error occurred, print the description for it.
             if error != nil
             {
                 print("Error: " + error!.description)
+            }
+            
+            // Runs the block of code sent by the view controller in order to
+            // confirm the service call has finished.
+            if let completion = completion {
+                completion()
             }
         })
         
@@ -276,6 +287,46 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
         task.resume()
     }
     
+    // Checks a given campus version in the server database.
+    func checkCampusVersion(campusVersion: Int, completion: ThreadCompletion?) {
+        let request = NSMutableURLRequest(URL: NSURL(string: webServiceUrl)!)
+        let session = NSURLSession.sharedSession()
+        let _: NSError?
+        
+        // Sends a parameter for the method.
+        let middleSoapMessage = "<wf:" + checkCampusVersionAction + "><wf:CampusID>\(sharedDefaults.campusId)</wf:CampusID></wf:" + checkCampusVersionAction + ">"
+        let checkCampusVersionMessage = baseStartSoapMessage + middleSoapMessage + baseEndSoapMessage
+        
+        request.HTTPMethod = "POST"
+        request.HTTPBody = checkCampusVersionMessage.dataUsingEncoding(NSUTF8StringEncoding)
+        request.addValue("student.mydesign.central.wa.edu.au", forHTTPHeaderField: "Host")
+        request.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.addValue(String((checkCampusVersionMessage).characters.count), forHTTPHeaderField: "Content-Length")
+        request.addValue("http://tempuri.org/WF_Service_Interface/" + checkCampusVersionAction, forHTTPHeaderField: "SOAPAction")
+        
+        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            
+            let campusVersionParser = CampusVersionParser()
+            campusVersionParser.applicationCampusVersion = campusVersion
+            
+            if data != nil {
+                self.sameVersion = campusVersionParser.parseXML(data!)
+            }
+            
+            // If an error occurred, print the description for it.
+            if error != nil
+            {
+                print("Error: " + error!.description)
+            }
+            
+            if let completion = completion {
+                completion()
+            }
+        })
+        
+        task.resume()
+    }
+    
     /*
      * Get web service objects
      */
@@ -303,6 +354,11 @@ class WebServicesHelper: NSObject, NSURLConnectionDelegate, NSXMLParserDelegate 
     // Returns information from the indoor maps.
     func getPostMapsInformation() -> [String] {
         return self.postMapsInformation
+    }
+    
+    // Returns the version boolean.
+    func getCampusVersionCheck() -> Bool {
+        return self.sameVersion
     }
     
     // Checks if the campuses variable is not empty.

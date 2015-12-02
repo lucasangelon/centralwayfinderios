@@ -152,10 +152,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func accessibilityTap(sender: UISwitch!) {
         if sender.on {
             sharedDefaults.accessibility = true
-            print(sharedDefaults.accessibility)
         } else {
             sharedDefaults.accessibility = false
-            print(sharedDefaults.accessibility)
         }
     }
     

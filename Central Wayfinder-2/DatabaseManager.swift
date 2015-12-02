@@ -83,9 +83,7 @@ class DatabaseManager : NSObject {
                 
                 success = db.executeUpdate(self.dbStatements.INSERT_CAMPUS, withArgumentsInArray: [(tempCampus.id), (tempCampus.name), (tempCampus.version), (tempCampus.lat), (tempCampus.long), (tempCampus.zoom)])
                 
-                if success {
-                    print(tempCampus.name + " added to the database.")
-                } else {
+                if !success {
                     print("An error has occurred: \(db.lastErrorMessage())")
                 }
             }
@@ -110,6 +108,8 @@ class DatabaseManager : NSObject {
                 
                 if !success {
                     print("An error has occurred: \(db.lastErrorMessage())")
+                } else {
+                    print(tempRoom.name + "Added to the database")
                 }
             }
         }

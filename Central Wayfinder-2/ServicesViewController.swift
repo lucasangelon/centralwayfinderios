@@ -32,6 +32,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationController?.navigationBar.barTintColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController?.title = "Services"
 
 
         self.tabBarController?.tabBar.hidden = false

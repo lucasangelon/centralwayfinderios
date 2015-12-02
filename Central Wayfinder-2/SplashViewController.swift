@@ -24,6 +24,7 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     private var campuses: [Campus] = [Campus]()
     private var success = false
     private var campusesFound = Bool()
+    private var downloadGroup = dispatch_group_create()
     
     // Declaring the location manager.
     private var locationManager = CLLocationManager()
@@ -56,64 +57,135 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
         
         application.beginIgnoringInteractionEvents()
         
-        if sharedInstance.checkCampuses() {
-            // Campuses are there, no need to re-download.
-            activityIndicator.hidden = true
-            application.endIgnoringInteractionEvents()
-            campusesFound = true
+        
+        let globalUserInitiatedQueue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)
+        
+        dispatch_async(globalUserInitiatedQueue) {
             
-        } else {
-            campusesFound = false
-            let dispatchGroup: dispatch_group_t = dispatch_group_create()
+            // Service Connection
+            dispatch_group_enter(self.downloadGroup)
+            self.webServicesHelper.checkServiceConnection() {
+                void in
+                dispatch_group_leave(self.downloadGroup)
+            }
             
-            // Checks the service and the database connections.
-            dispatch_group_async(dispatchGroup, dispatchQueue, {
-                self.webServicesHelper.checkServiceConnection()
-                self.webServicesHelper.checkDatabaseConnection()
-            })
+            // Database Connection
+            dispatch_group_enter(self.downloadGroup)
+            self.webServicesHelper.checkDatabaseConnection() {
+                void in
+                dispatch_group_leave(self.downloadGroup)
+            }
             
-            // Tries downloading the campuses.
-            dispatch_group_notify(dispatchGroup, dispatchQueue, {
-                NSThread.sleepForTimeInterval(5.0)
-                if self.webServicesHelper.serviceConnection == "true" && self.webServicesHelper.databaseConnection == "true" {
+            // Wait until both methods above complete their tasks.
+            dispatch_group_wait(self.downloadGroup, DISPATCH_TIME_FOREVER)
+            
+            if self.webServicesHelper.serviceConnection == "true" && self.webServicesHelper.databaseConnection == "true" {
+                if sharedInstance.checkCampuses() {
+                    // Campuses are there, no need to re-download.
                     
-                    dispatch_group_async(dispatchGroup, self.dispatchQueue, {
-                        self.webServicesHelper.downloadCampuses()
-                    })
+                    let globalUserInitiatedQueue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)
+                    
+                    // Go to a separate thread.
+                    dispatch_async(globalUserInitiatedQueue) {
+                        
+                        var versionCheck = Bool()
+                        
+                        // Check campus version.
+                        dispatch_group_enter(self.downloadGroup)
+                        self.webServicesHelper.checkCampusVersion(sharedDefaults.campusVersion) {
+                            void in
+                            dispatch_group_leave(self.downloadGroup)
+                        }
+                        
+                        // Wait until the method finishes running.
+                        dispatch_group_wait(self.downloadGroup, DISPATCH_TIME_FOREVER)
+                        
+                        versionCheck = self.webServicesHelper.getCampusVersionCheck()
+                        print(versionCheck)
+                        
+                        // If the versions differ, download the new version.
+                        if !versionCheck {
+                            print("Re-download")
+                            dispatch_group_enter(self.downloadGroup)
+                            
+                            // Download updated rooms for the current campus.
+                            self.webServicesHelper.downloadRooms(sharedDefaults.campusId) {
+                                void in
+                                dispatch_group_leave(self.downloadGroup)
+                            }
+                            
+                            // Wait until the download finishes.
+                            dispatch_group_wait(self.downloadGroup, DISPATCH_TIME_FOREVER)
+                            
+                            dispatch_async(dispatch_get_main_queue(), {
+                                // Clear the existing rooms.
+                                sharedInstance.removeRooms()
+                                
+                                // Download new rooms.
+                                sharedInstance.insertRooms(self.webServicesHelper.getRooms())
+                                
+                                self.activityIndicator.hidden = true
+                                self.application.endIgnoringInteractionEvents()
+                            })
+                        } else {
+                            print("Same Version")
+                            self.activityIndicator.hidden = true
+                            self.application.endIgnoringInteractionEvents()
+                        }
+                    }
                 } else {
-                    print("Unable to check connections.")
-                }
-            })
-            
-            // Loads the campuses into the database.
-            dispatch_group_notify(dispatchGroup, dispatchQueue, {
-                NSThread.sleepForTimeInterval(10.0)
-                self.campuses = self.webServicesHelper.getCampuses()
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    // Checking it "campuses" is not empty.
-                    if self.webServicesHelper.checkCampuses() {
-                        // Inserts campuses from the web service into the database.
-                        sharedInstance.insertCampuses(self.campuses)
-                        print("Campuses loaded.")
-                    } else {
-                        print("No campuses found.")
+                    // Download Campuses
+                    dispatch_group_enter(self.downloadGroup)
+                    self.webServicesHelper.downloadCampuses() {
+                        void in
+                        dispatch_group_leave(self.downloadGroup)
                     }
                     
-                    self.activityIndicator.hidden = true
-                    self.application.endIgnoringInteractionEvents()
-                })
-            })
+                    // Wait until the campuses have been downloaded.
+                    dispatch_group_wait(self.downloadGroup, DISPATCH_TIME_FOREVER)
+                    
+                    self.campuses = self.webServicesHelper.getCampuses()
+                    
+                    // Return to the main thread.
+                    dispatch_async(dispatch_get_main_queue(), {
+                        
+                        // Checking if "campuses" is not empty.
+                        if self.webServicesHelper.checkCampuses() {
+                            
+                            // Inserts campuses from the web service into the database.
+                            sharedInstance.insertCampuses(self.campuses)
+                            
+                            self.activityIndicator.hidden = true
+                            self.application.endIgnoringInteractionEvents()
+                        } else {
+                            self.activityIndicator.hidden = true
+                            self.application.endIgnoringInteractionEvents()
+                            
+                            // Handling the alert to explain the web service did not run as expected.
+                            let alert: UIAlertController = UIAlertController(title: "No Campuses Found", message: "The system was unable to retrieve the campuses. Please try again later.", preferredStyle: .Alert)
+                            
+                            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        }
+                    })
+                }
+            } else {
+                self.activityIndicator.hidden = true
+                self.application.endIgnoringInteractionEvents()
+                
+                // Handling the alert to explain the web service did not run as expected.
+                let alert: UIAlertController = UIAlertController(title: "Connection Error", message: "The system was unable to retrieve the campuses. Please try again later.", preferredStyle: .Alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
         }
     }
-    
-    // Handling the alert window in the right hierarchy.
+
     override func viewDidAppear(animated: Bool) {
         
-        if !campusesFound {
-            NSThread.sleepForTimeInterval(11.5)
-        }
-
         // If the location services status has not been set, prompt the user for it.
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
             locationManager.requestWhenInUseAuthorization()
