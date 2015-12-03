@@ -60,19 +60,15 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         self.tabBarController?.tabBar.hidden = true
         
         // Setting up the arrays for the searching cell.
-        rooms = sharedInstance.getRooms(sharedDefaults.campusId, rooms: rooms)
-        
-        if rooms.count > 0 {
-            for index in 0...(rooms.count - 1) {
-                roomNames.append(rooms[index].name)
-            }
-        }
+        refreshRooms()
         
         self.searchBar.placeholder = "Enter Room"
     }
     
     override func viewDidAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
+        
+        refreshRooms()
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -165,7 +161,6 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         if found {
-            print("Found")
             selectedRoom = rooms[positionFound]
             
             let downloadGroup = dispatch_group_create()
@@ -235,7 +230,18 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         self.searchBar.endEditing(true)
     }
     
+    // Opens the maps page.
     func goToMaps() {
         self.performSegueWithIdentifier("ShowMapsFromMenu", sender: self)
+    }
+    
+    // Refreshes rooms upon return in case the user selected a different campus.
+    func refreshRooms() {
+        rooms = sharedInstance.getRooms(sharedDefaults.campusId, rooms: rooms)
+        if rooms.count > 0 {
+            for index in 0...(rooms.count - 1) {
+                roomNames.append(rooms[index].name)
+            }
+        }
     }
 }

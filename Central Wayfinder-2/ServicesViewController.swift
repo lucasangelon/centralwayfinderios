@@ -42,6 +42,12 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         services = sharedInstance.getServices(sharedDefaults.campusId, rooms: services)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        services = sharedInstance.getServices(sharedDefaults.campusId, rooms: services)
+        
+        tableView.reloadData()
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if services.count < 1 {
             return 1

@@ -53,9 +53,7 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBarHidden = false
-        self.title = ""
-        
+        self.navigationController?.navigationBarHidden = false        
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.barTintColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
