@@ -39,8 +39,6 @@ class DatabaseManager : NSObject {
             // If it is nil, print the last error message.
             if centralWayfinderDB == nil {
                 print("Error: \(centralWayfinderDB.lastErrorMessage())")
-            } else {
-                print("Database loaded successfully.")
             }
         }
     }
@@ -56,7 +54,7 @@ class DatabaseManager : NSObject {
             db in
             
             // Create the tables in the database if they do not already exist.
-            let success = db.executeStatements(self.dbStatements.CREATE_TABLE_CAMPUS + self.dbStatements.CREATE_TABLE_BUILDINGS + self.dbStatements.CREATE_TABLE_ROOMS)
+            let success = db.executeStatements(self.dbStatements.CREATE_TABLE_CAMPUS + self.dbStatements.CREATE_TABLE_ROOMS)
             
             // If unsuccessful, print the error.
             if !success {
@@ -109,21 +107,6 @@ class DatabaseManager : NSObject {
                 if !success {
                     print("An error has occurred: \(db.lastErrorMessage())")
                 }
-            }
-        }
-    }
-    
-    // Inserts a building into the Database.
-    func insertBuilding(let building: Building) {
-        queue?.inDatabase() {
-            db in
-            
-            var success: Bool = Bool()
-            
-            success = db.executeUpdate(self.dbStatements.INSERT_BUILDING, withArgumentsInArray: [(building.id), (building.name), (building.lat), (building.long), (building.image), (building.campusId)])
-            
-            if !success {
-                print("An error has occurred: \(db.lastErrorMessage())")
             }
         }
     }
@@ -218,28 +201,6 @@ class DatabaseManager : NSObject {
         }
         
         return rooms
-    }
-    
-    // Returns the building a given room is located in through an id.
-    func getBuilding(id: Int, var building: Building) -> Building {
-        queue?.inDatabase() {
-            db in
-            
-            let result: FMResultSet = db.executeQuery(self.dbStatements.SELECT_BUILDING_BASED_ON_ROOM, withArgumentsInArray: [Int(id)])
-            
-            if result.next() {
-                building = Building(id: Int(result.intForColumn("id")), name: result.stringForColumn("Name"), lat: result.doubleForColumn("lat"), long: result.doubleForColumn("long"), image: result.stringForColumn("image"), campusId: result.stringForColumn("campus_id"))
-                
-                result.close()
-            }
-            
-            else {
-                print("An error has occured: \(db.lastErrorMessage())")
-                building = Building(id: 0, name: "Not Found", lat: 0.0, long: 0.0, image: "NoImage", campusId: "Not Found")
-            }
-        }
-        
-        return building
     }
     
     // Removes all rooms from the database table in order to add new ones.

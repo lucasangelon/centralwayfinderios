@@ -19,7 +19,6 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     private var campus: Campus = Campus()
     private var firstUse = false
     private var firstUseBackPress = false
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -222,9 +221,20 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
                     }
                 } else {
                     // Handling the alert to explain that there are no rooms available for this campus.
-                    let alert: UIAlertController = UIAlertController(title: "\(sharedDefaults.campusName)", message: "There are no rooms available for this campus at the moment.", preferredStyle: .Alert)
+                    let alert: UIAlertController = UIAlertController(title: "\(sharedDefaults.campusName)", message: "The campus has been set to \(sharedDefaults.campusName). There are no rooms available for this campus at the moment.", preferredStyle: .Alert)
                     
-                    let okAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let okAction = UIAlertAction(title: "Ok", style: .Default) {
+                        (action) in
+                        
+                        // If there is a parent view controller, pop the current view controller.
+                        if ((self.navigationController?.parentViewController) != nil) {
+                            self.navigationController?.popViewControllerAnimated(true)
+                        } else {
+                            
+                            // Otherwise return to the main menu.
+                            self.returnToMainMenu()
+                        }
+                    }
                     alert.addAction(okAction)
                     
                     self.presentViewController(alert, animated: true, completion: nil)

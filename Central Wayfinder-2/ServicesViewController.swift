@@ -38,12 +38,17 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         self.tabBarController?.tabBar.hidden = false
         
         activityIndicator.hidden = true
-        
-        services = sharedInstance.getServices(sharedDefaults.campusId, rooms: services)
     }
     
     override func viewDidAppear(animated: Bool) {
+        services = [Room]()
         services = sharedInstance.getServices(sharedDefaults.campusId, rooms: services)
+        
+        if services.count < 1 {
+            tableView.allowsSelection = false
+        } else {
+            tableView.allowsSelection = true
+        }
         
         tableView.reloadData()
     }
@@ -66,6 +71,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         // variable count is lower than 1. Disables selection on the tableView.
         if services.count < 1 {
             cell.textLabel?.text = "No services available."
+            cell.imageView?.image = nil
             cell.accessoryView = UIImageView(frame: CGRectMake(0, 0, 0, 0))
             tableView.allowsSelection = false
         } else {

@@ -83,6 +83,15 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
                 if sharedInstance.checkCampuses() {
                     // Campuses are there, no need to re-download.
                     
+                    let nsud = NSUserDefaults()
+                    if (nsud.objectForKey("selectedCampus")) == nil {
+                        sharedDefaults.campusId = "PE"
+                        sharedDefaults.campusName = "Perth"
+                        sharedDefaults.campusVersion = -1
+                        sharedDefaults.campusDefaultLat = 31.9476680755615
+                        sharedDefaults.campusDefaultLong = 115.862129211426
+                    }
+                    
                     let globalUserInitiatedQueue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)
                     
                     // Go to a separate thread.
@@ -187,9 +196,8 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
     }
 
     override func viewDidAppear(animated: Bool) {
-        
-        NSThread.sleepForTimeInterval(4)
-        
+        NSThread.sleepForTimeInterval(3)
+                
         // If the location services status has not been set, prompt the user for it.
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
             locationManager.requestWhenInUseAuthorization()

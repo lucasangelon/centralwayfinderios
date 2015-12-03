@@ -34,8 +34,6 @@ class IndoorMapsHelper : NSObject {
     }
     
     func stringBreaker(path: String) -> String {
-        
-        
         return path
     }
     
@@ -68,8 +66,15 @@ class IndoorMapsHelper : NSObject {
     }
     
     func appendIndoorMapUrl(var url: String) {
-        url = url.componentsSeparatedByString(indoorBreaker)[1]
-        var finalUrl = basePath + url
+        
+        var finalUrl = String()
+        
+        if url != "" {
+            url = url.componentsSeparatedByString(indoorBreaker)[1]
+            finalUrl = basePath + url
+        } else {
+            finalUrl = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
+        }
         
         self.indoorMapUrls.append(finalUrl)
     }

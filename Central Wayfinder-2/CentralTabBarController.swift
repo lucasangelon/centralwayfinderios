@@ -22,7 +22,7 @@ class CentralTabBarController : UITabBarController, UITabBarControllerDelegate {
             let url = NSURL(string: "http://central.wa.edu.au")!
             UIApplication.sharedApplication().openURL(url)
         } else {
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popToRootViewControllerAnimated(true)
         }
     }
     
