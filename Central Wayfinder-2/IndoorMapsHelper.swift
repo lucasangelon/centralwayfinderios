@@ -15,6 +15,9 @@ class IndoorMapsHelper : NSObject {
     private var buildingImage = UIImage()
     private let imageLoader = ImageLoader()
     private var building = Building()
+    private var indoorMapUrls = [String]()
+    private let basePath = "C:\\\\Inetpub\\\\vhosts\\\\student.mydesign.central.wa.edu.au\\\\httpdocs\\\\cf_Wayfinding_WebService\\\\/Img/"
+    private let indoorBreaker = "/Img/"
     
     func downloadBuildingImage(url: String) {
         imageLoader.imageForUrl(url, completionHandler: {
@@ -28,6 +31,12 @@ class IndoorMapsHelper : NSObject {
             (image: UIImage?, url: String) in
             self.indoorMaps.append(IndoorMap(image: image!, title: title, imagePath: url))
         })
+    }
+    
+    func stringBreaker(path: String) -> String {
+        
+        
+        return path
     }
     
     func getBuildingName() -> String {
@@ -58,8 +67,20 @@ class IndoorMapsHelper : NSObject {
         return self.indoorMaps
     }
     
+    func appendIndoorMapUrl(var url: String) {
+        url = url.componentsSeparatedByString(indoorBreaker)[1]
+        var finalUrl = basePath + url
+        
+        self.indoorMapUrls.append(finalUrl)
+    }
+    
+    func getIndoorMapsURLs() -> [String] {
+        return self.indoorMapUrls
+    }
+    
     func reset() {
         self.indoorMaps = [IndoorMap]()
         self.buildingImage = UIImage()
+        self.indoorMapUrls = [String]()
     }
 }

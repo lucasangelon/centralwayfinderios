@@ -53,13 +53,12 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBarHidden = false
-        self.title = ""
-        
+        self.navigationController?.navigationBarHidden = false        
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.barTintColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.title = "Maps"
         
         //Set Map Type Control Action
         self.mapTypeControl.addTarget(self, action: "mapTypeToggle:", forControlEvents: UIControlEvents.ValueChanged)
@@ -96,6 +95,9 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         
         // If the user was sent here from another page with data.
         if destinationExists() {
+            
+            // Deletes images in the web service.
+            deleteImages()
             
             // Generates the route.
             generateRoute(building!.id, directionsType: MKDirectionsTransportType.Walking)
@@ -137,15 +139,10 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
     private func checkLocationServices() -> Bool {
         switch CLLocationManager.authorizationStatus() {
         case CLAuthorizationStatus.Restricted, CLAuthorizationStatus.Denied:
-            print("Restricted or Denided")
-            // TODO: Alert about authorization.
             return false
         case CLAuthorizationStatus.NotDetermined:
-            print("Indetermined")
-            // TODO: Prompt acceptance.
             return false
         case CLAuthorizationStatus.Authorized, CLAuthorizationStatus.AuthorizedWhenInUse:
-            print("Authorized or AuthorizedWhenInUse")
             return true
         }
     }
@@ -297,7 +294,12 @@ class MapsViewController : UIViewController, MKMapViewDelegate, CLLocationManage
         mapView.removeOverlays(overlays)
     }
     
-    private func getBuilding() {
-        
+    private func deleteImages() {
+        let dispatchQueue = dispatch_get_main_queue()
+        dispatch_async(dispatchQueue) {
+            let webServicesHelper = WebServicesHelper()
+            let indoorMaps = sharedIndoorMaps.getIndoorMapsURLs()
+            webServicesHelper.purgeIndoorMap(indoorMaps)
+        }
     }
 }

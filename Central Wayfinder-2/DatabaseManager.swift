@@ -83,9 +83,7 @@ class DatabaseManager : NSObject {
                 
                 success = db.executeUpdate(self.dbStatements.INSERT_CAMPUS, withArgumentsInArray: [(tempCampus.id), (tempCampus.name), (tempCampus.version), (tempCampus.lat), (tempCampus.long), (tempCampus.zoom)])
                 
-                if success {
-                    print(tempCampus.name + " added to the database.")
-                } else {
+                if !success {
                     print("An error has occurred: \(db.lastErrorMessage())")
                 }
             }
@@ -108,9 +106,7 @@ class DatabaseManager : NSObject {
                 
                 success = db.executeUpdate(self.dbStatements.INSERT_ROOM, withArgumentsInArray: [(tempRoom.id), (tempRoom.name), (tempRoom.image), (tempRoom.buildingId), (currentCampusId)])
                 
-                if success {
-                    print(tempRoom.name + " added to the database.")
-                } else {
+                if !success {
                     print("An error has occurred: \(db.lastErrorMessage())")
                 }
             }
@@ -126,9 +122,7 @@ class DatabaseManager : NSObject {
             
             success = db.executeUpdate(self.dbStatements.INSERT_BUILDING, withArgumentsInArray: [(building.id), (building.name), (building.lat), (building.long), (building.image), (building.campusId)])
             
-            if success {
-                print(building.name + " added to the database.")
-            } else {
+            if !success {
                 print("An error has occurred: \(db.lastErrorMessage())")
             }
         }
@@ -248,6 +242,15 @@ class DatabaseManager : NSObject {
         return building
     }
     
+    // Removes all rooms from the database table in order to add new ones.
+    func removeRooms() {
+        queue?.inDatabase() {
+            db in
+            
+            db.executeStatements(self.dbStatements.DELETE_ALL_ROOMS)
+        }
+    }
+    
     // Checks if there are campuses in the campus table.
     func checkCampuses() -> Bool {
         var found = false
@@ -258,7 +261,6 @@ class DatabaseManager : NSObject {
             let result: FMResultSet = db.executeQuery(self.dbStatements.CHECK_CAMPUSES, withArgumentsInArray: nil)
             
             if result.next() {
-                print(result.intForColumnIndex(0))
                 if result.intForColumnIndex(0) > 1 {
                     found = true
                 }

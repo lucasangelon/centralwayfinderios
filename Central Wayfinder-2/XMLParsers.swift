@@ -172,13 +172,12 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
     // If anything was found inside a key/value pair, this method is activated.
     func parser(parser: NSXMLParser, foundCharacters string: String) {
         if element.isEqualToString("b:string") {
-            print(string)
+
             // Building Switch
             if arrayIndex == 0 {
                 switch theIndex {
                 case 0:
                     building.lat = Double(string)!
-                    print(building.lat)
                     theIndex++
                 case 1:
                     building.long = Double(string)!
@@ -223,7 +222,7 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
                     } else if string == "" {
                         postMapsUrl = "http://central.wa.edu.au/Style%20Library/CIT.Internet.Branding/images/Central-Institute-of-Technology-logo.gif"
                     } else {
-                        if postMapsUrl.containsString(indoorBreaker) {
+                        if string.containsString(indoorBreaker) {
                             postMapsUrl = "\(webServiceImagePath)\(string.componentsSeparatedByString(indoorBreaker)[1])"
                         } else {
                             self.building.id = 0
@@ -231,6 +230,7 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
                         }
                     }
                     
+                    sharedIndoorMaps.appendIndoorMapUrl(postMapsUrl)
                     // Loads an indoor map into the shared object.
                     sharedIndoorMaps.downloadIndoorMap(postMapsUrl, title: postMapsInformation)
                     
@@ -239,6 +239,47 @@ class BuildingParser: NSObject, NSXMLParserDelegate {
                     break
                 }
             }
+        }
+    }
+}
+
+class CampusVersionParser: NSObject, NSXMLParserDelegate {
+    
+    var applicationCampusVersion = Int()
+    private var serverCampusVersion = Int()
+    private var element = NSString()
+    
+    // Parses the XML.
+    func parseXML(data: NSData) -> Bool {
+
+        let parser = NSXMLParser(data: data)
+        parser.delegate = self
+        parser.parse()
+        
+        if applicationCampusVersion != serverCampusVersion {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    // Detects the start of an element and assigns it to the variable.
+    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+        element = elementName
+    }
+    
+    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+    }
+    
+    // If anything was found inside a key/value pair, this method is activated.
+    func parser(parser: NSXMLParser, foundCharacters string: String) {
+        if (Int(string) != nil) {
+            serverCampusVersion = Int(string)!
+        }
+        
+        // If something went wrong, force a re-download.
+        else {
+            serverCampusVersion = -1
         }
     }
 }

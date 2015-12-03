@@ -26,6 +26,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationController?.navigationBar.barTintColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.title = "Settings"
 
         
         self.tabBarController?.tabBar.hidden = false
@@ -128,7 +129,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             // Default action.
             default:
-                print("NoSegueAvailable")
+                break
             }
         } else {
             switch indexPath.row {
@@ -152,10 +153,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func accessibilityTap(sender: UISwitch!) {
         if sender.on {
             sharedDefaults.accessibility = true
-            print(sharedDefaults.accessibility)
         } else {
             sharedDefaults.accessibility = false
-            print(sharedDefaults.accessibility)
         }
     }
     

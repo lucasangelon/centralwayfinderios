@@ -21,9 +21,10 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     private let application = UIApplication.sharedApplication()
     private var rooms: [Room] = [Room]()
     private var roomNames: [String] = [String]()
-    private var selectedRoom: Room = Room()
+    private var selectedRoom = Room()
     private var postMapsInformation = [String]()
-    private var building: Building = Building()
+    private var building = Building()
+    private var indoorMapsUrls = [String]()
     
     // List items for the main menu.
     private let cellContent = [("Services", "services.png"), ("Central Web", "centralWeb.png"), ("Settings", "settings.png")]
@@ -59,19 +60,15 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         self.tabBarController?.tabBar.hidden = true
         
         // Setting up the arrays for the searching cell.
-        rooms = sharedInstance.getRooms(sharedDefaults.campusId, rooms: rooms)
-        
-        if rooms.count > 0 {
-            for index in 0...(rooms.count - 1) {
-                roomNames.append(rooms[index].name)
-            }
-        }
+        refreshRooms()
         
         self.searchBar.placeholder = "Enter Room"
     }
     
     override func viewDidAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
+        
+        refreshRooms()
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -123,7 +120,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
 
             // Default action.
         default:
-            print("NoSegueAvailable")
+            break
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -166,29 +163,29 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         if found {
             selectedRoom = rooms[positionFound]
             
-            let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-            let dispatchGroup: dispatch_group_t = dispatch_group_create()
-            
-            // Tries downloading the building and saving it into the database.
-            dispatch_group_async(dispatchGroup, dispatchQueue, {
-                self.webServicesHelper.downloadBuilding(self.selectedRoom.id, buildingId: self.selectedRoom.buildingId)
-            })
-            
-            dispatch_group_notify(dispatchGroup, dispatchQueue, {
-                NSThread.sleepForTimeInterval(22.0)
+            let downloadGroup = dispatch_group_create()
+            let globalUserInitiatedQueue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)
+
+            dispatch_async(globalUserInitiatedQueue) {
+                dispatch_group_enter(downloadGroup)
                 
-                self.building = sharedIndoorMaps.getBuilding()
+                self.webServicesHelper.downloadBuilding(self.selectedRoom.id, buildingId: self.selectedRoom.buildingId) {
+                    void in
+                    dispatch_group_leave(downloadGroup)
+                }
                 
-                if self.building.id != 0 {
+                dispatch_group_wait(downloadGroup, DISPATCH_TIME_FOREVER)
                 
-                    dispatch_async(dispatch_get_main_queue(), {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.building = sharedIndoorMaps.getBuilding()
+                    self.indoorMapsUrls = sharedIndoorMaps.getIndoorMapsURLs()
+                    
+                    if self.building.id != 0 {
                         self.activityIndicator.hidden = true
                         self.application.endIgnoringInteractionEvents()
                         
                         self.goToMaps()
-                    })
-                } else {
-                    dispatch_async(dispatch_get_main_queue(), {
+                    } else {
                         self.activityIndicator.hidden = true
                         self.application.endIgnoringInteractionEvents()
                         
@@ -198,9 +195,9 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
                         alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
                         
                         self.presentViewController(alert, animated: true, completion: nil)
-                    })
-                }
-            })
+                    }
+                })
+            }
         } else {
             self.activityIndicator.hidden = true
             self.application.endIgnoringInteractionEvents()
@@ -233,7 +230,18 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         self.searchBar.endEditing(true)
     }
     
+    // Opens the maps page.
     func goToMaps() {
         self.performSegueWithIdentifier("ShowMapsFromMenu", sender: self)
+    }
+    
+    // Refreshes rooms upon return in case the user selected a different campus.
+    func refreshRooms() {
+        rooms = sharedInstance.getRooms(sharedDefaults.campusId, rooms: rooms)
+        if rooms.count > 0 {
+            for index in 0...(rooms.count - 1) {
+                roomNames.append(rooms[index].name)
+            }
+        }
     }
 }

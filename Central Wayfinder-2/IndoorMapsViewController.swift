@@ -115,11 +115,11 @@ class IndoorMapsViewController : UIViewController, UIScrollViewDelegate {
     // Sets up the images.
     func setMaps() {
         indoorMaps = [IndoorMap]()
-        indoorMaps = sharedIndoorMaps.getIndoorMaps()
+        indoorMaps = sharedIndoorMaps.getIndoorMaps().reverse()
         
         segmentedControl.removeAllSegments()
         
-        for index in 0..<indoorMaps.count {
+        for index in (0..<indoorMaps.count) {
             
             // Adds a segment with the map name (split from the base string)
             // and the image to be added to the scrollView.

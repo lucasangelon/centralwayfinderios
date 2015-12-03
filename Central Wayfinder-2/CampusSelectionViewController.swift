@@ -105,13 +105,14 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
         activityIndicator.startAnimating()
         
         self.view.bringSubviewToFront(activityIndicator)
-        
         self.application.beginIgnoringInteractionEvents()
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         sharedDefaults.campusId = campuses[indexPath.row].id
         sharedDefaults.campusDefaultLat = campuses[indexPath.row].lat
         sharedDefaults.campusDefaultLong = campuses[indexPath.row].long
         sharedDefaults.campusName = campuses[indexPath.row].name
+        sharedDefaults.campusVersion = campuses[indexPath.row].version
         
         // Downloads rooms for a given campus.
         getRooms()
@@ -145,6 +146,7 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
                 sharedDefaults.campusDefaultLat = campus.lat
                 sharedDefaults.campusDefaultLong = campus.long
                 sharedDefaults.campusName = campus.name
+                sharedDefaults.campusVersion = campus.version
                 sharedDefaults.accessibility = false
             }
             
@@ -172,54 +174,62 @@ class CampusSelectionViewController : UIViewController, UITableViewDataSource, U
     
     // Retrieves rooms from the web service based on the campus.
     func getRooms() {
-            
-        let dispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-        let dispatchGroup: dispatch_group_t = dispatch_group_create()
         
-        // Tries downloading the building and saving it into the database.
-        dispatch_group_async(dispatchGroup, dispatchQueue, {
-            self.webServicesHelper.downloadRooms(sharedDefaults.campusId)
-            print("Downloading rooms.")
-        })
+        let downloadGroup = dispatch_group_create()
+        let globalUserInitiatedQueue = dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)
         
-        dispatch_group_notify(dispatchGroup, dispatchQueue, {
-            NSThread.sleepForTimeInterval(9.0)
+        dispatch_async(globalUserInitiatedQueue) {
+            dispatch_group_enter(downloadGroup)
             
-            if self.webServicesHelper.checkRooms() {
-                sharedInstance.insertRooms(self.webServicesHelper.getRooms())
-                print("Loaded rooms.")
-            } else {
-                print("No rooms available for the campus: " + sharedDefaults.campusName)
+            self.webServicesHelper.downloadRooms(sharedDefaults.campusId) {
+                void in
+                dispatch_group_leave(downloadGroup)
             }
             
+            dispatch_group_wait(downloadGroup, DISPATCH_TIME_FOREVER)
+            
             dispatch_async(dispatch_get_main_queue(), {
+                sharedInstance.removeRooms()
+                
                 self.activityIndicator.hidden = true
                 self.application.endIgnoringInteractionEvents()
                 
-                if self.firstUse {
-                    self.firstUse = false
-                    sharedDefaults.accessibility = false
+                if self.webServicesHelper.checkRooms() {
+                    sharedInstance.insertRooms(self.webServicesHelper.getRooms())
                     
-                    self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
-                } else if (self.firstUseBackPress == true) {
-                    self.firstUse = false
-                    sharedDefaults.accessibility = false
-                    
-                    // Handling the alert to explain the default Perth campus to the user.
-                    let alert: UIAlertController = UIAlertController(title: "Perth Campus", message: "The default campus has been set to Perth.", preferredStyle: .Alert)
-                    
-                    let okAction = UIAlertAction(title: "Ok", style: .Default) {
-                        (action) in
+                    if self.firstUseBackPress == true {
+                        self.firstUse = false
+                        sharedDefaults.accessibility = false
                         
-                        self.returnToMainMenu()
+                        // Handling the alert to explain the default Perth campus to the user.
+                        let alert: UIAlertController = UIAlertController(title: "Perth Campus", message: "The default campus has been set to Perth.", preferredStyle: .Alert)
+                        
+                        let okAction = UIAlertAction(title: "Ok", style: .Default) {
+                            (action) in
+                            
+                            self.returnToMainMenu()
+                        }
+                        alert.addAction(okAction)
+                        
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    } else if (self.firstUse == true) {
+                        self.firstUse = false
+                        sharedDefaults.accessibility = false
+                        
+                        self.performSegueWithIdentifier("ReturnFromFirstUse", sender: self)
+                    } else {
+                        self.navigationController?.popViewControllerAnimated(true)
                     }
+                } else {
+                    // Handling the alert to explain that there are no rooms available for this campus.
+                    let alert: UIAlertController = UIAlertController(title: "\(sharedDefaults.campusName)", message: "There are no rooms available for this campus at the moment.", preferredStyle: .Alert)
+                    
+                    let okAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
                     alert.addAction(okAction)
                     
                     self.presentViewController(alert, animated: true, completion: nil)
-                } else {
-                    self.navigationController?.popViewControllerAnimated(true)
                 }
             })
-        })
+        }
     }
 }

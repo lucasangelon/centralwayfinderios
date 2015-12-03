@@ -58,6 +58,9 @@ class DatabaseStatements {
     // Removal upon Campus update.
     let DELETE_SELECTED_CAMPUS_ROOMS = "DELETE FROM room WHERE campus_id = (?);"
     
+    // Remove all rooms in the table.
+    let DELETE_ALL_ROOMS = "DELETE FROM room;"
+    
     let DELETE_SELECTED_CAMPUS_BUILDINGS = "DELETE FROM building WHERE campus_id = (?);"
     
     // Deletes the data within all tables if required.

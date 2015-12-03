@@ -59,6 +59,17 @@ class UserDefaultsController {
         }
     }
     
+    // Campus Version
+    var campusVersion: Int {
+        get {
+            return defaults.integerForKey("campusVersion")
+        }
+        
+        set {
+            defaults.setInteger(newValue, forKey: "campusVersion")
+        }
+    }
+    
     // Accessibility
     var accessibility: Bool {
         get {
