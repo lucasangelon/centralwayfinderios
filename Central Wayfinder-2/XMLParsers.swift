@@ -275,7 +275,10 @@ class CampusVersionParser: NSObject, NSXMLParserDelegate {
     func parser(parser: NSXMLParser, foundCharacters string: String) {
         if (Int(string) != nil) {
             serverCampusVersion = Int(string)!
-        } else {
+        }
+        
+        // If something went wrong, force a re-download.
+        else {
             serverCampusVersion = -1
         }
     }

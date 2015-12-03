@@ -101,11 +101,9 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
                         dispatch_group_wait(self.downloadGroup, DISPATCH_TIME_FOREVER)
                         
                         versionCheck = self.webServicesHelper.getCampusVersionCheck()
-                        print(versionCheck)
                         
                         // If the versions differ, download the new version.
                         if !versionCheck {
-                            print("Re-download")
                             dispatch_group_enter(self.downloadGroup)
                             
                             // Download updated rooms for the current campus.
@@ -128,9 +126,10 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
                                 self.application.endIgnoringInteractionEvents()
                             })
                         } else {
-                            print("Same Version")
-                            self.activityIndicator.hidden = true
-                            self.application.endIgnoringInteractionEvents()
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.activityIndicator.hidden = true
+                                self.application.endIgnoringInteractionEvents()
+                            })
                         }
                     }
                 } else {
@@ -171,20 +170,25 @@ class SplashViewController: UIViewController, CLLocationManagerDelegate, UIAppli
                     })
                 }
             } else {
-                self.activityIndicator.hidden = true
-                self.application.endIgnoringInteractionEvents()
                 
-                // Handling the alert to explain the web service did not run as expected.
-                let alert: UIAlertController = UIAlertController(title: "Connection Error", message: "The system was unable to retrieve the campuses. Please try again later.", preferredStyle: .Alert)
-                
-                alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
-                
-                self.presentViewController(alert, animated: true, completion: nil)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.activityIndicator.hidden = true
+                    self.application.endIgnoringInteractionEvents()
+                    
+                    // Handling the alert to explain the web service did not run as expected.
+                    let alert: UIAlertController = UIAlertController(title: "Connection Error", message: "The system was unable to retrieve the campuses. Please try again later.", preferredStyle: .Alert)
+                    
+                    alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                })
             }
         }
     }
 
     override func viewDidAppear(animated: Bool) {
+        
+        NSThread.sleepForTimeInterval(4)
         
         // If the location services status has not been set, prompt the user for it.
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {

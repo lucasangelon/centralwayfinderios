@@ -32,7 +32,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationController?.navigationBar.barTintColor = UIColor(red: (236/255), green: (104/255), blue: (36/255), alpha: 1)
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationController?.title = "Services"
+        self.title = "Services"
 
 
         self.tabBarController?.tabBar.hidden = false
@@ -60,6 +60,7 @@ class ServicesViewController: UIViewController, UITableViewDataSource, UITableVi
         // variable count is lower than 1. Disables selection on the tableView.
         if services.count < 1 {
             cell.textLabel?.text = "No services available."
+            cell.accessoryView = UIImageView(frame: CGRectMake(0, 0, 0, 0))
             tableView.allowsSelection = false
         } else {
             cell.textLabel?.text = services[indexPath.row].name

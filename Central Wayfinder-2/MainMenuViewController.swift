@@ -124,7 +124,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
 
             // Default action.
         default:
-            print("NoSegueAvailable")
+            break
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -165,6 +165,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         if found {
+            print("Found")
             selectedRoom = rooms[positionFound]
             
             let downloadGroup = dispatch_group_create()
