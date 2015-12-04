@@ -99,13 +99,15 @@ class DatabaseManager : NSObject {
             var tempRoom: Room!
             let currentCampusId = sharedDefaults.campusId
             
-            for index in 0...(rooms.count - 1) {
-                tempRoom = rooms[index]
-                
-                success = db.executeUpdate(self.dbStatements.INSERT_ROOM, withArgumentsInArray: [(tempRoom.id), (tempRoom.name), (tempRoom.image), (tempRoom.buildingId), (currentCampusId)])
-                
-                if !success {
-                    print("An error has occurred: \(db.lastErrorMessage())")
+            if rooms.count > 1 {
+                for index in 0...(rooms.count - 1) {
+                    tempRoom = rooms[index]
+                    
+                    success = db.executeUpdate(self.dbStatements.INSERT_ROOM, withArgumentsInArray: [(tempRoom.id), (tempRoom.name), (tempRoom.image), (tempRoom.buildingId), (currentCampusId)])
+                    
+                    if !success {
+                        print("An error has occurred: \(db.lastErrorMessage())")
+                    }
                 }
             }
         }

@@ -27,7 +27,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     private var indoorMapsUrls = [String]()
     
     // List items for the main menu.
-    private let cellContent = [("Services", "services.png"), ("Central Web", "centralWeb.png"), ("Settings", "settings.png")]
+    private let cellContent = [("Facilities", "facilities.png"), ("Central Web", "centralWeb.png"), ("Settings", "settings.png")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
